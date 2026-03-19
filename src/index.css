@@ -110,5 +110,5 @@ label {
 
 /* 安全区域适配（iPhone 刘海/底部横条） */
 .safe-area-bottom {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
 }

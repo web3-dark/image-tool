@@ -1,11 +1,54 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+import { compression } from 'vite-plugin-compression2'
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    // 目标现代浏览器，输出更小的代码
+    target: 'es2020',
+    // CSS 代码分割
+    cssCodeSplit: true,
+    // 关闭 sourcemap
+    sourcemap: false,
+    // Rollup 配置
+    rollupOptions: {
+      output: {
+        // 手动分包：把大依赖单独拆出来，利于缓存
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'radix-vendor': ['@radix-ui/react-select', '@radix-ui/react-slider'],
+          'compression': ['browser-image-compression'],
+          'image-q': ['image-q'],
+        },
+      },
+    },
+    // terser 极限压缩
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.warn'],
+        passes: 2,
+        collapse_vars: true,
+        reduce_vars: true,
+      },
+      mangle: {
+        toplevel: true,
+      },
+      format: {
+        comments: false,
+      },
+    },
+  },
   plugins: [
     react(),
+    // Gzip
+    compression({ algorithm: 'gzip', exclude: [/\.(png|jpg|ico|svg)$/] }),
+    // Brotli（压缩率更高，现代浏览器优先使用）
+    compression({ algorithm: 'brotliCompress', exclude: [/\.(png|jpg|ico|svg)$/] }),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'favicon.ico', 'apple-touch-icon-180x180.png'],

@@ -367,13 +367,13 @@ function App() {
       </main>
 
       {/* 页脚 */}
-      <footer className="flex-shrink-0 border-t border-border bg-card px-8 py-3 safe-area-bottom">
-        <div className="flex items-center justify-center gap-3 text-sm text-muted-foreground">
-          <span>完全免费 • 无需注册 • 100%本地处理</span>
-          <span>·</span>
+      <footer className="flex-shrink-0 border-t border-border bg-card px-8 pt-4 safe-area-bottom">
+        <div className="flex items-center justify-center gap-3 text-base font-medium text-foreground">
+          <span>图片仅在本地处理，不上传服务器，隐私安全有保障</span>
+          <span className="text-muted-foreground">|</span>
           <button
             onClick={() => setPrivacyOpen(true)}
-            className="underline underline-offset-2 hover:text-foreground transition-colors"
+            className="underline underline-offset-2 hover:text-primary transition-colors"
           >
             隐私政策
           </button>
