@@ -1,0 +1,134 @@
+.format-selector-container {
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.format-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 1.5rem;
+}
+
+.format-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.format-button {
+  position: relative;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.format-button:hover:not(.disabled) {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+  transform: translateY(-2px);
+}
+
+.format-button.active {
+  border-color: #3b82f6;
+  background-color: #3b82f6;
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.format-button.active .format-name {
+  color: white;
+}
+
+.format-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f3f4f6;
+}
+
+.format-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.format-description {
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.3;
+}
+
+.format-button.active .format-description {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.format-checkmark {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 24px;
+  height: 24px;
+  background-color: rgba(59, 130, 246, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+.format-button.active .format-checkmark {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.format-info {
+  padding: 1rem;
+  background-color: #dbeafe;
+  border-left: 4px solid #3b82f6;
+  border-radius: 6px;
+}
+
+.format-note {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #1e40af;
+}
+
+@media (max-width: 768px) {
+  .format-selector-container {
+    padding: 1rem;
+  }
+
+  .format-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .format-button {
+    min-height: 90px;
+    padding: 0.75rem;
+  }
+
+  .format-name {
+    font-size: 1rem;
+  }
+
+  .format-description {
+    font-size: 0.7rem;
+  }
+}

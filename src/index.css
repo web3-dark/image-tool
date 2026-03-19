@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.6%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.6%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.6%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 9%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --ring: 217.2 91.2% 59.8%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.6%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.6%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.6%;
+    --popover-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 98%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 212.7 26.8% 83.9%;
+    --secondary-foreground: 210 40% 3.6%;
+    --ring: 217.2 91.2% 59.8%;
+  }
+}
+
+* {
+  @apply border-border;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent; /* 移除 iOS/Android 点击高亮 */
+}
+
+html {
+  @apply scroll-smooth;
+  /* 防止 iOS 横屏时字体自动放大 */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* 使用动态视口高度，兼容 iOS Safari 地址栏 */
+  height: 100%;
+}
+
+body {
+  @apply bg-background text-foreground;
+  height: 100%;
+  /* iOS 橡皮筋效果控制 */
+  overscroll-behavior: none;
+  /* 平滑字体渲染 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+}
+
+/* iOS Safari 全屏高度修正：100vh 不计算底部工具栏 */
+.h-screen {
+  height: 100vh;
+  height: 100dvh; /* 动态视口高度，iOS 15.4+ / Chrome 108+ */
+}
+
+/* iOS 滚动区域：启用惯性滚动 */
+.overflow-auto,
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 防止 iOS Safari input 聚焦时自动放大（font-size < 16px 会触发） */
+@supports (-webkit-touch-callout: none) {
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* 按钮触摸优化：阻止双击放大，允许单击 */
+button,
+[role="button"],
+input[type="file"],
+label {
+  touch-action: manipulation;
+}
+
+/* 安全区域适配（iPhone 刘海/底部横条） */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
