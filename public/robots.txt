@@ -1,0 +1,27 @@
+# 允许所有爬虫
+User-agent: *
+Allow: /
+Disallow:
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# 百度
+User-agent: Baiduspider
+Allow: /
+
+# Bing
+User-agent: bingbot
+Allow: /
+
+# 搜狗
+User-agent: Sogou web spider
+Allow: /
+
+# 360
+User-agent: 360Spider
+Allow: /
+
+# Sitemap（上线后将 YOUR_DOMAIN 替换为真实域名）
+Sitemap: https://YOUR_DOMAIN/sitemap.xml

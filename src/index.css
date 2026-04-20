@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* tokens.css 已设置 body 底色 / 字体 / 选区 / focus-visible，这里只补 image-tool 特有的 H5 兼容 */
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent; /* 移除 iOS/Android 点击高亮 */
+  }
+
+  html {
+    /* 防止 iOS 横屏时字体自动放大 */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* 使用动态视口高度，兼容 iOS Safari 地址栏 */
+    height: 100%;
+  }
+
+  body {
+    height: 100%;
+    /* iOS 橡皮筋效果控制 */
+    overscroll-behavior: none;
+  }
+
+  #root {
+    height: 100%;
+  }
+}
+
+/* iOS Safari 全屏高度修正：100vh 不计算底部工具栏 */
+.h-screen {
+  height: 100vh;
+  height: 100dvh; /* 动态视口高度，iOS 15.4+ / Chrome 108+ */
+}
+
+/* iOS 滚动区域：启用惯性滚动 */
+.overflow-auto,
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 防止 iOS Safari input 聚焦时自动放大（font-size < 16px 会触发） */
+@supports (-webkit-touch-callout: none) {
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* 按钮触摸优化：阻止双击放大，允许单击 */
+button,
+[role="button"],
+input[type="file"],
+label {
+  touch-action: manipulation;
+}
+
+/* 安全区域适配（iPhone 刘海/底部横条） */
+.safe-area-bottom {
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+}
