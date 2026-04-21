@@ -1,4 +1,4 @@
-import preset from '../shared/design-system/tailwind.preset.js'
+import preset from './src/design-system/tailwind.preset.js'
 
 /** @type {import('tailwindcss').Config} */
 export default {

@@ -1,0 +1,28 @@
+/**
+ * Tools Design System · Fonts
+ * SF Pro 系统栈为主，数字用等宽 SF Mono。
+ * 中文 fallback 到 PingFang SC / Microsoft YaHei。
+ */
+
+:root {
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display',
+    'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei',
+    'Segoe UI', Roboto, sans-serif;
+
+  --font-mono:
+    'SF Mono', 'Monaco', 'Menlo', 'Cascadia Code',
+    'Consolas', 'Liberation Mono', monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+.font-mono,
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+}

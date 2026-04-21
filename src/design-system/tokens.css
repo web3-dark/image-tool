@@ -1,0 +1,135 @@
+/**
+ * Tools Design System · Tokens
+ * ----------------------------
+ * Apple 质感 · iOS 系统蓝 · 仅浅色
+ * 单一真实源：所有项目的颜色/间距/字号/圆角/阴影都从这里来。
+ * 禁止硬编码。
+ *
+ * 颜色用 RGB 三元组（空格分隔），通过 preset 包成
+ *   rgb(var(--color-X) / <alpha-value>)
+ * 以支持 Tailwind 的 /N 透明度修饰符。
+ */
+
+:root {
+  /* ========== 色板 · iOS 系统蓝 + 冷灰阶 (RGB triplets) ========== */
+
+  /* 主色 */
+  --color-primary:        10 132 255;   /* #0A84FF */
+  --color-primary-hover:  0  113 227;   /* #0071E3 */
+  --color-primary-muted:  230 242 255;  /* #E6F2FF */
+  --color-primary-fg:     255 255 255;  /* #FFFFFF */
+
+  /* 中性灰（偏冷，Tailwind slate 系） */
+  --color-bg:             245 247 250;  /* #F5F7FA */
+  --color-surface:        255 255 255;  /* #FFFFFF */
+  --color-surface-muted:  241 245 249;  /* #F1F5F9 */
+  --color-border:         226 232 240;  /* #E2E8F0 */
+  --color-border-strong:  203 213 225;  /* #CBD5E1 */
+
+  /* 文字 */
+  --color-foreground:        15 23 42;   /* #0F172A */
+  --color-foreground-muted:  71 85 105;  /* #475569 */
+  --color-muted:             148 163 184;/* #94A3B8 */
+
+  /* 语义 */
+  --color-success: 52 199 89;   /* #34C759 */
+  --color-warning: 255 149 0;   /* #FF9500 */
+  --color-danger:  255 59 48;   /* #FF3B30 */
+
+  /* 货币特殊色（不再金色） */
+  --color-money:        15 23 42;   /* #0F172A */
+  --color-money-accent: 10 132 255; /* #0A84FF */
+
+  /* ========== 字号 · 8 级阶梯 ========== */
+  --text-xs:       12px;
+  --text-xs-lh:    16px;
+  --text-sm:       14px;
+  --text-sm-lh:    20px;
+  --text-base:     16px;
+  --text-base-lh:  24px;
+  --text-lg:       18px;
+  --text-lg-lh:    28px;
+  --text-xl:       20px;
+  --text-xl-lh:    28px;
+  --text-2xl:      24px;
+  --text-2xl-lh:   32px;
+  --text-3xl:      32px;
+  --text-3xl-lh:   40px;
+  --text-4xl:      48px;
+  --text-4xl-lh:   56px;
+
+  /* 字重 */
+  --font-regular:  400;
+  --font-medium:   500;
+  --font-semibold: 600;
+  --font-bold:     700;
+
+  /* ========== 间距 · 4px base ========== */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ========== 圆角 · 苹果偏大 ========== */
+  --radius-sm:   6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --radius-xl:  20px;
+  --radius-full: 9999px;
+
+  /* ========== 阴影 · 多层柔和 ========== */
+  --shadow-sm: 0 1px 2px rgba(15,23,42,0.04), 0 1px 1px rgba(15,23,42,0.03);
+  --shadow-md: 0 2px 4px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.06);
+  --shadow-lg: 0 4px 8px rgba(15,23,42,0.05), 0 12px 32px rgba(15,23,42,0.08);
+
+  /* ========== 动画 · 基础 ========== */
+  --ease-out:     cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 350ms;
+
+  /* ========== 响应式 · 容器 + padding ========== */
+  --container-sm:  640px;
+  --container-md:  768px;
+  --container-lg:  1024px;
+  --container-xl:  1280px;
+
+  --page-padding-mobile:  16px;
+  --page-padding-tablet:  24px;
+  --page-padding-desktop: 32px;
+}
+
+/* 全局重置 · 轻量版 */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--color-bg));
+  color: rgb(var(--color-foreground));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* 选中态 */
+::selection {
+  background: rgb(var(--color-primary));
+  color: rgb(var(--color-primary-fg));
+}
+
+/* 焦点 · iOS 风 */
+:focus-visible {
+  outline: 2px solid rgb(var(--color-primary));
+  outline-offset: 2px;
+}
