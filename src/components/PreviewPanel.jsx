@@ -21,6 +21,17 @@ const PreviewPanel = ({
   const [modalImage, setModalImage] = useState(null);
   const [modalTitle, setModalTitle] = useState('');
   const [downloaded, setDownloaded] = useState(false);
+  const [isNarrowScreen, setIsNarrowScreen] = useState(false);
+
+  // 用 effect + matchMedia 取代 window.innerWidth 渲染期访问，兼容 SSG
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsNarrowScreen(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
 
   /**
    * 初始化预览图片
@@ -147,7 +158,7 @@ const PreviewPanel = ({
       </div>
 
       {/* 预览内容 */}
-      {(comparisonMode === 'split' || window.innerWidth < 768) ? (
+      {(comparisonMode === 'split' || isNarrowScreen) ? (
         // 并排对比模式
         <div className="flex-1 flex gap-4 overflow-auto">
           {/* 原始图片 */}

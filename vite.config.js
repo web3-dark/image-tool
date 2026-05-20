@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 import { compression } from 'vite-plugin-compression2'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   build: {
     // 目标现代浏览器，输出更小的代码
     target: 'es2020',
@@ -15,13 +15,16 @@ export default defineConfig({
     // Rollup 配置
     rollupOptions: {
       output: {
-        // 手动分包：把大依赖单独拆出来，利于缓存
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'radix-vendor': ['@radix-ui/react-select', '@radix-ui/react-slider'],
-          'compression': ['browser-image-compression'],
-          'image-q': ['image-q'],
-        },
+        // 仅对客户端构建做手动分包；SSR 构建会把 react 等标记为 external，
+        // 此时不能将它们写入 manualChunks（会触发 EXTERNAL_MODULES_CANNOT_BE_INCLUDED_IN_MANUAL_CHUNKS）
+        manualChunks: isSsrBuild
+          ? undefined
+          : {
+              'react-vendor': ['react', 'react-dom'],
+              'radix-vendor': ['@radix-ui/react-select', '@radix-ui/react-slider'],
+              'compression': ['browser-image-compression'],
+              'image-q': ['image-q'],
+            },
       },
     },
     // terser 极限压缩
@@ -87,4 +90,4 @@ export default defineConfig({
       },
     }),
   ],
-})
+}))
