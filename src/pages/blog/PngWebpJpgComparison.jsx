@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Head } from 'vite-react-ssg';
 import BlogLayout from '../../components/BlogLayout';
+import ImageModal from '../../components/ImageModal';
 
 const PAGE_URL = 'https://image-tool-bk5.pages.dev/blog/png-webp-jpg-comparison';
 const PUBLISHED_DATE = '2026-05-20';
@@ -72,6 +74,10 @@ const FAQ_SCHEMA = {
 };
 
 export default function PngWebpJpgComparison() {
+  const [preview, setPreview] = useState(null);
+  const openPreview = (src, title) => setPreview({ src, title });
+  const closePreview = () => setPreview(null);
+
   return (
     <BlogLayout>
       <Head>
@@ -187,19 +193,19 @@ export default function PngWebpJpgComparison() {
 
         <div className="format-demo-grid">
           <figure className="format-demo-card">
-            <img src="/img/demo/landscape.png" alt="风景照 PNG 无损版本，体积 1334 KB" loading="lazy" />
+            <img src="/img/demo/landscape.png" alt="风景照 PNG 无损版本，体积 1334 KB" loading="lazy" onClick={() => openPreview('/img/demo/landscape.png', 'PNG 无损 · 1334 KB')} />
             <figcaption><strong>PNG 无损</strong><span>1334 KB</span></figcaption>
           </figure>
           <figure className="format-demo-card">
-            <img src="/img/demo/landscape-q80.jpg" alt="风景照 JPG 80% 质量版本，体积 112 KB" loading="lazy" />
+            <img src="/img/demo/landscape-q80.jpg" alt="风景照 JPG 80% 质量版本，体积 112 KB" loading="lazy" onClick={() => openPreview('/img/demo/landscape-q80.jpg', 'JPG q80 · 112 KB')} />
             <figcaption><strong>JPG q80</strong><span>112 KB</span></figcaption>
           </figure>
           <figure className="format-demo-card">
-            <img src="/img/demo/landscape-q75.webp" alt="风景照 WebP 75% 质量版本，体积 94 KB" loading="lazy" />
+            <img src="/img/demo/landscape-q75.webp" alt="风景照 WebP 75% 质量版本，体积 94 KB" loading="lazy" onClick={() => openPreview('/img/demo/landscape-q75.webp', 'WebP q75 · 94 KB')} />
             <figcaption><strong>WebP q75</strong><span>94 KB</span></figcaption>
           </figure>
           <figure className="format-demo-card">
-            <img src="/img/demo/landscape-q45.avif" alt="风景照 AVIF 45% 质量版本，体积 54 KB" loading="lazy" />
+            <img src="/img/demo/landscape-q45.avif" alt="风景照 AVIF 45% 质量版本，体积 54 KB" loading="lazy" onClick={() => openPreview('/img/demo/landscape-q45.avif', 'AVIF q45 · 54 KB')} />
             <figcaption><strong>AVIF q45</strong><span>54 KB</span></figcaption>
           </figure>
         </div>
@@ -297,11 +303,11 @@ export default function PngWebpJpgComparison() {
 
         <div className="format-demo-grid format-demo-grid-2">
           <figure className="format-demo-card">
-            <img src="/img/demo/crop-q90.jpg" alt="局部裁切照片 JPG 质量 90 版本，画面干净" loading="lazy" />
+            <img src="/img/demo/crop-q90.jpg" alt="局部裁切照片 JPG 质量 90 版本，画面干净" loading="lazy" onClick={() => openPreview('/img/demo/crop-q90.jpg', 'JPG q90 · 58 KB · 几乎无伪影')} />
             <figcaption><strong>JPG q90</strong><span>58 KB · 几乎无伪影</span></figcaption>
           </figure>
           <figure className="format-demo-card">
-            <img src="/img/demo/crop-q15.jpg" alt="局部裁切照片 JPG 质量 15 版本，画面出现明显马赛克和色块" loading="lazy" />
+            <img src="/img/demo/crop-q15.jpg" alt="局部裁切照片 JPG 质量 15 版本，画面出现明显马赛克和色块" loading="lazy" onClick={() => openPreview('/img/demo/crop-q15.jpg', 'JPG q15 · 6 KB · 马赛克 / 色块明显')} />
             <figcaption><strong>JPG q15</strong><span>6 KB · 马赛克 / 色块明显</span></figcaption>
           </figure>
         </div>
@@ -458,6 +464,13 @@ export default function PngWebpJpgComparison() {
           想立刻试试格式转换？<Link to="/" className="text-primary hover:underline font-medium">用 picthin 在线压缩工具</Link>，浏览器里本地处理，支持五种格式互转，免费无需注册。
         </p>
       </article>
+
+      <ImageModal
+        isOpen={!!preview}
+        imageUrl={preview?.src}
+        imageTitle={preview?.title}
+        onClose={closePreview}
+      />
     </BlogLayout>
   );
 }

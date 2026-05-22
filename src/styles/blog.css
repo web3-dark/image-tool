@@ -172,6 +172,13 @@
   border-radius: var(--radius-md);
   border: 1px solid rgb(var(--color-border));
   background: rgb(var(--color-surface-muted));
+  cursor: zoom-in;
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+}
+
+.blog-article .format-demo-card > img:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .blog-article .format-demo-grid-2 .format-demo-card > img {
