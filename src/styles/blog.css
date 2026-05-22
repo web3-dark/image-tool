@@ -1,0 +1,245 @@
+/**
+ * 博客文章排版样式
+ * 复用 design-system tokens，仅在 .blog-article 作用域内生效
+ */
+
+.blog-article {
+  color: rgb(var(--color-foreground));
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.blog-article .lead {
+  font-size: 18px;
+  line-height: 1.75;
+  color: rgb(var(--color-foreground-muted));
+  margin: 0 0 32px;
+  padding: 20px 24px;
+  background: rgb(var(--color-primary-muted));
+  border-left: 4px solid rgb(var(--color-primary));
+  border-radius: var(--radius-md);
+}
+
+.blog-article h2 {
+  font-size: 26px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: rgb(var(--color-foreground));
+  margin: 56px 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgb(var(--color-border));
+  scroll-margin-top: 80px;
+}
+
+.blog-article h3 {
+  font-size: 20px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+  margin: 36px 0 12px;
+  scroll-margin-top: 80px;
+}
+
+.blog-article p {
+  margin: 0 0 18px;
+  color: rgb(var(--color-foreground));
+}
+
+.blog-article strong {
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+}
+
+.blog-article ul,
+.blog-article ol {
+  margin: 0 0 20px;
+  padding-left: 24px;
+}
+
+.blog-article li {
+  margin-bottom: 10px;
+  line-height: 1.8;
+}
+
+.blog-article li::marker {
+  color: rgb(var(--color-primary));
+}
+
+.blog-article a {
+  color: rgb(var(--color-primary));
+  text-decoration: none;
+  border-bottom: 1px solid rgb(var(--color-primary) / 0.3);
+  transition: border-color 150ms var(--ease-out);
+}
+
+.blog-article a:hover {
+  border-bottom-color: rgb(var(--color-primary));
+}
+
+.blog-article code {
+  font-family: 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  padding: 2px 6px;
+  background: rgb(var(--color-surface-muted));
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 4px;
+  color: rgb(var(--color-foreground));
+}
+
+.blog-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-border));
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.blog-article thead {
+  background: rgb(var(--color-surface-muted));
+}
+
+.blog-article th {
+  text-align: left;
+  font-weight: 600;
+  padding: 12px 16px;
+  color: rgb(var(--color-foreground));
+  border-bottom: 1px solid rgb(var(--color-border));
+  white-space: nowrap;
+}
+
+.blog-article td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgb(var(--color-border));
+  color: rgb(var(--color-foreground));
+}
+
+.blog-article tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.blog-article tbody tr:hover {
+  background: rgb(var(--color-surface-muted) / 0.5);
+}
+
+.blog-article figure {
+  margin: 32px 0;
+  padding: 0;
+}
+
+.blog-article figure > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid rgb(var(--color-border));
+  background: rgb(var(--color-surface));
+}
+
+.blog-article figcaption {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgb(var(--color-foreground-muted));
+  text-align: center;
+}
+
+.blog-article .format-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.blog-article .format-demo-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.blog-article .format-demo-card {
+  margin: 0;
+  padding: 0;
+}
+
+.blog-article .format-demo-card > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1200 / 750;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid rgb(var(--color-border));
+  background: rgb(var(--color-surface-muted));
+}
+
+.blog-article .format-demo-grid-2 .format-demo-card > img {
+  aspect-ratio: 1 / 1;
+}
+
+.blog-article .format-demo-card > figcaption {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+}
+
+.blog-article .format-demo-card > figcaption > strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgb(var(--color-foreground));
+}
+
+.blog-article .format-demo-card > figcaption > span {
+  font-size: 12px;
+  color: rgb(var(--color-foreground-muted));
+}
+
+.blog-article .format-demo-note {
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgb(var(--color-foreground-muted));
+  padding: 12px 16px;
+  background: rgb(var(--color-surface-muted));
+  border-radius: var(--radius-md);
+  margin: 0 0 24px;
+}
+
+@media (max-width: 640px) {
+  .blog-article .format-demo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .blog-article .format-demo-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .blog-article {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  .blog-article h2 {
+    font-size: 22px;
+    margin: 40px 0 14px;
+  }
+  .blog-article h3 {
+    font-size: 18px;
+    margin: 28px 0 10px;
+  }
+  .blog-article .lead {
+    font-size: 16px;
+    padding: 16px 18px;
+  }
+  .blog-article table {
+    font-size: 13px;
+  }
+  .blog-article th,
+  .blog-article td {
+    padding: 10px 12px;
+  }
+}

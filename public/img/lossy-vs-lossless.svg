@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" role="img" aria-label="有损压缩与无损压缩的原理对比">
+  <title>有损压缩 vs 无损压缩</title>
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .panel-title { font: 700 18px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .panel-desc { font: 400 13px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #475569; }
+      .legend { font: 500 12px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #475569; }
+      .badge { font: 700 11px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .border { fill: none; stroke: #E2E8F0; stroke-width: 1.5; }
+      .arrow { stroke: #94A3B8; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#94A3B8"/>
+    </marker>
+    <linearGradient id="grad-orig" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A84FF"/>
+      <stop offset="33%" stop-color="#3B82F6"/>
+      <stop offset="66%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+  <rect class="bg" width="800" height="360"/>
+
+  <!-- LEFT PANEL: 无损 -->
+  <g transform="translate(40,30)">
+    <rect class="border" x="0" y="0" width="350" height="300" rx="12" fill="#F8FAFC"/>
+    <rect x="14" y="14" width="60" height="22" rx="11" fill="#34C759"/>
+    <text class="badge" x="44" y="29" text-anchor="middle" fill="#FFFFFF">无损</text>
+    <text class="panel-title" x="84" y="30" fill="#0F172A">PNG / 无损 WebP</text>
+
+    <!-- 原图 -->
+    <text class="legend" x="14" y="68">原始像素</text>
+    <rect x="14" y="78" width="140" height="100" fill="url(#grad-orig)" rx="6"/>
+
+    <!-- 箭头 -->
+    <path class="arrow" d="M158 128 L196 128"/>
+    <text class="legend" x="177" y="120" text-anchor="middle">压缩</text>
+
+    <!-- 解压后 -->
+    <text class="legend" x="200" y="68">解压后</text>
+    <rect x="200" y="78" width="140" height="100" fill="url(#grad-orig)" rx="6"/>
+
+    <text class="panel-desc" x="14" y="210">
+      <tspan x="14" dy="0">每一个像素都跟原图一模一样。</tspan>
+      <tspan x="14" dy="22">靠的是发现重复模式，重新打包，</tspan>
+      <tspan x="14" dy="22">不丢任何信息。</tspan>
+      <tspan x="14" dy="22" fill="#0F172A" font-weight="600">→ 适合图标、截图、线条</tspan>
+    </text>
+  </g>
+
+  <!-- RIGHT PANEL: 有损 -->
+  <g transform="translate(410,30)">
+    <rect class="border" x="0" y="0" width="350" height="300" rx="12" fill="#F8FAFC"/>
+    <rect x="14" y="14" width="60" height="22" rx="11" fill="#FF9500"/>
+    <text class="badge" x="44" y="29" text-anchor="middle" fill="#FFFFFF">有损</text>
+    <text class="panel-title" x="84" y="30" fill="#0F172A">JPG / WebP / AVIF</text>
+
+    <!-- 原图 -->
+    <text class="legend" x="14" y="68">原始像素</text>
+    <rect x="14" y="78" width="140" height="100" fill="url(#grad-orig)" rx="6"/>
+
+    <!-- 箭头 -->
+    <path class="arrow" d="M158 128 L196 128"/>
+    <text class="legend" x="177" y="120" text-anchor="middle">压缩</text>
+
+    <!-- 解压后：用色块表示丢失细节 -->
+    <text class="legend" x="200" y="68">解压后（简化）</text>
+    <g transform="translate(200,78)">
+      <rect width="46" height="50" fill="#1E78D9"/>
+      <rect x="46" width="48" height="50" fill="#4F86E7"/>
+      <rect x="94" width="46" height="50" fill="#7B7BEB"/>
+      <rect y="50" width="46" height="50" fill="#5089D9"/>
+      <rect x="46" y="50" width="48" height="50" fill="#7080E1"/>
+      <rect x="94" y="50" width="46" height="50" fill="#9587EA"/>
+      <rect class="border" width="140" height="100" rx="6"/>
+    </g>
+
+    <text class="panel-desc" x="14" y="210">
+      <tspan x="14" dy="0">主动丢掉人眼难以察觉的细节。</tspan>
+      <tspan x="14" dy="22">体积大幅缩小，肉眼几乎看不出</tspan>
+      <tspan x="14" dy="22">差别。</tspan>
+      <tspan x="14" dy="22" fill="#0F172A" font-weight="600">→ 适合照片、复杂图像</tspan>
+    </text>
+  </g>
+</svg>

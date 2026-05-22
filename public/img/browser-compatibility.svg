@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" role="img" aria-label="主流浏览器对各图片格式的支持情况（2026 年 5 月）">
+  <title>浏览器图片格式兼容性矩阵</title>
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .title { font: 700 18px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #0F172A; }
+      .subtitle { font: 400 12px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #94A3B8; }
+      .head-cell { font: 700 14px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #0F172A; }
+      .row-label { font: 700 14px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #0F172A; }
+      .cell-text { font: 600 12px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #0F172A; }
+      .cell-sub { font: 400 10px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #475569; }
+      .cell-full { fill: #DCFCE7; stroke: #34C759; stroke-width: 1; }
+      .cell-mostly { fill: #E6F2FF; stroke: #0A84FF; stroke-width: 1; }
+      .cell-partial { fill: #FEF3C7; stroke: #FF9500; stroke-width: 1; }
+      .grid-line { stroke: #E2E8F0; stroke-width: 1; }
+    </style>
+  </defs>
+  <rect class="bg" width="800" height="320"/>
+  <text class="title" x="40" y="32">浏览器兼容性矩阵（2026 年 5 月）</text>
+  <text class="subtitle" x="40" y="50">数据来源：caniuse.com · 全球用户份额加权</text>
+
+  <!-- Header row -->
+  <g transform="translate(40,72)">
+    <text class="head-cell" x="80" y="22">格式</text>
+    <text class="head-cell" x="220" y="22" text-anchor="middle">Chrome</text>
+    <text class="head-cell" x="360" y="22" text-anchor="middle">Firefox</text>
+    <text class="head-cell" x="500" y="22" text-anchor="middle">Safari</text>
+    <text class="head-cell" x="640" y="22" text-anchor="middle">Edge</text>
+  </g>
+
+  <line class="grid-line" x1="40" y1="84" x2="760" y2="84"/>
+
+  <!-- Row: PNG -->
+  <g transform="translate(40,96)">
+    <text class="row-label" x="0" y="28">PNG</text>
+    <rect class="cell-full" x="150" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="220" y="32" text-anchor="middle">✓ 全部支持</text>
+    <rect class="cell-full" x="290" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="360" y="32" text-anchor="middle">✓ 全部支持</text>
+    <rect class="cell-full" x="430" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="500" y="32" text-anchor="middle">✓ 全部支持</text>
+    <rect class="cell-full" x="570" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="640" y="32" text-anchor="middle">✓ 全部支持</text>
+  </g>
+
+  <!-- Row: JPG -->
+  <g transform="translate(40,148)">
+    <text class="row-label" x="0" y="28">JPG</text>
+    <rect class="cell-full" x="150" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="220" y="32" text-anchor="middle">✓ 全部支持</text>
+    <rect class="cell-full" x="290" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="360" y="32" text-anchor="middle">✓ 全部支持</text>
+    <rect class="cell-full" x="430" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="500" y="32" text-anchor="middle">✓ 全部支持</text>
+    <rect class="cell-full" x="570" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="640" y="32" text-anchor="middle">✓ 全部支持</text>
+  </g>
+
+  <!-- Row: WebP -->
+  <g transform="translate(40,200)">
+    <text class="row-label" x="0" y="28">WebP</text>
+    <rect class="cell-mostly" x="150" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="220" y="26" text-anchor="middle">✓ 32+</text>
+    <text class="cell-sub" x="220" y="40" text-anchor="middle">2018 年起</text>
+    <rect class="cell-mostly" x="290" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="360" y="26" text-anchor="middle">✓ 65+</text>
+    <text class="cell-sub" x="360" y="40" text-anchor="middle">2019 年起</text>
+    <rect class="cell-mostly" x="430" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="500" y="26" text-anchor="middle">✓ 14+</text>
+    <text class="cell-sub" x="500" y="40" text-anchor="middle">2020 年起</text>
+    <rect class="cell-mostly" x="570" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="640" y="26" text-anchor="middle">✓ 18+</text>
+    <text class="cell-sub" x="640" y="40" text-anchor="middle">2020 年起</text>
+  </g>
+
+  <!-- Row: AVIF -->
+  <g transform="translate(40,252)">
+    <text class="row-label" x="0" y="28">AVIF</text>
+    <rect class="cell-mostly" x="150" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="220" y="26" text-anchor="middle">✓ 85+</text>
+    <text class="cell-sub" x="220" y="40" text-anchor="middle">2020 年起</text>
+    <rect class="cell-mostly" x="290" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="360" y="26" text-anchor="middle">✓ 113+</text>
+    <text class="cell-sub" x="360" y="40" text-anchor="middle">2023 年起</text>
+    <rect class="cell-partial" x="430" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="500" y="26" text-anchor="middle">△ 16+</text>
+    <text class="cell-sub" x="500" y="40" text-anchor="middle">2022 年起</text>
+    <rect class="cell-mostly" x="570" y="6" width="140" height="42" rx="8"/>
+    <text class="cell-text" x="640" y="26" text-anchor="middle">✓ 121+</text>
+    <text class="cell-sub" x="640" y="40" text-anchor="middle">2024 年起</text>
+  </g>
+</svg>

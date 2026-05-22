@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" role="img" aria-label="图片格式选择决策树">
+  <title>图片格式选择决策流程图</title>
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .box { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; }
+      .box-decision { fill: #E6F2FF; stroke: #0A84FF; stroke-width: 1.5; }
+      .box-result { fill: #0A84FF; stroke: none; }
+      .box-result-alt { fill: #34C759; stroke: none; }
+      .text-decision { font: 600 14px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #0F172A; }
+      .text-result { font: 700 14px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #FFFFFF; }
+      .text-result-sub { font: 400 11px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #FFFFFF; opacity: 0.85; }
+      .label-yes { font: 700 12px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #34C759; }
+      .label-no { font: 700 12px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #FF3B30; }
+      .arrow { stroke: #94A3B8; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+      .title { font: 700 18px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #0F172A; }
+    </style>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#94A3B8"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="820" height="480"/>
+  <text class="title" x="410" y="32" text-anchor="middle">图片格式怎么选？三步决策</text>
+
+  <!-- Q1 -->
+  <g transform="translate(330,60)">
+    <rect class="box-decision" x="0" y="0" width="160" height="56" rx="12"/>
+    <text class="text-decision" x="80" y="34" text-anchor="middle">需要透明背景？</text>
+  </g>
+
+  <!-- Q1 arrows -->
+  <path class="arrow" d="M380 116 L200 156"/>
+  <text class="label-yes" x="270" y="135">是</text>
+  <path class="arrow" d="M440 116 L620 156"/>
+  <text class="label-no" x="540" y="135">否</text>
+
+  <!-- Q2-left: 是图标 -->
+  <g transform="translate(120,160)">
+    <rect class="box-decision" x="0" y="0" width="160" height="56" rx="12"/>
+    <text class="text-decision" x="80" y="34" text-anchor="middle">是图标 / Logo？</text>
+  </g>
+
+  <!-- Q2-right: 是照片 -->
+  <g transform="translate(540,160)">
+    <rect class="box-decision" x="0" y="0" width="160" height="56" rx="12"/>
+    <text class="text-decision" x="80" y="34" text-anchor="middle">是照片？</text>
+  </g>
+
+  <!-- Q2-left arrows -->
+  <path class="arrow" d="M170 216 L90 290"/>
+  <text class="label-yes" x="115" y="260">是</text>
+  <path class="arrow" d="M230 216 L310 290"/>
+  <text class="label-no" x="290" y="260">否</text>
+
+  <!-- Q2-right arrows -->
+  <path class="arrow" d="M590 216 L510 290"/>
+  <text class="label-yes" x="535" y="260">是</text>
+  <path class="arrow" d="M650 216 L730 290"/>
+  <text class="label-no" x="710" y="260">否</text>
+
+  <!-- Result 1: SVG / PNG (icon w/ transparency) -->
+  <g transform="translate(10,290)">
+    <rect class="box-result-alt" x="0" y="0" width="160" height="62" rx="12"/>
+    <text class="text-result" x="80" y="28" text-anchor="middle">SVG (首选)</text>
+    <text class="text-result-sub" x="80" y="48" text-anchor="middle">退路：PNG</text>
+  </g>
+
+  <!-- Result 2: WebP / PNG (transparent non-icon) -->
+  <g transform="translate(230,290)">
+    <rect class="box-result" x="0" y="0" width="160" height="62" rx="12"/>
+    <text class="text-result" x="80" y="28" text-anchor="middle">WebP</text>
+    <text class="text-result-sub" x="80" y="48" text-anchor="middle">退路：PNG</text>
+  </g>
+
+  <!-- Result 3: WebP / JPG (photo, no transparency) -->
+  <g transform="translate(430,290)">
+    <rect class="box-result" x="0" y="0" width="160" height="62" rx="12"/>
+    <text class="text-result" x="80" y="28" text-anchor="middle">WebP (首选)</text>
+    <text class="text-result-sub" x="80" y="48" text-anchor="middle">退路：JPG · 微信用 JPG</text>
+  </g>
+
+  <!-- Result 4: SVG / PNG (no transparency, no photo - icon/illustration) -->
+  <g transform="translate(650,290)">
+    <rect class="box-result-alt" x="0" y="0" width="160" height="62" rx="12"/>
+    <text class="text-result" x="80" y="28" text-anchor="middle">SVG / PNG</text>
+    <text class="text-result-sub" x="80" y="48" text-anchor="middle">线条 / 图表</text>
+  </g>
+
+  <!-- Footer note -->
+  <g transform="translate(40,395)">
+    <rect x="0" y="0" width="740" height="64" rx="10" fill="#F1F5F9" stroke="#E2E8F0"/>
+    <text class="text-decision" x="20" y="26" fill="#0F172A">小贴士：AVIF 比 WebP 再小 30–50%，可用 &lt;picture&gt; 把它放第一位</text>
+    <text x="20" y="48" font="400 12px -apple-system, sans-serif" fill="#475569">浏览器优先取 AVIF，不支持时自动回退到 WebP，再回退到 JPG/PNG，兼顾体积和兼容性。</text>
+  </g>
+</svg>

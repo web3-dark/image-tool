@@ -1,15 +1,19 @@
-import { StrictMode } from 'react'
-import { ViteReactSSG } from 'vite-react-ssg/single-page'
+import { ViteReactSSG } from 'vite-react-ssg'
 import './design-system/tokens.css'
 import './design-system/fonts.css'
 import './index.css'
-import App from './App.jsx'
-import ErrorBoundary from './components/ErrorBoundary.jsx'
+import './styles/blog.css'
+import { routes } from './routes.jsx'
 
 export const createRoot = ViteReactSSG(
-  <StrictMode>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
-  </StrictMode>
+  { routes },
+  ({ router, isClient }) => {
+    if (isClient && router) {
+      router.subscribe(() => {
+        if (typeof window !== 'undefined') {
+          window.scrollTo(0, 0);
+        }
+      });
+    }
+  }
 )

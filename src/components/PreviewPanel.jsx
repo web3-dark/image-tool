@@ -59,26 +59,7 @@ const PreviewPanel = ({
     loadImages();
   }, [originalFile, compressedBlob]);
 
-  /**
-   * ESC键关闭模态框
-   */
-  useEffect(() => {
-    const handleEscKey = (e) => {
-      if (e.key === 'Escape' && modalOpen) {
-        setModalOpen(false);
-      }
-    };
-
-    if (modalOpen) {
-      document.addEventListener('keydown', handleEscKey);
-      document.body.style.overflow = 'hidden';
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscKey);
-      document.body.style.overflow = 'unset';
-    };
-  }, [modalOpen]);
+  // ESC 关闭 + body 滚动锁定已由 ImageModal 内部处理
 
   /**
    * 打开图片放大预览
@@ -99,18 +80,12 @@ const PreviewPanel = ({
   };
 
   /**
-   * 处理滑块移动
-   */
-  const handleSliderChange = (e) => {
-    setSliderPosition(e.clientX);
-  };
-
-  /**
-   * 获取预览面板宽度
+   * 根据鼠标位置计算滑块百分比（相对滑块容器）
    */
   const getSliderPercentage = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const percentage = ((e.clientX - rect.left) / rect.width) * 100;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const percentage = ((clientX - rect.left) / rect.width) * 100;
     return Math.max(0, Math.min(100, percentage));
   };
 
@@ -206,54 +181,47 @@ const PreviewPanel = ({
           </div>
         </div>
       ) : (
-        // 滑块对比模式
+        // 滑块对比模式（用 clip-path 剪裁，两张图保持完全相同的容器尺寸）
         <div
-          className="flex-1 relative bg-surface-muted rounded-lg overflow-hidden"
-          onMouseMove={(e) => {
-            const percentage = getSliderPercentage(e);
-            setSliderPosition(percentage);
-          }}
+          className="flex-1 relative bg-surface-muted rounded-lg overflow-hidden select-none cursor-col-resize"
+          onMouseMove={(e) => setSliderPosition(getSliderPercentage(e))}
+          onTouchMove={(e) => setSliderPosition(getSliderPercentage(e))}
         >
-          {/* 背景图片（原始） */}
-          <div className="w-full h-full">
+          {/* 底层：压缩后图片（默认露出在右边） */}
+          {compressedDataURL && (
             <img
-              src={originalDataURL}
-              alt="原始图片"
-              className="w-full h-full object-contain"
+              src={compressedDataURL}
+              alt="压缩后图片"
+              draggable={false}
+              className="absolute inset-0 w-full h-full object-contain pointer-events-none"
             />
-          </div>
+          )}
 
-          {/* 滑块位置的压缩图片 */}
-          <div
-            className="absolute top-0 left-0 h-full overflow-hidden"
-            style={{ width: `${sliderPosition}%` }}
-          >
-            {compressedDataURL && (
-              <img
-                src={compressedDataURL}
-                alt="压缩后图片"
-                className="w-screen h-full object-contain"
-              />
-            )}
-          </div>
+          {/* 上层：原始图片，按滑块位置剪裁，只露出左半部分 */}
+          <img
+            src={originalDataURL}
+            alt="原始图片"
+            draggable={false}
+            className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+            style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+          />
 
           {/* 滑块手柄 */}
           <div
-            className="absolute top-0 h-full w-1 bg-primary cursor-col-resize transition-none"
+            className="absolute top-0 h-full w-0.5 bg-primary pointer-events-none"
             style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
           >
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg text-lg font-bold">
-              ‹
-            </div>
-            <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg text-lg font-bold">
-              ›
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4">
+                <path d="M9 6l-6 6 6 6M15 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </div>
           </div>
 
           {/* 标签 */}
-          <div className="absolute bottom-4 left-4 right-4 flex justify-between pointer-events-none">
-            <span className="bg-black/50 text-white px-2 py-1 rounded text-xs font-medium">原始</span>
-            <span className="bg-black/50 text-white px-2 py-1 rounded text-xs font-medium">压缩</span>
+          <div className="absolute bottom-3 left-3 right-3 flex justify-between pointer-events-none">
+            <span className="bg-black/60 text-white px-2 py-1 rounded text-xs font-medium">原始</span>
+            <span className="bg-black/60 text-white px-2 py-1 rounded text-xs font-medium">压缩</span>
           </div>
         </div>
       )}

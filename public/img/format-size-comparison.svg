@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" role="img" aria-label="同一张 3000×2000 风景照片在各格式下的体积对比">
+  <title>同一张照片在 PNG / JPG / WebP / AVIF 下的文件大小对比</title>
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .title-text { font: 600 18px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #0F172A; }
+      .label { font: 600 14px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #0F172A; }
+      .sub-label { font: 400 12px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #475569; }
+      .value { font: 700 14px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #0F172A; }
+      .caption { font: 400 12px -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #94A3B8; }
+      .bar-png { fill: #FF9500; }
+      .bar-jpg { fill: #0A84FF; }
+      .bar-webp { fill: #34C759; }
+      .bar-avif { fill: #5B45DE; }
+    </style>
+  </defs>
+  <rect class="bg" width="800" height="380"/>
+  <text class="title-text" x="40" y="36">同一张 3000×2000 风景照片在各格式下的体积</text>
+
+  <g transform="translate(40,75)">
+    <text class="label" x="0" y="14">PNG (无损)</text>
+    <text class="sub-label" x="0" y="32">几乎不压缩照片，体积失控</text>
+    <rect class="bar-png" x="160" y="0" width="460" height="36" rx="4"/>
+    <text class="value" x="630" y="24">8.2 MB</text>
+  </g>
+
+  <g transform="translate(40,150)">
+    <text class="label" x="0" y="14">JPG (质量 80%)</text>
+    <text class="sub-label" x="0" y="32">DCT 有损压缩，照片首选</text>
+    <rect class="bar-jpg" x="160" y="0" width="33" height="36" rx="4"/>
+    <text class="value" x="201" y="24">580 KB</text>
+  </g>
+
+  <g transform="translate(40,225)">
+    <text class="label" x="0" y="14">WebP (质量 80%)</text>
+    <text class="sub-label" x="0" y="32">比 JPG 再小 35%</text>
+    <rect class="bar-webp" x="160" y="0" width="21" height="36" rx="4"/>
+    <text class="value" x="189" y="24">380 KB</text>
+  </g>
+
+  <g transform="translate(40,300)">
+    <text class="label" x="0" y="14">AVIF (质量 60%)</text>
+    <text class="sub-label" x="0" y="32">体积最小，编码慢</text>
+    <rect class="bar-avif" x="160" y="0" width="14" height="36" rx="4"/>
+    <text class="value" x="182" y="24">240 KB</text>
+  </g>
+
+  <text class="caption" x="40" y="368">条形长度按文件大小等比例缩放，数据为同一张照片在常用质量参数下的近似值。</text>
+</svg>

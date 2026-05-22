@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Pencil } from 'lucide-react';
 import { Button } from './ui/button';
 import { formatFileSize, calculateSavingPercentage } from '../utils/imageProcessor';
+import ImageModal from './ImageModal';
 
 /**
  * 批量结果行组件
@@ -8,6 +10,15 @@ import { formatFileSize, calculateSavingPercentage } from '../utils/imageProcess
 const ResultRow = ({ result, ext, onDownload, onUpdateFileName }) => {
   const [thumbUrl, setThumbUrl] = useState(null);
   const [downloaded, setDownloaded] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const inputRef = useRef(null);
+
+  const handleEditClick = () => {
+    const el = inputRef.current;
+    if (!el) return;
+    el.focus();
+    el.select();
+  };
 
   useEffect(() => {
     if (result.compressedBlob) {
@@ -27,10 +38,23 @@ const ResultRow = ({ result, ext, onDownload, onUpdateFileName }) => {
     setTimeout(() => setDownloaded(false), 2000);
   };
 
+  const canPreview = result.status === 'done' && !!thumbUrl;
+  const handleThumbClick = () => {
+    if (canPreview) setPreviewOpen(true);
+  };
+
   return (
     <div className="flex items-center gap-3 px-4 py-3">
-      {/* 缩略图 */}
-      <div className="w-12 h-12 flex-shrink-0 bg-surface-muted rounded overflow-hidden flex items-center justify-center">
+      {/* 缩略图（处理完成后点击放大预览） */}
+      <button
+        type="button"
+        onClick={handleThumbClick}
+        disabled={!canPreview}
+        title={canPreview ? '点击查看大图' : undefined}
+        className={`w-12 h-12 flex-shrink-0 bg-surface-muted rounded overflow-hidden flex items-center justify-center p-0 border-0 ${
+          canPreview ? 'cursor-zoom-in hover:ring-2 hover:ring-primary transition-shadow' : 'cursor-default'
+        }`}
+      >
         {result.status === 'processing' ? (
           <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         ) : result.status === 'error' ? (
@@ -42,22 +66,57 @@ const ResultRow = ({ result, ext, onDownload, onUpdateFileName }) => {
         ) : (
           <div className="w-4 h-4 border-2 border-foreground-muted/20 rounded-full" />
         )}
-      </div>
+      </button>
 
       {/* 文件信息 */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1 mb-1">
-          <input
-            type="text"
-            value={result.fileName}
-            onChange={(e) => onUpdateFileName(result.id, e.target.value)}
-            className="flex-1 min-w-0 px-2 py-0.5 text-sm border border-border rounded focus:outline-none focus:ring-1 focus:ring-primary bg-surface"
-          />
-          <span className="text-xs text-foreground-muted flex-shrink-0">.{ext}</span>
+        <div className="flex items-center gap-2.5">
+          <div className="relative w-full max-w-xs min-w-0">
+            <input
+              ref={inputRef}
+              type="text"
+              value={result.fileName}
+              onChange={(e) => onUpdateFileName(result.id, e.target.value)}
+              className="w-full pl-2.5 pr-8 py-1 text-base border border-border rounded focus:outline-none focus:ring-1 focus:ring-primary bg-surface"
+            />
+            <button
+              type="button"
+              onClick={handleEditClick}
+              title="编辑文件名"
+              tabIndex={-1}
+              className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded text-foreground-muted hover:text-primary hover:bg-primary-muted transition-colors"
+            >
+              <Pencil className="w-3.5 h-3.5" />
+            </button>
+          </div>
+          <span className="text-sm text-foreground-muted flex-shrink-0">.{ext}</span>
+
+          {result.status === 'done' && (
+            <div className="hidden sm:flex items-center gap-2 text-sm text-foreground-muted flex-shrink-0 whitespace-nowrap ml-auto">
+              <span>{formatFileSize(result.originalFile.size)}</span>
+              <span>→</span>
+              <span>{formatFileSize(result.compressedBlob.size)}</span>
+              <span className={`font-medium ${saving >= 0 ? 'text-success' : 'text-danger'}`}>
+                ({saving >= 0 ? '-' : '+'}{Math.abs(saving)}%)
+              </span>
+            </div>
+          )}
         </div>
 
+        {/* 移动端窄屏：体积对比放第二行 */}
+        {result.status === 'done' && (
+          <div className="sm:hidden mt-1.5 flex items-center gap-1.5 text-sm text-foreground-muted whitespace-nowrap">
+            <span>{formatFileSize(result.originalFile.size)}</span>
+            <span>→</span>
+            <span>{formatFileSize(result.compressedBlob.size)}</span>
+            <span className={`font-medium ${saving >= 0 ? 'text-success' : 'text-danger'}`}>
+              ({saving >= 0 ? '-' : '+'}{Math.abs(saving)}%)
+            </span>
+          </div>
+        )}
+
         {result.status === 'processing' && (
-          <div className="flex items-center gap-2">
+          <div className="mt-1 flex items-center gap-2">
             <div className="flex-1 h-1 bg-surface-muted rounded-full overflow-hidden">
               <div
                 className="h-full bg-primary rounded-full transition-all duration-150"
@@ -68,23 +127,12 @@ const ResultRow = ({ result, ext, onDownload, onUpdateFileName }) => {
           </div>
         )}
 
-        {result.status === 'done' && (
-          <div className="flex items-center gap-1.5 text-xs text-foreground-muted">
-            <span>{formatFileSize(result.originalFile.size)}</span>
-            <span>→</span>
-            <span>{formatFileSize(result.compressedBlob.size)}</span>
-            <span className={`font-medium ${saving >= 0 ? 'text-success' : 'text-danger'}`}>
-              ({saving >= 0 ? '-' : '+'}{Math.abs(saving)}%)
-            </span>
-          </div>
-        )}
-
         {result.status === 'pending' && (
-          <p className="text-xs text-foreground-muted">等待处理...</p>
+          <p className="mt-1 text-xs text-foreground-muted">等待处理...</p>
         )}
 
         {result.status === 'error' && (
-          <p className="text-xs text-danger truncate">{result.error}</p>
+          <p className="mt-1 text-xs text-danger truncate">{result.error}</p>
         )}
       </div>
 
@@ -106,6 +154,13 @@ const ResultRow = ({ result, ext, onDownload, onUpdateFileName }) => {
           </svg>
         )}
       </Button>
+
+      <ImageModal
+        isOpen={previewOpen}
+        imageUrl={thumbUrl}
+        imageTitle={`${result.fileName}.${ext}`}
+        onClose={() => setPreviewOpen(false)}
+      />
     </div>
   );
 };

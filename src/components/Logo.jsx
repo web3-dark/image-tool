@@ -1,5 +1,5 @@
 /**
- * ImagePro Logo 组件
+ * picthin Logo 组件
  * 设计理念：简洁、现代、充满活力
  */
 
@@ -59,7 +59,7 @@ export function LogoText({ size = 'md', className = '' }) {
 
   return (
     <div className={`font-black ${sizeClasses[size]} ${className}`}>
-      <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">ImagePro</span>
+      <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">picthin</span>
     </div>
   );
 }

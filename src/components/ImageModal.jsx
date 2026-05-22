@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles/ImageModal.css';
 
 /**
  * 图片放大预览模态框组件
+ * ESC 键关闭、打开时锁定 body 滚动；调用方不需要重复绑定。
  */
 const ImageModal = ({ isOpen, imageUrl, imageTitle, onClose }) => {
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e) => { if (e.key === 'Escape') onClose?.(); };
+    document.addEventListener('keydown', onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen || !imageUrl) {
     return null;
   }
