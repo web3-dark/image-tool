@@ -22,6 +22,15 @@ const PreviewPanel = ({
   const [modalTitle, setModalTitle] = useState('');
   const [downloaded, setDownloaded] = useState(false);
   const [isNarrowScreen, setIsNarrowScreen] = useState(false);
+  // 竖图（h > w）在横向并排里会被挤成窄条，所以自适应改为上下堆叠
+  const [isPortrait, setIsPortrait] = useState(false);
+
+  const handleOriginalLoad = (e) => {
+    const img = e.currentTarget;
+    if (img.naturalWidth && img.naturalHeight) {
+      setIsPortrait(img.naturalHeight > img.naturalWidth);
+    }
+  };
 
   // 用 effect + matchMedia 取代 window.innerWidth 渲染期访问，兼容 SSG
   useEffect(() => {
@@ -134,20 +143,22 @@ const PreviewPanel = ({
 
       {/* 预览内容 */}
       {(comparisonMode === 'split' || isNarrowScreen) ? (
-        // 并排对比模式
-        <div className="flex-1 flex gap-4 overflow-auto">
+        // 并排对比模式：图片缩放到容器内显示，点击放大可看实际尺寸
+        // 竖图自动改上下堆叠，避免横向被挤窄
+        <div className={`flex-1 flex ${isPortrait ? 'flex-col' : 'flex-row'} gap-4 min-h-0`}>
           {/* 原始图片 */}
-          <div className="flex-1 flex flex-col gap-2 min-w-0">
+          <div className="flex-1 flex flex-col gap-2 min-w-0 min-h-0">
             <p className="text-sm font-medium text-foreground">原始图片</p>
             <div
-              className="flex-1 relative bg-surface-muted rounded-lg overflow-hidden cursor-pointer group"
+              className="flex-1 relative bg-surface-muted rounded-lg overflow-hidden cursor-zoom-in group min-h-0"
               onClick={() => openImageModal(originalDataURL, '原始图片')}
               title="点击放大查看"
             >
               <img
                 src={originalDataURL}
                 alt="原始图片"
-                className="w-full h-full object-contain"
+                onLoad={handleOriginalLoad}
+                className="absolute inset-0 w-full h-full object-contain"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                 <span className="text-white text-2xl">🔍</span>
@@ -157,10 +168,10 @@ const PreviewPanel = ({
           </div>
 
           {/* 压缩后图片 */}
-          <div className="flex-1 flex flex-col gap-2 min-w-0">
+          <div className="flex-1 flex flex-col gap-2 min-w-0 min-h-0">
             <p className="text-sm font-medium text-foreground">压缩后图片</p>
             <div
-              className="flex-1 relative bg-surface-muted rounded-lg overflow-hidden cursor-pointer group"
+              className="flex-1 relative bg-surface-muted rounded-lg overflow-hidden cursor-zoom-in group min-h-0"
               onClick={() => compressedDataURL && openImageModal(compressedDataURL, '压缩后图片')}
               title="点击放大查看"
             >
@@ -169,7 +180,7 @@ const PreviewPanel = ({
                   <img
                     src={compressedDataURL}
                     alt="压缩后图片"
-                    className="w-full h-full object-contain"
+                    className="absolute inset-0 w-full h-full object-contain"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                     <span className="text-white text-2xl">🔍</span>

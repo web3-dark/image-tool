@@ -32,20 +32,8 @@ const ImageModal = ({ isOpen, imageUrl, imageTitle, onClose }) => {
           </svg>
         </button>
 
-        {/* 标题 */}
-        <div className="modal-header">
-          <h3 className="modal-title">{imageTitle}</h3>
-        </div>
-
-        {/* 图片容器 */}
-        <div className="modal-image-container">
-          <img src={imageUrl} alt={imageTitle} className="modal-image" />
-        </div>
-
-        {/* 提示文字 */}
-        <div className="modal-footer">
-          <p className="modal-hint">点击外部区域关闭 • 按 ESC 关闭</p>
-        </div>
+        {/* 图片：按自身像素尺寸渲染 */}
+        <img src={imageUrl} alt={imageTitle} className="modal-image" />
       </div>
     </div>
   );

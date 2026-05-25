@@ -326,7 +326,7 @@ function App() {
         ) : (
           // 处理界面 - 工具栏 + 预览（PC 宽屏下居中收窄，避免列表横向拉太长）
           <div className="relative flex flex-col gap-4 h-full px-6 py-4 bg-bg w-full max-w-5xl mx-auto">
-            {/* 左上角关闭按钮：即使处理中也可强制取消返回 */}
+            {/* 右上角关闭按钮：即使处理中也可强制取消返回 */}
             <button
               onClick={() => {
                 clearTimeout(qualityDebounceRef.current);
@@ -336,7 +336,7 @@ function App() {
                 setSelectedFiles([]);
                 setResults([]);
               }}
-              className="absolute top-1 left-3 w-8 h-8 flex items-center justify-center rounded-full border border-border bg-surface text-foreground-muted hover:text-foreground hover:border-foreground transition-colors"
+              className="absolute top-1 right-3 w-8 h-8 flex items-center justify-center rounded-full border border-border bg-surface text-foreground-muted hover:text-foreground hover:border-foreground transition-colors"
               title="更换图片"
             >
               <X className="w-4 h-4" strokeWidth={2.5} />

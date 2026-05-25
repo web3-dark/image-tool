@@ -27,11 +27,10 @@
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  max-width: 90vw;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  /* 大图超过视口时自身可滚动；小图就贴着图片实际尺寸 */
+  max-width: 95vw;
+  max-height: 95vh;
+  overflow: auto;
   animation: slideUp 0.3s ease-out;
 }
 
@@ -76,79 +75,14 @@
   color: #374151;
 }
 
-/* 模态框头部 */
-.modal-header {
-  padding: 1.5rem;
-  border-bottom: 1px solid #e5e7eb;
-  background-color: #f9fafb;
-}
-
-.modal-title {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #1f2937;
-}
-
-/* 图片容器 */
-.modal-image-container {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background-color: #ffffff;
-  overflow: auto;
-  min-height: 300px;
-}
-
+/* 图片：按自身像素尺寸渲染 */
 .modal-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  display: block;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 模态框底部 */
-.modal-footer {
-  padding: 1rem;
-  background-color: #f9fafb;
-  border-top: 1px solid #e5e7eb;
-  text-align: center;
-}
-
-.modal-hint {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #9ca3af;
-}
-
-/* 响应式设计 */
+/* 响应式：小屏幕收紧关闭按钮 */
 @media (max-width: 768px) {
-  .image-modal-overlay {
-    padding: 1rem;
-  }
-
-  .image-modal-content {
-    max-width: 100%;
-    max-height: calc(100vh - 2rem);
-    border-radius: 8px;
-  }
-
-  .modal-header {
-    padding: 1rem;
-  }
-
-  .modal-title {
-    font-size: 1rem;
-  }
-
-  .modal-image-container {
-    padding: 1rem;
-    min-height: 200px;
-  }
-
   .modal-close-button {
     width: 36px;
     height: 36px;
@@ -160,41 +94,4 @@
     width: 20px;
     height: 20px;
   }
-}
-
-@media (max-width: 480px) {
-  .image-modal-overlay {
-    padding: 0.5rem;
-  }
-
-  .image-modal-content {
-    max-width: 100%;
-    border-radius: 6px;
-  }
-
-  .modal-header {
-    padding: 0.75rem;
-  }
-
-  .modal-title {
-    font-size: 0.95rem;
-  }
-
-  .modal-image-container {
-    padding: 0.5rem;
-    min-height: 150px;
-  }
-
-  .modal-footer {
-    padding: 0.75rem;
-  }
-
-  .modal-hint {
-    font-size: 0.75rem;
-  }
-}
-
-/* 防止背景滚动 */
-body.modal-open {
-  overflow: hidden;
 }
