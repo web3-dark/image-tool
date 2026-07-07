@@ -20,31 +20,45 @@ npm run dev
 ## 构建部署
 
 ```bash
-npm run build   # 产物在 dist/
+npm run build      # 自动生成 sitemap/robots，产物在 dist/
+npm run seo:check  # 检查 dist 中的 canonical、OG、sitemap、旧域名残留
+```
+
+正式域名构建：
+
+```bash
+VITE_SITE_URL=https://picthin.com npm run build
+npm run seo:check
 ```
 
 ---
 
 ## 上线前必做清单
 
-### 1. 替换域名
+### 1. 配置正式域名
 
-全局搜索 `YOUR_DOMAIN`，替换为真实域名（如 `https://img.example.com`），涉及以下文件：
+项目的页面 SEO URL 统一来自 [src/config/site.js](src/config/site.js)，构建时用 `VITE_SITE_URL` 注入正式域名。
+
+```bash
+VITE_SITE_URL=https://picthin.com npm run build
+npm run seo:check
+```
+
+这会更新：
 
 | 文件 | 作用 |
 | --- | --- |
-| [index.html](index.html) | canonical、og:url、og:image、JSON-LD url |
 | [public/sitemap.xml](public/sitemap.xml) | sitemap loc |
 | [public/robots.txt](public/robots.txt) | Sitemap 绝对路径 |
-| [public/og-image.svg](public/og-image.svg) | 底部域名文字 |
+| React 页面 Head | canonical、og:url、og:image、JSON-LD url |
+
+新增页面时先更新 [src/config/content.js](src/config/content.js)，`sitemap.xml` 会在构建前自动生成。
 
 ### 2. 生成 og-image.png（社交分享卡片）
 
 微信/Twitter/Facebook 分享时需要一张 `1200×630` 的 PNG 图片。
 
-1. 用浏览器打开 `public/og-image.svg`
-2. 截图或用工具（Figma / Sketch / 浏览器截图）导出为 `1200×630` PNG
-3. 保存为 `public/og-image.png`
+当前分享图已生成到 [public/og-image.png](public/og-image.png)。修改 [public/og-image.svg](public/og-image.svg) 后重新导出 `1200×630` PNG。
 
 > Twitter 不支持 SVG 格式，必须提供 PNG。
 
@@ -58,7 +72,7 @@ npm run build   # 产物在 dist/
 | Bing Webmaster | <https://www.bing.com/webmasters> | `msvalidate.01` |
 | Google Search Console | <https://search.google.com/search-console> | `google-site-verification` |
 
-提交 sitemap 地址：`https://YOUR_DOMAIN/sitemap.xml`
+提交 sitemap 地址：`https://picthin.com/sitemap.xml`
 
 ### 4. 启用访问统计（可选）
 

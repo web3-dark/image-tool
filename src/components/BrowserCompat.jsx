@@ -31,13 +31,23 @@ const BrowserCompat = () => {
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
+
     try {
       const detected = checkCompatibility();
-      setIssues(detected);
+      queueMicrotask(() => {
+        if (!cancelled) setIssues(detected);
+      });
     } catch {
       // 检测本身报错，说明浏览器极旧，也提示
-      setIssues(['基础 API 支持不足']);
+      queueMicrotask(() => {
+        if (!cancelled) setIssues(['基础 API 支持不足']);
+      });
     }
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   if (issues.length === 0 || dismissed) return null;

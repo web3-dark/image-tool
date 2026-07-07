@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { Head } from 'vite-react-ssg';
 import BlogLayout from '../../components/BlogLayout';
 import ImageModal from '../../components/ImageModal';
+import { getSiteUrl, SITE } from '../../config/site';
 
-const PAGE_URL = 'https://image-tool-bk5.pages.dev/blog/png-webp-jpg-comparison';
+const PAGE_URL = getSiteUrl('/blog/png-webp-jpg-comparison');
+const OG_IMAGE_URL = getSiteUrl('/og-image.png');
+const PUBLISHER_LOGO_URL = getSiteUrl('/pwa-192x192.png');
 const PUBLISHED_DATE = '2026-05-20';
 const DESCRIPTION = 'PNG、JPG、WebP、AVIF 完整对比：原理、压缩方式、文件大小、浏览器兼容性，以及不同场景该怎么选。一篇 3500 字讲透图片格式。';
 
@@ -13,17 +16,17 @@ const ARTICLE_SCHEMA = {
   '@type': 'Article',
   headline: '图片格式怎么选？PNG、JPG、WebP、AVIF 完整对比 + 压缩原理',
   description: DESCRIPTION,
-  image: 'https://image-tool-bk5.pages.dev/og-image.png',
+  image: OG_IMAGE_URL,
   datePublished: PUBLISHED_DATE,
   dateModified: PUBLISHED_DATE,
-  author: { '@type': 'Organization', name: 'picthin' },
+  author: { '@type': 'Organization', name: SITE.name },
   publisher: {
     '@type': 'Organization',
-    name: 'picthin',
-    logo: { '@type': 'ImageObject', url: 'https://image-tool-bk5.pages.dev/pwa-192x192.png' },
+    name: SITE.name,
+    logo: { '@type': 'ImageObject', url: PUBLISHER_LOGO_URL },
   },
   mainEntityOfPage: { '@type': 'WebPage', '@id': PAGE_URL },
-  inLanguage: 'zh-CN',
+  inLanguage: SITE.locale,
 };
 
 const FAQ_SCHEMA = {
@@ -90,11 +93,12 @@ export default function PngWebpJpgComparison() {
         <meta property="og:title" content="图片格式怎么选？PNG、JPG、WebP、AVIF 完整对比" />
         <meta property="og:description" content={DESCRIPTION} />
         <meta property="og:url" content={PAGE_URL} />
-        <meta property="og:image" content="https://image-tool-bk5.pages.dev/og-image.png" />
+        <meta property="og:image" content={OG_IMAGE_URL} />
         <meta property="article:published_time" content={PUBLISHED_DATE} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="图片格式怎么选？PNG、JPG、WebP、AVIF 完整对比" />
         <meta name="twitter:description" content={DESCRIPTION} />
+        <meta name="twitter:image" content={OG_IMAGE_URL} />
         <script type="application/ld+json">{JSON.stringify(ARTICLE_SCHEMA)}</script>
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
       </Head>

@@ -17,7 +17,7 @@ export default function BlogLayout({ children }) {
             <Link to="/" className="text-foreground-muted hover:text-primary transition-colors">
               图片压缩
             </Link>
-            <Link to="/blog/png-webp-jpg-comparison" className="text-foreground hover:text-primary font-medium transition-colors">
+            <Link to="/blog" className="text-foreground hover:text-primary font-medium transition-colors">
               博客
             </Link>
           </nav>

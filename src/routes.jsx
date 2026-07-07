@@ -1,5 +1,7 @@
 import RootLayout from './RootLayout.jsx';
 import App from './App.jsx';
+import BlogIndex from './pages/blog/BlogIndex.jsx';
+import JpgCompressToTargetSize from './pages/blog/JpgCompressToTargetSize.jsx';
 import PngWebpJpgComparison from './pages/blog/PngWebpJpgComparison.jsx';
 
 export const routes = [
@@ -12,6 +14,16 @@ export const routes = [
         index: true,
         element: <App />,
         entry: 'src/App.jsx',
+      },
+      {
+        path: 'blog',
+        element: <BlogIndex />,
+        entry: 'src/pages/blog/BlogIndex.jsx',
+      },
+      {
+        path: 'blog/jpg-compress-to-target-size',
+        element: <JpgCompressToTargetSize />,
+        entry: 'src/pages/blog/JpgCompressToTargetSize.jsx',
       },
       {
         path: 'blog/png-webp-jpg-comparison',

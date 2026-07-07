@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://image-tool-bk5.pages.dev/sitemap.xml
+Sitemap: https://picthin.com/sitemap.xml

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Pencil } from 'lucide-react';
 import { Button } from './ui/button';
 import { formatFileSize, calculateSavingPercentage } from '../utils/imageProcessor';
@@ -8,10 +8,13 @@ import ImageModal from './ImageModal';
  * 批量结果行组件
  */
 const ResultRow = ({ result, ext, onDownload, onUpdateFileName }) => {
-  const [thumbUrl, setThumbUrl] = useState(null);
   const [downloaded, setDownloaded] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const inputRef = useRef(null);
+  const thumbUrl = useMemo(
+    () => (result.compressedBlob ? URL.createObjectURL(result.compressedBlob) : null),
+    [result.compressedBlob],
+  );
 
   const handleEditClick = () => {
     const el = inputRef.current;
@@ -21,12 +24,9 @@ const ResultRow = ({ result, ext, onDownload, onUpdateFileName }) => {
   };
 
   useEffect(() => {
-    if (result.compressedBlob) {
-      const url = URL.createObjectURL(result.compressedBlob);
-      setThumbUrl(url);
-      return () => URL.revokeObjectURL(url);
-    }
-  }, [result.compressedBlob]);
+    if (!thumbUrl) return undefined;
+    return () => URL.revokeObjectURL(thumbUrl);
+  }, [thumbUrl]);
 
   const saving = result.compressedBlob
     ? calculateSavingPercentage(result.originalFile.size, result.compressedBlob.size)

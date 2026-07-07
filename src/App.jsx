@@ -15,8 +15,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from './components/ui/select';
+import { getSiteUrl, SITE } from './config/site';
 import { compressImage, downloadBlob } from './utils/imageProcessor';
 import { Zap, ShieldCheck, Palette, Layers, X, AlertCircle, Upload, Pencil } from 'lucide-react';
+
+const HOME_URL = getSiteUrl('/');
+const OG_IMAGE_URL = getSiteUrl('/og-image.png');
+const HOME_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: SITE.title,
+  description: SITE.description,
+  url: HOME_URL,
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'Any',
+  inLanguage: SITE.locale,
+  browserRequirements: 'Requires a modern browser with JavaScript enabled',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  featureList: [
+    '支持 JPEG、PNG、WebP、AVIF、GIF 格式',
+    '批量压缩，同时处理多张图片',
+    '完全本地处理，不上传服务器',
+    '免费使用，无需注册',
+  ],
+  screenshot: OG_IMAGE_URL,
+};
 
 /**
  * 主应用组件
@@ -252,17 +279,18 @@ function App() {
         <title>图片压缩工具 - 免费在线压缩 JPEG PNG WebP，本地处理不上传</title>
         <meta name="description" content="免费在线图片压缩工具，支持 JPEG、PNG、WebP、AVIF、GIF 格式，全程本地处理，不上传服务器，保护隐私。支持批量压缩，手机电脑均可使用。" />
         <meta name="keywords" content="图片压缩,在线压缩图片,PNG压缩,JPEG压缩,WebP转换,图片格式转换,免费图片压缩,批量压缩图片,图片瘦身,图片体积压缩" />
-        <link rel="canonical" href="https://image-tool-bk5.pages.dev/" />
+        <link rel="canonical" href={HOME_URL} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://image-tool-bk5.pages.dev/" />
+        <meta property="og:url" content={HOME_URL} />
         <meta property="og:title" content="图片压缩工具 - 免费在线压缩 JPEG PNG WebP" />
         <meta property="og:description" content="免费在线图片压缩工具，全程本地处理，不上传服务器，保护隐私。" />
-        <meta property="og:image" content="https://image-tool-bk5.pages.dev/og-image.png" />
+        <meta property="og:image" content={OG_IMAGE_URL} />
         <meta property="og:image:alt" content="图片压缩工具 - 支持 JPEG PNG WebP AVIF 格式" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="图片压缩工具 - 免费在线压缩 JPEG PNG WebP" />
         <meta name="twitter:description" content="免费在线图片压缩工具，全程本地处理，不上传服务器，保护隐私。" />
-        <meta name="twitter:image" content="https://image-tool-bk5.pages.dev/og-image.png" />
+        <meta name="twitter:image" content={OG_IMAGE_URL} />
+        <script type="application/ld+json">{JSON.stringify(HOME_JSON_LD)}</script>
       </Head>
       {/* 浏览器兼容性提示 */}
       <BrowserCompat />
@@ -276,10 +304,10 @@ function App() {
           </div>
           <nav className="flex items-center">
             <Link
-              to="/blog/png-webp-jpg-comparison"
+              to="/blog"
               className="text-sm text-foreground-muted hover:text-primary transition-colors px-3 py-1.5 rounded-md hover:bg-primary-muted"
             >
-              图片格式对比
+              压缩指南
             </Link>
           </nav>
         </div>
@@ -312,10 +340,10 @@ function App() {
                 { Icon: ShieldCheck, title: '完全隐私',   desc: '不上传服务器' },
                 { Icon: Palette,     title: '多格式支持', desc: 'JPEG、PNG、WebP 等' },
                 { Icon: Layers,      title: '批量处理',   desc: '同时压缩多张图片' },
-              ].map(({ Icon, title, desc }) => (
+              ].map(({ Icon: FeatureIcon, title, desc }) => (
                 <div key={title} className="p-4 rounded-lg border border-border bg-surface hover:shadow-md transition-shadow">
                   <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary-muted text-primary mb-3">
-                    <Icon className="w-5 h-5" />
+                    {React.createElement(FeatureIcon, { className: 'w-5 h-5' })}
                   </div>
                   <h3 className="font-semibold text-foreground mb-1">{title}</h3>
                   <p className="text-sm text-foreground-muted">{desc}</p>

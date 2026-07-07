@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://image-tool-bk5.pages.dev/</loc>
-    <lastmod>2026-05-20</lastmod>
+    <loc>https://picthin.com/</loc>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://image-tool-bk5.pages.dev/blog/png-webp-jpg-comparison</loc>
-    <lastmod>2026-05-20</lastmod>
+    <loc>https://picthin.com/blog</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://picthin.com/blog/jpg-compress-to-target-size</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://picthin.com/blog/png-webp-jpg-comparison</loc>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

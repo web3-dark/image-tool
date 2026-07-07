@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm run seo:generate",
     "build": "vite-react-ssg build",
     "lint": "eslint .",
+    "seo:generate": "node scripts/generate-seo-files.mjs",
+    "seo:check": "node scripts/check-seo.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
