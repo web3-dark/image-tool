@@ -1,33 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Head } from 'vite-react-ssg';
-import BlogLayout from '../../components/BlogLayout';
+import BlogPostShell from '../../components/blog/BlogPostShell';
 import ImageModal from '../../components/ImageModal';
-import { getSiteUrl, SITE } from '../../config/site';
+import { getBlogPost } from '../../config/content';
 
-const PAGE_URL = getSiteUrl('/blog/png-webp-jpg-comparison');
-const OG_IMAGE_URL = getSiteUrl('/og-image.png');
-const PUBLISHER_LOGO_URL = getSiteUrl('/pwa-192x192.png');
-const PUBLISHED_DATE = '2026-05-20';
-const DESCRIPTION = 'PNG、JPG、WebP、AVIF 完整对比：原理、压缩方式、文件大小、浏览器兼容性，以及不同场景该怎么选。一篇 3500 字讲透图片格式。';
-
-const ARTICLE_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: '图片格式怎么选？PNG、JPG、WebP、AVIF 完整对比 + 压缩原理',
-  description: DESCRIPTION,
-  image: OG_IMAGE_URL,
-  datePublished: PUBLISHED_DATE,
-  dateModified: PUBLISHED_DATE,
-  author: { '@type': 'Organization', name: SITE.name },
-  publisher: {
-    '@type': 'Organization',
-    name: SITE.name,
-    logo: { '@type': 'ImageObject', url: PUBLISHER_LOGO_URL },
-  },
-  mainEntityOfPage: { '@type': 'WebPage', '@id': PAGE_URL },
-  inLanguage: SITE.locale,
-};
+const POST = getBlogPost('/blog/png-webp-jpg-comparison');
 
 const FAQ_SCHEMA = {
   '@context': 'https://schema.org',
@@ -81,43 +58,17 @@ export default function PngWebpJpgComparison() {
   const openPreview = (src, title) => setPreview({ src, title });
   const closePreview = () => setPreview(null);
 
+  const imageModal = (
+    <ImageModal
+      isOpen={!!preview}
+      imageUrl={preview?.src}
+      imageTitle={preview?.title}
+      onClose={closePreview}
+    />
+  );
+
   return (
-    <BlogLayout>
-      <Head>
-        <html lang="zh-CN" />
-        <title>图片格式怎么选？PNG、JPG、WebP、AVIF 完整对比 - picthin</title>
-        <meta name="description" content={DESCRIPTION} />
-        <meta name="keywords" content="PNG JPG区别,WebP是什么,AVIF格式,图片格式对比,WebP兼容性,PNG压缩原理,JPG有损压缩,图片格式选择" />
-        <link rel="canonical" href={PAGE_URL} />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="图片格式怎么选？PNG、JPG、WebP、AVIF 完整对比" />
-        <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:url" content={PAGE_URL} />
-        <meta property="og:image" content={OG_IMAGE_URL} />
-        <meta property="article:published_time" content={PUBLISHED_DATE} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="图片格式怎么选？PNG、JPG、WebP、AVIF 完整对比" />
-        <meta name="twitter:description" content={DESCRIPTION} />
-        <meta name="twitter:image" content={OG_IMAGE_URL} />
-        <script type="application/ld+json">{JSON.stringify(ARTICLE_SCHEMA)}</script>
-        <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
-      </Head>
-
-      <article className="blog-article max-w-3xl mx-auto px-4 md:px-6 py-10 md:py-14">
-        <header className="mb-10">
-          <p className="text-sm text-foreground-muted mb-3">
-            <Link to="/" className="hover:text-primary">首页</Link>
-            <span className="mx-2">/</span>
-            <span>博客</span>
-          </p>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-            图片格式怎么选？PNG、JPG、WebP、AVIF 完整对比 + 压缩原理
-          </h1>
-          <p className="text-sm text-foreground-muted mt-4">
-            发布于 2026-05-20
-          </p>
-        </header>
-
+    <BlogPostShell post={POST} extraSchemas={[FAQ_SCHEMA]} afterArticle={imageModal}>
         <p className="lead">
           PNG 适合需要透明背景或锐利线条的图（图标、截图、UI 切图）；JPG 适合照片；WebP 比两者都小，主流浏览器都支持，是 2026 年 Web 端的首选；AVIF 比 WebP 更小，但兼容性还差最后一公里。下面这篇文章会把这四种格式（外加 GIF）的压缩原理、文件大小、浏览器兼容性、使用场景一次讲透，看完你就能在任何场景下做出正确选择。
         </p>
@@ -467,14 +418,6 @@ export default function PngWebpJpgComparison() {
         <p>
           想立刻试试格式转换？<Link to="/" className="text-primary hover:underline font-medium">用 picthin 在线压缩工具</Link>，浏览器里本地处理，支持五种格式互转，免费无需注册。
         </p>
-      </article>
-
-      <ImageModal
-        isOpen={!!preview}
-        imageUrl={preview?.src}
-        imageTitle={preview?.title}
-        onClose={closePreview}
-      />
-    </BlogLayout>
+    </BlogPostShell>
   );
 }

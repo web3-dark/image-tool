@@ -50,6 +50,19 @@
   color: rgb(var(--color-foreground));
 }
 
+.blog-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 2px 8px;
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 999px;
+  background: rgb(var(--color-surface-muted));
+  color: rgb(var(--color-foreground-muted));
+  font-weight: 500;
+  line-height: 1;
+}
+
 .blog-article ul,
 .blog-article ol {
   margin: 0 0 20px;

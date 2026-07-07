@@ -1,30 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Head } from 'vite-react-ssg';
-import BlogLayout from '../../components/BlogLayout';
-import { BLOG_POSTS } from '../../config/content';
-import { getSiteUrl, SITE } from '../../config/site';
+import BlogPostShell from '../../components/blog/BlogPostShell';
+import { getBlogPost } from '../../config/content';
 
-const POST = BLOG_POSTS.find((post) => post.path === '/blog/jpg-compress-to-target-size');
-const PAGE_URL = getSiteUrl(POST.path);
-const OG_IMAGE_URL = getSiteUrl('/og-image.png');
-
-const ARTICLE_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: POST.title,
-  description: POST.description,
-  image: OG_IMAGE_URL,
-  datePublished: POST.datePublished,
-  dateModified: POST.dateModified,
-  author: { '@type': 'Organization', name: SITE.name },
-  publisher: {
-    '@type': 'Organization',
-    name: SITE.name,
-    logo: { '@type': 'ImageObject', url: getSiteUrl('/pwa-192x192.png') },
-  },
-  mainEntityOfPage: { '@type': 'WebPage', '@id': PAGE_URL },
-  inLanguage: SITE.locale,
-};
+const POST = getBlogPost('/blog/jpg-compress-to-target-size');
 
 const FAQ_SCHEMA = {
   '@context': 'https://schema.org',
@@ -59,43 +37,7 @@ const FAQ_SCHEMA = {
 
 export default function JpgCompressToTargetSize() {
   return (
-    <BlogLayout>
-      <Head>
-        <html lang="zh-CN" />
-        <title>JPG 图片怎么压缩到指定大小？压到 1MB / 500KB 的实用方法 - picthin</title>
-        <meta name="description" content={POST.description} />
-        <meta name="keywords" content={POST.keywords} />
-        <link rel="canonical" href={PAGE_URL} />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="JPG 图片怎么压缩到指定大小" />
-        <meta property="og:description" content={POST.description} />
-        <meta property="og:url" content={PAGE_URL} />
-        <meta property="og:image" content={OG_IMAGE_URL} />
-        <meta property="article:published_time" content={POST.datePublished} />
-        <meta property="article:modified_time" content={POST.dateModified} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="JPG 图片怎么压缩到指定大小" />
-        <meta name="twitter:description" content={POST.description} />
-        <meta name="twitter:image" content={OG_IMAGE_URL} />
-        <script type="application/ld+json">{JSON.stringify(ARTICLE_SCHEMA)}</script>
-        <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
-      </Head>
-
-      <article className="blog-article max-w-3xl mx-auto px-4 md:px-6 py-10 md:py-14">
-        <header className="mb-10">
-          <p className="text-sm text-foreground-muted mb-3">
-            <Link to="/" className="hover:text-primary">首页</Link>
-            <span className="mx-2">/</span>
-            <Link to="/blog" className="hover:text-primary">博客</Link>
-          </p>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-            JPG 图片怎么压缩到指定大小？
-          </h1>
-          <p className="text-sm text-foreground-muted mt-4">
-            更新于 {POST.dateModified}
-          </p>
-        </header>
-
+    <BlogPostShell post={POST} extraSchemas={[FAQ_SCHEMA]}>
         <p className="lead">
           想把 JPG 压缩到 1MB、500KB 或 200KB 以下，核心不是找一个神奇按钮，而是同时控制三件事：图片质量、图片尺寸、输出格式。最稳的做法是先压一次，看结果，再按目标大小微调。
         </p>
@@ -186,7 +128,6 @@ export default function JpgCompressToTargetSize() {
         <p>
           现在可以回到 <Link to="/" className="text-primary hover:underline font-medium">picthin 图片压缩工具</Link> 试一张图，边调质量边看压缩后的文件大小。
         </p>
-      </article>
-    </BlogLayout>
+    </BlogPostShell>
   );
 }
