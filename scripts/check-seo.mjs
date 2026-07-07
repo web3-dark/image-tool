@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { SEO_PAGES } from '../src/config/content.js';
 
@@ -37,6 +37,14 @@ function assertNoForbidden(content, label) {
   }
 }
 
+function assertValidJson(content, label) {
+  try {
+    return JSON.parse(content);
+  } catch (error) {
+    throw new Error(`${label} is not valid JSON: ${error.message}`);
+  }
+}
+
 const sitemap = readDistFile('sitemap.xml');
 const robots = readDistFile('robots.txt');
 
@@ -67,5 +75,22 @@ for (const [file, path] of htmlFiles) {
 
 assertNoForbidden(sitemap, 'sitemap.xml');
 assertNoForbidden(robots, 'robots.txt');
+
+const loaderManifests = readdirSync(DIST_DIR).filter((file) =>
+  /^static-loader-data-manifest-.+\.json$/.test(file),
+);
+
+if (loaderManifests.length === 0) {
+  throw new Error('Missing static loader data manifest');
+}
+
+for (const manifestFile of loaderManifests) {
+  const manifest = assertValidJson(readDistFile(manifestFile), manifestFile);
+
+  for (const [routePath, dataFile] of Object.entries(manifest)) {
+    const data = readDistFile(dataFile);
+    assertValidJson(data, `${manifestFile} -> ${routePath}`);
+  }
+}
 
 console.log(`SEO check passed for ${SITE_URL}`);

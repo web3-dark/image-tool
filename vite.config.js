@@ -74,7 +74,7 @@ export default defineConfig(({ isSsrBuild }) => ({
       },
       workbox: {
         // 预缓存所有构建产物
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        globPatterns: ['**/*.{js,css,html,json,xml,txt,webmanifest,ico,png,svg,woff2}'],
         // 运行时缓存策略
         runtimeCaching: [
           {
