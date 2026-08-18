@@ -31,6 +31,10 @@ VITE_SITE_URL=https://picthin.com npm run build
 npm run seo:check
 ```
 
+Cloudflare Pages 会通过 [functions/_middleware.js](functions/_middleware.js) 将
+`image-tool-bk5.pages.dev` 和 `www.picthin.com` 永久重定向到 `https://picthin.com`，
+避免同一页面通过多个域名返回 `200`，导致搜索引擎自行选择不同的规范网址。
+
 ---
 
 ## 上线前必做清单

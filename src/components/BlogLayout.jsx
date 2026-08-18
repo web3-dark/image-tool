@@ -17,6 +17,9 @@ export default function BlogLayout({ children }) {
             <Link to="/" className="text-foreground-muted hover:text-primary transition-colors">
               图片压缩
             </Link>
+            <Link to="/compress-image-to-size" className="text-foreground-muted hover:text-primary transition-colors">
+              指定大小
+            </Link>
             <Link to="/blog" className="text-foreground hover:text-primary font-medium transition-colors">
               博客
             </Link>
@@ -29,15 +32,23 @@ export default function BlogLayout({ children }) {
       </main>
 
       <footer className="flex-shrink-0 border-t border-border bg-surface px-8 py-6">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-3 text-sm text-foreground-muted max-w-4xl mx-auto">
-          <span>图片仅在本地处理，不上传服务器，隐私安全有保障</span>
-          <span className="hidden md:inline w-px h-4 bg-border" aria-hidden="true" />
-          <button
-            onClick={() => setPrivacyOpen(true)}
-            className="underline underline-offset-2 hover:text-primary transition-colors"
-          >
-            隐私政策
-          </button>
+        <div className="flex flex-col items-center gap-3 text-sm text-foreground-muted max-w-4xl mx-auto">
+          <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2" aria-label="页脚导航">
+            <Link to="/" className="hover:text-primary">在线图片压缩</Link>
+            <Link to="/compress-image-to-size" className="hover:text-primary">压缩到指定大小</Link>
+            <Link to="/blog/jpg-compress-to-target-size" className="hover:text-primary">JPG 压缩指南</Link>
+            <Link to="/blog/png-webp-jpg-comparison" className="hover:text-primary">图片格式对比</Link>
+          </nav>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-3">
+            <span>图片仅在本地处理，不上传服务器，隐私安全有保障</span>
+            <span className="hidden md:inline w-px h-4 bg-border" aria-hidden="true" />
+            <button
+              onClick={() => setPrivacyOpen(true)}
+              className="underline underline-offset-2 hover:text-primary transition-colors"
+            >
+              隐私政策
+            </button>
+          </div>
         </div>
       </footer>
 

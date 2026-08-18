@@ -99,6 +99,93 @@ export const compressImage = async (file, quality = 0.8, format = 'jpeg', onProg
 };
 
 /**
+ * 将图片压缩到不超过指定体积。
+ * 优先降低编码质量；如果仍然过大，再逐步缩小像素尺寸。
+ * 该能力用于“压缩到指定大小”工具页，因此只提供适合稳定控制体积的
+ * JPEG / WebP 输出，避免 PNG 无损编码无法可靠命中目标体积。
+ *
+ * @param {File} file - 原始图片
+ * @param {number} targetBytes - 目标上限（字节）
+ * @param {'jpeg'|'webp'} format - 输出格式
+ * @param {Function|null} onProgress - 进度回调（0-100）
+ * @returns {Promise<Blob>}
+ */
+export const compressImageToTargetSize = async (
+  file,
+  targetBytes,
+  format = 'jpeg',
+  onProgress = null,
+) => {
+  if (!Number.isFinite(targetBytes) || targetBytes < 20 * 1024) {
+    throw new Error('目标大小不能低于 20KB');
+  }
+
+  const fmt = format === 'jpg' ? 'jpeg' : format;
+  if (!['jpeg', 'webp'].includes(fmt)) {
+    throw new Error('指定大小压缩目前支持 JPG 和 WebP 输出');
+  }
+
+  if (file.type === 'image/gif') {
+    throw new Error('暂不支持 GIF 动图压缩到指定大小，请选择 JPG、PNG、WebP 或 AVIF 图片');
+  }
+
+  const sameFormat = file.type === `image/${fmt}`;
+  if (sameFormat && file.size <= targetBytes) {
+    onProgress?.(100);
+    return file;
+  }
+
+  const info = await getImageInfo(file);
+  const originalMaxDimension = Math.max(info.width, info.height);
+  let maxDimension = Math.min(4096, originalMaxDimension);
+  let smallestResult = null;
+
+  // 留出少量编码差异余量，确保下载结果不超过用户填写的上限。
+  const targetSizeMB = (targetBytes * 0.98) / (1024 * 1024);
+
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const attemptStart = attempt * 20;
+    const result = await imageCompression(file, {
+      maxSizeMB: targetSizeMB,
+      maxWidthOrHeight: maxDimension,
+      initialQuality: 0.92,
+      maxIteration: 14,
+      useWebWorker: true,
+      fileType: `image/${fmt}`,
+      alwaysKeepResolution: false,
+      onProgress: onProgress
+        ? (progress) => onProgress(Math.min(99, attemptStart + progress / 5))
+        : undefined,
+    });
+
+    if (!smallestResult || result.size < smallestResult.size) {
+      smallestResult = result;
+    }
+
+    if (result.size <= targetBytes) {
+      onProgress?.(100);
+      return result;
+    }
+
+    const sizeRatio = Math.sqrt(targetBytes / result.size);
+    const nextScale = Math.max(0.6, Math.min(0.88, sizeRatio * 0.94));
+    const nextDimension = Math.max(320, Math.round(maxDimension * nextScale));
+
+    if (nextDimension >= maxDimension || maxDimension <= 320) {
+      break;
+    }
+    maxDimension = nextDimension;
+  }
+
+  if (smallestResult?.size <= targetBytes) {
+    onProgress?.(100);
+    return smallestResult;
+  }
+
+  throw new Error('这张图片无法在可接受的清晰度范围内达到目标大小，请适当提高目标值');
+};
+
+/**
  * PNG 专用压缩
  * PNG 是无损格式，压缩只能通过缩小尺寸实现。
  * quality 0.8 → 目标文件体积为原始的 80%（通过缩小尺寸达成）

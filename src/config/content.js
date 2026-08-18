@@ -46,6 +46,12 @@ export const SEO_PAGES = [
     priority: '1.0',
   },
   {
+    path: '/compress-image-to-size',
+    lastmod: '2026-08-18',
+    changefreq: 'monthly',
+    priority: '0.9',
+  },
+  {
     path: '/blog',
     lastmod: '2026-07-08',
     changefreq: 'weekly',

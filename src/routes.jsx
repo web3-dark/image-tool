@@ -3,6 +3,7 @@ import App from './App.jsx';
 import BlogIndex from './pages/blog/BlogIndex.jsx';
 import JpgCompressToTargetSize from './pages/blog/JpgCompressToTargetSize.jsx';
 import PngWebpJpgComparison from './pages/blog/PngWebpJpgComparison.jsx';
+import CompressImageToSize from './pages/CompressImageToSize.jsx';
 
 export const routes = [
   {
@@ -14,6 +15,11 @@ export const routes = [
         index: true,
         element: <App />,
         entry: 'src/App.jsx',
+      },
+      {
+        path: 'compress-image-to-size',
+        element: <CompressImageToSize />,
+        entry: 'src/pages/CompressImageToSize.jsx',
       },
       {
         path: 'blog',

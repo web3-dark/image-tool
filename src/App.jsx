@@ -304,6 +304,12 @@ function App() {
           </div>
           <nav className="flex items-center">
             <Link
+              to="/compress-image-to-size"
+              className="text-sm text-foreground-muted hover:text-primary transition-colors px-3 py-1.5 rounded-md hover:bg-primary-muted"
+            >
+              压到指定大小
+            </Link>
+            <Link
               to="/blog"
               className="text-sm text-foreground-muted hover:text-primary transition-colors px-3 py-1.5 rounded-md hover:bg-primary-muted"
             >
@@ -318,6 +324,15 @@ function App() {
         {selectedFiles.length === 0 ? (
           // 初始界面 - 上传页面
           <div className="flex flex-col gap-6 w-full max-w-4xl mx-auto py-12 px-4 md:px-8">
+            <section className="max-w-3xl">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+                免费在线图片压缩工具
+              </h1>
+              <p className="text-base md:text-lg text-foreground-muted mt-3 leading-7">
+                批量压缩 JPG、PNG、WebP、AVIF 和 GIF 图片，支持调整画质与转换格式。图片全程在浏览器本地处理，无需上传或注册。
+              </p>
+            </section>
+
             {/* 上传区域 */}
             <section className="flex flex-col gap-4">
               <div>
@@ -350,6 +365,35 @@ function App() {
                 </div>
               ))}
             </div>
+
+            <section aria-labelledby="popular-tools-title" className="pt-2">
+              <h2 id="popular-tools-title" className="text-xl font-semibold text-foreground mb-3">
+                常用图片工具与指南
+              </h2>
+              <div className="grid md:grid-cols-3 gap-3">
+                <Link
+                  to="/compress-image-to-size"
+                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
+                >
+                  <h3 className="font-semibold text-foreground">压缩到指定大小</h3>
+                  <p className="text-sm text-foreground-muted mt-1">自动压到 100KB、200KB、500KB 或 1MB 以内</p>
+                </Link>
+                <Link
+                  to="/blog/jpg-compress-to-target-size"
+                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
+                >
+                  <h3 className="font-semibold text-foreground">JPG 压缩方法</h3>
+                  <p className="text-sm text-foreground-muted mt-1">理解质量、尺寸和文件体积之间的关系</p>
+                </Link>
+                <Link
+                  to="/blog/png-webp-jpg-comparison"
+                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
+                >
+                  <h3 className="font-semibold text-foreground">图片格式怎么选</h3>
+                  <p className="text-sm text-foreground-muted mt-1">对比 PNG、JPG、WebP 和 AVIF 的适用场景</p>
+                </Link>
+              </div>
+            </section>
           </div>
         ) : (
           // 处理界面 - 工具栏 + 预览（PC 宽屏下居中收窄，避免列表横向拉太长）

@@ -3,6 +3,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { SEO_PAGES } from '../src/config/content.js';
+import { onRequest as redirectDuplicateHost } from '../functions/_middleware.js';
 
 const SITE_URL = (process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://picthin.com').replace(/\/+$/, '');
 const DIST_DIR = resolve('dist');
@@ -45,6 +46,33 @@ function assertValidJson(content, label) {
   }
 }
 
+async function assertDuplicateHostRedirect(requestUrl, expectedUrl) {
+  const response = await redirectDuplicateHost({
+    request: new Request(requestUrl),
+    next: () => {
+      throw new Error(`Duplicate host was not redirected: ${requestUrl}`);
+    },
+  });
+
+  if (response.status !== 301 || response.headers.get('location') !== expectedUrl) {
+    throw new Error(
+      `Unexpected duplicate host redirect: ${requestUrl} -> ${response.status} ${response.headers.get('location')}`,
+    );
+  }
+}
+
+async function assertCanonicalHostPassesThrough(requestUrl) {
+  const expectedResponse = new Response('canonical host');
+  const response = await redirectDuplicateHost({
+    request: new Request(requestUrl),
+    next: () => expectedResponse,
+  });
+
+  if (response !== expectedResponse) {
+    throw new Error(`Canonical host should not redirect: ${requestUrl}`);
+  }
+}
+
 const sitemap = readDistFile('sitemap.xml');
 const robots = readDistFile('robots.txt');
 
@@ -56,6 +84,7 @@ for (const page of SEO_PAGES) {
 
 const htmlFiles = [
   ['index.html', '/'],
+  ['compress-image-to-size.html', '/compress-image-to-size'],
   ['blog.html', '/blog'],
   ['blog/jpg-compress-to-target-size.html', '/blog/jpg-compress-to-target-size'],
   ['blog/png-webp-jpg-comparison.html', '/blog/png-webp-jpg-comparison'],
@@ -92,5 +121,12 @@ for (const manifestFile of loaderManifests) {
     assertValidJson(data, `${manifestFile} -> ${routePath}`);
   }
 }
+
+await assertDuplicateHostRedirect(
+  'https://image-tool-bk5.pages.dev/blog?source=google',
+  'https://picthin.com/blog?source=google',
+);
+await assertDuplicateHostRedirect('https://www.picthin.com/', 'https://picthin.com/');
+await assertCanonicalHostPassesThrough('https://picthin.com/blog');
 
 console.log(`SEO check passed for ${SITE_URL}`);
