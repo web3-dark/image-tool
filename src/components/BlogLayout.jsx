@@ -17,11 +17,11 @@ export default function BlogLayout({ children }) {
             <Link to="/" className="text-foreground-muted hover:text-primary transition-colors">
               图片压缩
             </Link>
-            <Link to="/compress-image-to-size" className="text-foreground-muted hover:text-primary transition-colors">
-              指定大小
+            <Link to="/tools" className="text-foreground-muted hover:text-primary transition-colors">
+              工具
             </Link>
             <Link to="/blog" className="text-foreground hover:text-primary font-medium transition-colors">
-              博客
+              指南
             </Link>
           </nav>
         </div>
@@ -35,9 +35,11 @@ export default function BlogLayout({ children }) {
         <div className="flex flex-col items-center gap-3 text-sm text-foreground-muted max-w-4xl mx-auto">
           <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2" aria-label="页脚导航">
             <Link to="/" className="hover:text-primary">在线图片压缩</Link>
+            <Link to="/tools" className="hover:text-primary">全部图片工具</Link>
             <Link to="/compress-image-to-size" className="hover:text-primary">压缩到指定大小</Link>
-            <Link to="/blog/jpg-compress-to-target-size" className="hover:text-primary">JPG 压缩指南</Link>
-            <Link to="/blog/png-webp-jpg-comparison" className="hover:text-primary">图片格式对比</Link>
+            <Link to="/compress-jpg" className="hover:text-primary">JPG 压缩</Link>
+            <Link to="/png-to-webp" className="hover:text-primary">PNG 转 WebP</Link>
+            <Link to="/about" className="hover:text-primary">关于 PicThin</Link>
           </nav>
           <div className="flex flex-col md:flex-row items-center justify-center gap-3">
             <span>图片仅在本地处理，不上传服务器，隐私安全有保障</span>

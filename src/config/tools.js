@@ -1,0 +1,108 @@
+export const FORMAT_TOOL_CONFIGS = [
+  {
+    path: '/compress-jpg',
+    shortTitle: 'JPG 图片压缩',
+    title: 'JPG 图片压缩工具',
+    seoTitle: 'JPG 图片压缩工具 - 免费在线减小照片体积 - PicThin',
+    description: '免费在线压缩 JPG/JPEG 图片，调整画质并实时查看文件大小。图片在浏览器本地处理，不上传服务器，支持手机和电脑。',
+    lead: '减小照片和 JPG 图片的文件体积，实时比较压缩前后的大小与画面效果。无需上传，处理完成后可直接下载。',
+    inputTypes: ['image/jpeg'],
+    acceptedLabel: 'JPG、JPEG',
+    outputFormat: 'jpeg',
+    outputLabel: 'JPG',
+    defaultQuality: 80,
+    actionLabel: '压缩 JPG',
+    benefits: [
+      ['保持照片观感', '从 80% 质量开始通常能明显减小体积，同时保留大部分肉眼可见细节。'],
+      ['适合照片内容', 'JPG 对颜色连续、细节丰富的照片更有效，不适合需要透明背景的图片。'],
+      ['本地批次外处理', '单张精细调整适合确认画质；需要一次处理多张时可回到首页使用批量压缩。'],
+    ],
+    useCases: ['手机照片和相机照片', '邮件附件与网页配图', '需要减小体积但保留较高分辨率的 JPG'],
+    faq: [
+      ['JPG 质量设置多少比较合适？', '日常照片可以先从 75%–85% 开始。如果文字边缘或人物脸部出现明显色块，再适当提高质量。'],
+      ['反复压缩 JPG 会怎样？', 'JPG 是有损格式，每次重新编码都会丢失一部分细节。建议始终保留原图，并从原图生成不同体积的副本。'],
+      ['JPG 能保留透明背景吗？', '不能。需要透明背景时建议使用 PNG，或转换成支持透明度的 WebP。'],
+    ],
+  },
+  {
+    path: '/compress-png',
+    shortTitle: 'PNG 图片压缩',
+    title: 'PNG 图片压缩工具',
+    seoTitle: 'PNG 图片压缩工具 - 免费在线减小 PNG 体积 - PicThin',
+    description: '免费在线压缩 PNG 图片，通过颜色量化减小文件体积并保留透明背景。所有图片在浏览器本地处理，不上传服务器。',
+    lead: '通过减少图片中不必要的颜色数量来压缩 PNG，适合图标、截图和透明背景素材。压缩过程完全在当前设备完成。',
+    inputTypes: ['image/png'],
+    acceptedLabel: 'PNG',
+    outputFormat: 'png',
+    outputLabel: 'PNG',
+    defaultQuality: 82,
+    actionLabel: '压缩 PNG',
+    benefits: [
+      ['保留透明背景', '输出仍然是 PNG，适合图标、Logo、UI 切图和透明商品素材。'],
+      ['减少颜色冗余', '通过颜色量化降低文件体积，比单纯重新保存 PNG 更有效。'],
+      ['可观察画质变化', '较低质量会减少可用颜色，渐变和照片类 PNG 需要重点检查色带。'],
+    ],
+    useCases: ['透明背景 Logo 与图标', '软件界面和网页截图', '颜色相对简单的插画与图表'],
+    faq: [
+      ['为什么照片用 PNG 很难压小？', '照片包含大量连续色彩和细节，PNG 的无损编码不擅长这类内容。照片通常转换为 JPG 或 WebP 后体积会更小。'],
+      ['压缩后透明背景还在吗？', '会保留。输出仍是 PNG，并继续支持 Alpha 透明通道。'],
+      ['质量越低意味着什么？', '此处的质量主要控制保留的颜色数量。数值越低，文件通常越小，但渐变区域更容易出现色带。'],
+    ],
+  },
+  {
+    path: '/png-to-webp',
+    shortTitle: 'PNG 转 WebP',
+    title: 'PNG 转 WebP 在线工具',
+    seoTitle: 'PNG 转 WebP 在线工具 - 免费本地转换图片 - PicThin',
+    description: '免费在线将 PNG 转换为 WebP，可调整输出质量并保留透明背景。图片只在浏览器本地转换，无需上传或注册。',
+    lead: '把 PNG 转换为更适合网页使用的 WebP，通常可以在保留透明背景的同时进一步减小文件体积。',
+    inputTypes: ['image/png'],
+    acceptedLabel: 'PNG',
+    outputFormat: 'webp',
+    outputLabel: 'WebP',
+    defaultQuality: 82,
+    actionLabel: '转换为 WebP',
+    benefits: [
+      ['适合网页资源', 'WebP 同时支持有损压缩和透明背景，适合网页图片、商品图和界面素材。'],
+      ['可控输出质量', '照片或复杂插画可以降低质量换取更小体积，简单图形可适当提高质量。'],
+      ['不上传原图', '转换由浏览器图像编码能力完成，图片不会发送到 PicThin 服务器。'],
+    ],
+    useCases: ['把网站 PNG 素材改为 WebP', '压缩带透明背景的商品图', '减小游戏和应用中的位图资源'],
+    faq: [
+      ['PNG 转 WebP 会失去透明背景吗？', '不会。WebP 支持完整的 Alpha 透明度，透明区域会继续保留。'],
+      ['WebP 能在手机和浏览器中打开吗？', '当前主流浏览器都支持 WebP。部分较旧的桌面软件可能仍需要先转换回 JPG 或 PNG。'],
+      ['什么时候不建议转换？', '如果图片需要交付给只接受 PNG 的设计流程或旧软件，应保留 PNG 原文件，并把 WebP 作为网页分发副本。'],
+    ],
+  },
+  {
+    path: '/webp-to-jpg',
+    shortTitle: 'WebP 转 JPG',
+    title: 'WebP 转 JPG 在线工具',
+    seoTitle: 'WebP 转 JPG 在线工具 - 免费本地转换图片 - PicThin',
+    description: '免费在线将 WebP 图片转换为 JPG，可调整画质并直接下载。转换在浏览器本地完成，不上传图片，兼容手机和电脑。',
+    lead: '把 WebP 转换为兼容性更广的 JPG，适合发送给不支持 WebP 的软件、网站表单和旧设备。',
+    inputTypes: ['image/webp'],
+    acceptedLabel: 'WebP',
+    outputFormat: 'jpeg',
+    outputLabel: 'JPG',
+    defaultQuality: 88,
+    actionLabel: '转换为 JPG',
+    benefits: [
+      ['提升文件兼容性', 'JPG 几乎可以在所有图片查看器、办公软件和上传表单中使用。'],
+      ['转换前后可预览', '在下载前检查画面与文件大小，避免为了兼容性牺牲过多清晰度。'],
+      ['处理过程私密', 'WebP 文件仅由当前浏览器读取和编码，不会上传到第三方服务器。'],
+    ],
+    useCases: ['旧软件无法打开 WebP', '网站表单只接受 JPG/JPEG', '将网页下载的 WebP 转为常用照片格式'],
+    faq: [
+      ['转换成 JPG 后透明背景会怎样？', 'JPG 不支持透明背景。透明区域会被转换为不透明背景，因此透明素材更适合转换为 PNG。'],
+      ['转换会增加文件大小吗？', '有可能。WebP 通常比 JPG 编码效率更高，转换后的文件是否变大取决于图片内容和质量设置。'],
+      ['应该选择多少质量？', '可以从 85%–90% 开始。如果结果仍然太大再逐步降低，并重点检查文字边缘和颜色渐变。'],
+    ],
+  },
+];
+
+export function getFormatTool(path) {
+  const tool = FORMAT_TOOL_CONFIGS.find((item) => item.path === path);
+  if (!tool) throw new Error(`Missing format tool config for ${path}`);
+  return tool;
+}

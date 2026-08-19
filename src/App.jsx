@@ -304,10 +304,10 @@ function App() {
           </div>
           <nav className="flex items-center">
             <Link
-              to="/compress-image-to-size"
+              to="/tools"
               className="text-sm text-foreground-muted hover:text-primary transition-colors px-3 py-1.5 rounded-md hover:bg-primary-muted"
             >
-              压到指定大小
+              全部工具
             </Link>
             <Link
               to="/blog"
@@ -370,7 +370,7 @@ function App() {
               <h2 id="popular-tools-title" className="text-xl font-semibold text-foreground mb-3">
                 常用图片工具与指南
               </h2>
-              <div className="grid md:grid-cols-3 gap-3">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
                 <Link
                   to="/compress-image-to-size"
                   className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
@@ -379,18 +379,39 @@ function App() {
                   <p className="text-sm text-foreground-muted mt-1">自动压到 100KB、200KB、500KB 或 1MB 以内</p>
                 </Link>
                 <Link
-                  to="/blog/jpg-compress-to-target-size"
+                  to="/compress-jpg"
                   className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
                 >
-                  <h3 className="font-semibold text-foreground">JPG 压缩方法</h3>
-                  <p className="text-sm text-foreground-muted mt-1">理解质量、尺寸和文件体积之间的关系</p>
+                  <h3 className="font-semibold text-foreground">JPG 在线压缩</h3>
+                  <p className="text-sm text-foreground-muted mt-1">专门压缩照片和 JPG 图片，可调整输出画质</p>
                 </Link>
                 <Link
-                  to="/blog/png-webp-jpg-comparison"
+                  to="/compress-png"
                   className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
                 >
-                  <h3 className="font-semibold text-foreground">图片格式怎么选</h3>
-                  <p className="text-sm text-foreground-muted mt-1">对比 PNG、JPG、WebP 和 AVIF 的适用场景</p>
+                  <h3 className="font-semibold text-foreground">PNG 在线压缩</h3>
+                  <p className="text-sm text-foreground-muted mt-1">减小截图、图标和透明背景图片的体积</p>
+                </Link>
+                <Link
+                  to="/png-to-webp"
+                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
+                >
+                  <h3 className="font-semibold text-foreground">PNG 转 WebP</h3>
+                  <p className="text-sm text-foreground-muted mt-1">保留透明背景，生成更适合网页分发的格式</p>
+                </Link>
+                <Link
+                  to="/webp-to-jpg"
+                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
+                >
+                  <h3 className="font-semibold text-foreground">WebP 转 JPG</h3>
+                  <p className="text-sm text-foreground-muted mt-1">转换成兼容性更广的常用照片格式</p>
+                </Link>
+                <Link
+                  to="/tools"
+                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
+                >
+                  <h3 className="font-semibold text-foreground">查看全部图片工具</h3>
+                  <p className="text-sm text-foreground-muted mt-1">根据文件格式和目标体积选择合适工具</p>
                 </Link>
               </div>
             </section>

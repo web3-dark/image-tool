@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Head } from 'vite-react-ssg';
 import { Link } from 'react-router-dom';
 import { Download, Gauge, RefreshCw, ShieldCheck } from 'lucide-react';
@@ -12,6 +12,7 @@ import {
   formatFileSize,
 } from '../utils/imageProcessor';
 import { getSiteUrl, SITE } from '../config/site';
+import { useObjectUrl } from '../hooks/useObjectUrl';
 
 const PAGE_URL = getSiteUrl('/compress-image-to-size');
 const OG_IMAGE_URL = getSiteUrl('/og-image.png');
@@ -54,19 +55,15 @@ const FAQ_SCHEMA = {
   })),
 };
 
-function useObjectUrl(value) {
-  const url = useMemo(
-    () => (value && typeof URL !== 'undefined' ? URL.createObjectURL(value) : ''),
-    [value],
-  );
-
-  useEffect(() => {
-    if (!url) return undefined;
-    return () => URL.revokeObjectURL(url);
-  }, [url]);
-
-  return url;
-}
+const BREADCRUMB_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首页', item: getSiteUrl('/') },
+    { '@type': 'ListItem', position: 2, name: '图片工具', item: getSiteUrl('/tools') },
+    { '@type': 'ListItem', position: 3, name: '压缩到指定大小', item: PAGE_URL },
+  ],
+};
 
 export default function CompressImageToSize() {
   const [file, setFile] = useState(null);
@@ -150,6 +147,7 @@ export default function CompressImageToSize() {
         <meta name="twitter:description" content="输入目标体积，自动调整画质和尺寸，全程本地处理。" />
         <meta name="twitter:image" content={OG_IMAGE_URL} />
         <script type="application/ld+json">{JSON.stringify(PAGE_SCHEMA)}</script>
+        <script type="application/ld+json">{JSON.stringify(BREADCRUMB_SCHEMA)}</script>
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
       </Head>
 
@@ -157,6 +155,8 @@ export default function CompressImageToSize() {
         <header className="max-w-3xl mb-8">
           <p className="text-sm text-foreground-muted mb-3">
             <Link to="/" className="hover:text-primary">首页</Link>
+            <span className="mx-2">/</span>
+            <Link to="/tools" className="hover:text-primary">图片工具</Link>
             <span className="mx-2">/</span>
             <span>压缩到指定大小</span>
           </p>

@@ -1,3 +1,5 @@
+import { FORMAT_TOOL_CONFIGS } from './tools.js';
+
 export const BLOG_POSTS = [
   {
     path: '/blog/jpg-compress-to-target-size',
@@ -41,9 +43,15 @@ export function getBlogPost(path) {
 export const SEO_PAGES = [
   {
     path: '/',
-    lastmod: '2026-07-08',
+    lastmod: '2026-08-18',
     changefreq: 'monthly',
     priority: '1.0',
+  },
+  {
+    path: '/tools',
+    lastmod: '2026-08-18',
+    changefreq: 'monthly',
+    priority: '0.9',
   },
   {
     path: '/compress-image-to-size',
@@ -51,11 +59,23 @@ export const SEO_PAGES = [
     changefreq: 'monthly',
     priority: '0.9',
   },
+  ...FORMAT_TOOL_CONFIGS.map((tool) => ({
+    path: tool.path,
+    lastmod: '2026-08-18',
+    changefreq: 'monthly',
+    priority: '0.9',
+  })),
   {
     path: '/blog',
     lastmod: '2026-07-08',
     changefreq: 'weekly',
     priority: '0.7',
+  },
+  {
+    path: '/about',
+    lastmod: '2026-08-18',
+    changefreq: 'yearly',
+    priority: '0.5',
   },
   ...BLOG_POSTS.map((post) => ({
     path: post.path,

@@ -4,7 +4,12 @@ import { validateImageFile } from '../utils/imageProcessor';
 /**
  * 图片上传组件 - 支持拖拽和点击选择
  */
-const ImageUploader = ({ onImagesSelected, isMultiple = true }) => {
+const ImageUploader = ({
+  onImagesSelected,
+  isMultiple = true,
+  acceptedTypes = null,
+  supportedText = 'JPG、PNG、GIF、WebP、AVIF',
+}) => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
@@ -59,10 +64,11 @@ const ImageUploader = ({ onImagesSelected, isMultiple = true }) => {
 
     files.forEach((file) => {
       const validation = validateImageFile(file);
-      if (validation.valid) {
+      const matchesPageType = !acceptedTypes || acceptedTypes.includes(file.type);
+      if (validation.valid && matchesPageType) {
         validFiles.push(file);
       } else {
-        errors.push(`${file.name}: ${validation.error}`);
+        errors.push(`${file.name}: ${validation.valid ? `此工具仅支持 ${supportedText}` : validation.error}`);
       }
     });
 
@@ -117,13 +123,13 @@ const ImageUploader = ({ onImagesSelected, isMultiple = true }) => {
           <span className="md:hidden">支持从相册或文件中选择</span>
           <span className="hidden md:inline">或点击选择文件</span>
         </p>
-        <p className="text-xs text-foreground-muted">JPG、PNG、GIF、WebP、AVIF</p>
+        <p className="text-xs text-foreground-muted">{supportedText}</p>
 
         <input
           ref={fileInputRef}
           type="file"
           multiple={isMultiple}
-          accept="image/*"
+          accept={acceptedTypes?.join(',') || 'image/*'}
           onChange={handleFileInputChange}
           style={{ display: 'none' }}
         />

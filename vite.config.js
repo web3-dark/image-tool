@@ -75,6 +75,8 @@ export default defineConfig(({ isSsrBuild }) => ({
       workbox: {
         // 预缓存所有构建产物
         globPatterns: ['**/*.{js,css,html,json,xml,txt,webmanifest,ico,png,svg,woff2}'],
+        // 压缩引擎只在用户选择图片后再下载，避免服务工作线程提前拉取。
+        globIgnores: ['assets/compression-*.js'],
         // 运行时缓存策略
         runtimeCaching: [
           {

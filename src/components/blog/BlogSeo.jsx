@@ -3,6 +3,20 @@ import { getSiteUrl, SITE } from '../../config/site';
 
 const OG_IMAGE_URL = getSiteUrl('/og-image.png');
 const PUBLISHER_LOGO_URL = getSiteUrl('/pwa-192x192.png');
+const ABOUT_URL = getSiteUrl('/about');
+
+function createBreadcrumbSchema(items) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map(({ name, path }, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name,
+      item: getSiteUrl(path),
+    })),
+  };
+}
 
 export function BlogIndexSeo({ description }) {
   const pageUrl = getSiteUrl('/blog');
@@ -16,12 +30,17 @@ export function BlogIndexSeo({ description }) {
     publisher: {
       '@type': 'Organization',
       name: SITE.name,
+      url: ABOUT_URL,
       logo: {
         '@type': 'ImageObject',
         url: PUBLISHER_LOGO_URL,
       },
     },
   };
+  const breadcrumbSchema = createBreadcrumbSchema([
+    { name: '首页', path: '/' },
+    { name: '图片压缩指南', path: '/blog' },
+  ]);
 
   return (
     <Head>
@@ -39,6 +58,7 @@ export function BlogIndexSeo({ description }) {
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={OG_IMAGE_URL} />
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
+      <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
     </Head>
   );
 }
@@ -53,15 +73,21 @@ export function BlogArticleSeo({ post, extraSchemas = [] }) {
     image: OG_IMAGE_URL,
     datePublished: post.datePublished,
     dateModified: post.dateModified,
-    author: { '@type': 'Organization', name: SITE.name },
+    author: { '@type': 'Organization', name: 'PicThin 项目维护者', url: ABOUT_URL },
     publisher: {
       '@type': 'Organization',
       name: SITE.name,
+      url: ABOUT_URL,
       logo: { '@type': 'ImageObject', url: PUBLISHER_LOGO_URL },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
     inLanguage: SITE.locale,
   };
+  const breadcrumbSchema = createBreadcrumbSchema([
+    { name: '首页', path: '/' },
+    { name: '图片压缩指南', path: '/blog' },
+    { name: post.title, path: post.path },
+  ]);
 
   return (
     <Head>
@@ -81,7 +107,7 @@ export function BlogArticleSeo({ post, extraSchemas = [] }) {
       <meta name="twitter:title" content={post.ogTitle || post.title} />
       <meta name="twitter:description" content={post.description} />
       <meta name="twitter:image" content={OG_IMAGE_URL} />
-      {[schema, ...extraSchemas].map((item, index) => (
+      {[schema, breadcrumbSchema, ...extraSchemas].map((item, index) => (
         <script key={index} type="application/ld+json">{JSON.stringify(item)}</script>
       ))}
     </Head>

@@ -1,7 +1,14 @@
 /**
  * 图片处理工具类 - 处理压缩和格式转换
  */
-import imageCompression from 'browser-image-compression';
+let imageCompressionPromise;
+
+const loadImageCompression = () => {
+  if (!imageCompressionPromise) {
+    imageCompressionPromise = import('browser-image-compression').then((module) => module.default);
+  }
+  return imageCompressionPromise;
+};
 
 /**
  * 获取图片信息
@@ -82,6 +89,7 @@ export const compressImage = async (file, quality = 0.8, format = 'jpeg', onProg
       return await compressPng(file, quality, onProgress);
     }
     // JPEG / WebP / AVIF：支持有损压缩，quality 直接控制画质
+    const imageCompression = await loadImageCompression();
     const options = {
       maxSizeMB: (file.size / (1024 * 1024)) * quality,
       maxWidthOrHeight: 4096,
@@ -142,6 +150,7 @@ export const compressImageToTargetSize = async (
 
   // 留出少量编码差异余量，确保下载结果不超过用户填写的上限。
   const targetSizeMB = (targetBytes * 0.98) / (1024 * 1024);
+  const imageCompression = await loadImageCompression();
 
   for (let attempt = 0; attempt < 5; attempt += 1) {
     const attemptStart = attempt * 20;

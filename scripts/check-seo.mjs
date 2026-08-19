@@ -82,13 +82,10 @@ for (const page of SEO_PAGES) {
   assertIncludes(sitemap, `<loc>${getSiteUrl(page.path)}</loc>`, 'sitemap.xml');
 }
 
-const htmlFiles = [
-  ['index.html', '/'],
-  ['compress-image-to-size.html', '/compress-image-to-size'],
-  ['blog.html', '/blog'],
-  ['blog/jpg-compress-to-target-size.html', '/blog/jpg-compress-to-target-size'],
-  ['blog/png-webp-jpg-comparison.html', '/blog/png-webp-jpg-comparison'],
-];
+const htmlFiles = SEO_PAGES.map(({ path }) => [
+  path === '/' ? 'index.html' : `${path.slice(1)}.html`,
+  path,
+]);
 
 for (const [file, path] of htmlFiles) {
   const html = readDistFile(file);
@@ -100,6 +97,24 @@ for (const [file, path] of htmlFiles) {
   assertIncludes(html, `property="og:image" content="${getSiteUrl('/og-image.png')}"`, file);
   assertIncludes(html, `name="twitter:image" content="${getSiteUrl('/og-image.png')}"`, file);
   assertIncludes(html, 'type="application/ld+json"', file);
+
+  if (/rel="modulepreload"[^>]+compression-[^>]+\.js/.test(html)) {
+    throw new Error(`${file} should not preload the image compression engine`);
+  }
+
+  const h1Count = (html.match(/<h1\b/g) || []).length;
+  if (h1Count !== 1) {
+    throw new Error(`${file} should contain exactly one h1, found ${h1Count}`);
+  }
+
+  if (path !== '/') {
+    assertIncludes(html, '"@type":"BreadcrumbList"', file);
+  }
+}
+
+const serviceWorker = readDistFile('sw.js');
+if (/assets\/compression-[^"']+\.js/.test(serviceWorker)) {
+  throw new Error('The image compression engine should not be precached');
 }
 
 assertNoForbidden(sitemap, 'sitemap.xml');
