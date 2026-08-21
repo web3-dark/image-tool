@@ -37,8 +37,8 @@ export default function BlogLayout({ children }) {
             <Link to="/" className="hover:text-primary">在线图片压缩</Link>
             <Link to="/tools" className="hover:text-primary">全部图片工具</Link>
             <Link to="/compress-image-to-size" className="hover:text-primary">压缩到指定大小</Link>
-            <Link to="/compress-jpg" className="hover:text-primary">JPG 压缩</Link>
-            <Link to="/png-to-webp" className="hover:text-primary">PNG 转 WebP</Link>
+            <Link to="/compress-image-to-100kb" className="hover:text-primary">压缩到 100KB</Link>
+            <Link to="/remove-image-metadata" className="hover:text-primary">清除照片位置</Link>
             <Link to="/about" className="hover:text-primary">关于 PicThin</Link>
           </nav>
           <div className="flex flex-col md:flex-row items-center justify-center gap-3">

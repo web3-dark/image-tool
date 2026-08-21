@@ -1,9 +1,10 @@
 import { createElement } from 'react';
 import { Head } from 'vite-react-ssg';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Gauge, Images } from 'lucide-react';
+import { ArrowRight, Gauge, Images, MapPinOff } from 'lucide-react';
 import BlogLayout from '../components/BlogLayout';
 import { FORMAT_TOOL_CONFIGS } from '../config/tools';
+import { TARGET_SIZE_PAGE_CONFIGS } from '../config/targetSizes';
 import { getSiteUrl } from '../config/site';
 
 const PAGE_URL = getSiteUrl('/tools');
@@ -13,8 +14,20 @@ const TOOL_CARDS = [
   {
     path: '/compress-image-to-size',
     title: '图片压缩到指定大小',
-    description: '自动压到 100KB、200KB、500KB、1MB 或自定义体积以内。',
+    description: '自动压到 20KB、50KB、100KB、200KB、1MB 或自定义体积以内。',
     icon: Gauge,
+  },
+  ...TARGET_SIZE_PAGE_CONFIGS.map((page) => ({
+    path: page.path,
+    title: page.shortTitle,
+    description: page.lead,
+    icon: Gauge,
+  })),
+  {
+    path: '/remove-image-metadata',
+    title: '清除照片 EXIF / GPS',
+    description: '分享前清除位置、拍摄时间和设备信息，生成不携带原始元数据的新图片。',
+    icon: MapPinOff,
   },
   ...FORMAT_TOOL_CONFIGS.map((tool) => ({
     path: tool.path,
@@ -50,17 +63,17 @@ export default function ToolsIndex() {
     <BlogLayout>
       <Head>
         <html lang="zh-CN" />
-        <title>在线图片工具 - 压缩、指定大小与格式转换 - PicThin</title>
-        <meta name="description" content="PicThin 免费在线图片工具：压缩 JPG、PNG，压缩到指定 KB，以及 PNG 转 WebP、WebP 转 JPG。全程浏览器本地处理。" />
+        <title>在线图片工具 - 本地压缩、清除 EXIF 与格式转换 - PicThin</title>
+        <meta name="description" content="PicThin 免费在线图片工具：压缩到 20KB、50KB、100KB、200KB，清除 EXIF/GPS，以及图片格式转换。全程浏览器本地处理。" />
         <link rel="canonical" href={PAGE_URL} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="PicThin 在线图片工具" />
-        <meta property="og:description" content="图片压缩、指定大小和格式转换，全程在浏览器本地完成。" />
+        <meta property="og:description" content="图片压缩、清除 EXIF/GPS 和格式转换，全程在浏览器本地完成。" />
         <meta property="og:url" content={PAGE_URL} />
         <meta property="og:image" content={OG_IMAGE_URL} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="PicThin 在线图片工具" />
-        <meta name="twitter:description" content="图片压缩、指定大小和格式转换，全程在浏览器本地完成。" />
+        <meta name="twitter:description" content="图片压缩、清除 EXIF/GPS 和格式转换，全程在浏览器本地完成。" />
         <meta name="twitter:image" content={OG_IMAGE_URL} />
         <script type="application/ld+json">{JSON.stringify(ITEM_LIST_SCHEMA)}</script>
         <script type="application/ld+json">{JSON.stringify(BREADCRUMB_SCHEMA)}</script>
@@ -75,7 +88,7 @@ export default function ToolsIndex() {
           </p>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">在线图片工具</h1>
           <p className="text-base md:text-lg text-foreground-muted mt-4 leading-8">
-            根据你的任务直接选择工具。所有图片都在浏览器本地处理，无需注册，不会上传到 PicThin 服务器。
+            根据目标体积、格式或隐私需求选择工具。所有图片都在浏览器本地处理，无需注册，不会上传到 PicThin 服务器。
           </p>
         </header>
 

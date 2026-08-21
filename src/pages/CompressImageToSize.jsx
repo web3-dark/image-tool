@@ -13,12 +13,15 @@ import {
 } from '../utils/imageProcessor';
 import { getSiteUrl, SITE } from '../config/site';
 import { useObjectUrl } from '../hooks/useObjectUrl';
+import {
+  GENERIC_TARGET_SIZE_PAGE,
+  TARGET_SIZE_PAGE_CONFIGS,
+} from '../config/targetSizes';
 
-const PAGE_URL = getSiteUrl('/compress-image-to-size');
 const OG_IMAGE_URL = getSiteUrl('/og-image.png');
-const TARGET_PRESETS = [100, 200, 500, 1024];
+const TARGET_PRESETS = [20, 50, 100, 200, 500, 1024];
 
-const FAQ_ITEMS = [
+const GENERIC_FAQ_ITEMS = [
   {
     question: '为什么压缩结果通常会略小于目标值？',
     answer: '不同浏览器的图片编码结果会有少量差异。工具会预留很小的体积余量，避免下载后的文件超过你填写的上限。',
@@ -33,47 +36,52 @@ const FAQ_ITEMS = [
   },
 ];
 
-const PAGE_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'WebApplication',
-  name: '图片压缩到指定大小',
-  description: '免费将 JPG、PNG、WebP、AVIF 图片压缩到指定 KB 或 MB，全程在浏览器本地处理。',
-  url: PAGE_URL,
-  applicationCategory: 'MultimediaApplication',
-  operatingSystem: 'Any',
-  inLanguage: SITE.locale,
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-};
-
-const FAQ_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQ_ITEMS.map((item) => ({
-    '@type': 'Question',
-    name: item.question,
-    acceptedAnswer: { '@type': 'Answer', text: item.answer },
-  })),
-};
-
-const BREADCRUMB_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: '首页', item: getSiteUrl('/') },
-    { '@type': 'ListItem', position: 2, name: '图片工具', item: getSiteUrl('/tools') },
-    { '@type': 'ListItem', position: 3, name: '压缩到指定大小', item: PAGE_URL },
-  ],
-};
-
-export default function CompressImageToSize() {
+export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_PAGE }) {
   const [file, setFile] = useState(null);
-  const [targetKb, setTargetKb] = useState(500);
+  const [targetKb, setTargetKb] = useState(pageConfig.targetKb);
   const [format, setFormat] = useState('jpeg');
   const [result, setResult] = useState(null);
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
   const processIdRef = useRef(0);
+  const pageUrl = getSiteUrl(pageConfig.path);
+  const isPresetPage = pageConfig.path !== GENERIC_TARGET_SIZE_PAGE.path;
+  const faqItems = pageConfig.faq
+    ? pageConfig.faq.map(([question, answer]) => ({ question, answer }))
+    : GENERIC_FAQ_ITEMS;
+
+  const schemas = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: pageConfig.title,
+      description: pageConfig.description,
+      url: pageUrl,
+      applicationCategory: 'MultimediaApplication',
+      operatingSystem: 'Any',
+      inLanguage: SITE.locale,
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '首页', item: getSiteUrl('/') },
+        { '@type': 'ListItem', position: 2, name: '图片工具', item: getSiteUrl('/tools') },
+        { '@type': 'ListItem', position: 3, name: pageConfig.shortTitle, item: pageUrl },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    },
+  ];
 
   const originalUrl = useObjectUrl(file);
   const resultUrl = useObjectUrl(result);
@@ -131,24 +139,21 @@ export default function CompressImageToSize() {
     <BlogLayout>
       <Head>
         <html lang="zh-CN" />
-        <title>图片压缩到指定大小 - 压到 100KB、200KB、500KB 或 1MB - picthin</title>
-        <meta
-          name="description"
-          content="免费将 JPG、PNG、WebP、AVIF 图片压缩到指定 KB 或 MB。自动调整质量和尺寸，全程浏览器本地处理，不上传图片。"
-        />
-        <link rel="canonical" href={PAGE_URL} />
+        <title>{pageConfig.seoTitle}</title>
+        <meta name="description" content={pageConfig.description} />
+        <link rel="canonical" href={pageUrl} />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="图片压缩到指定大小 - picthin" />
-        <meta property="og:description" content="输入目标体积，自动将图片压到 100KB、200KB、500KB 或 1MB 以内。" />
-        <meta property="og:url" content={PAGE_URL} />
+        <meta property="og:title" content={`${pageConfig.title} - PicThin`} />
+        <meta property="og:description" content={pageConfig.description} />
+        <meta property="og:url" content={pageUrl} />
         <meta property="og:image" content={OG_IMAGE_URL} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="图片压缩到指定大小 - picthin" />
-        <meta name="twitter:description" content="输入目标体积，自动调整画质和尺寸，全程本地处理。" />
+        <meta name="twitter:title" content={`${pageConfig.title} - PicThin`} />
+        <meta name="twitter:description" content={pageConfig.description} />
         <meta name="twitter:image" content={OG_IMAGE_URL} />
-        <script type="application/ld+json">{JSON.stringify(PAGE_SCHEMA)}</script>
-        <script type="application/ld+json">{JSON.stringify(BREADCRUMB_SCHEMA)}</script>
-        <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
+        {schemas.map((schema, index) => (
+          <script key={index} type="application/ld+json">{JSON.stringify(schema)}</script>
+        ))}
       </Head>
 
       <section className="max-w-4xl mx-auto px-4 md:px-6 py-10 md:py-14">
@@ -158,13 +163,13 @@ export default function CompressImageToSize() {
             <span className="mx-2">/</span>
             <Link to="/tools" className="hover:text-primary">图片工具</Link>
             <span className="mx-2">/</span>
-            <span>压缩到指定大小</span>
+            <span>{pageConfig.shortTitle}</span>
           </p>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-            图片压缩到指定大小
+            {pageConfig.title}
           </h1>
           <p className="text-base md:text-lg text-foreground-muted mt-4 leading-8">
-            输入目标体积，自动把图片压缩到指定 KB 以内。工具会先优化画质，必要时再缩小尺寸；所有处理都在你的浏览器本地完成。
+            {pageConfig.lead}
           </p>
         </header>
 
@@ -335,29 +340,37 @@ export default function CompressImageToSize() {
         </div>
 
         <article className="blog-article mt-12">
-          <h2>怎样把图片压到指定 KB？</h2>
+          <h2>{isPresetPage ? `怎样把图片压到 ${pageConfig.targetKb}KB 以内？` : '怎样把图片压到指定 KB？'}</h2>
           <p>
             只降低质量并不总能达到目标体积。PicThin 会先在保持原始尺寸的前提下调整编码质量；如果图片仍然过大，再逐步缩小像素尺寸。相比一次把质量拉得很低，这种方法通常能保留更多可见细节。
           </p>
 
-          <h2>常见目标大小怎么选</h2>
+          <h2>{isPresetPage ? `哪些情况适合 ${pageConfig.targetKb}KB？` : '常见目标大小怎么选'}</h2>
           <ul>
-            <li><strong>100KB–200KB：</strong>适合头像、小尺寸预览图和对上传体积要求较严格的表单。</li>
-            <li><strong>500KB：</strong>适合邮件附件、网页配图和多数日常分享场景。</li>
-            <li><strong>1MB：</strong>适合希望保留较高分辨率和较多照片细节的情况。</li>
+            {pageConfig.useCases.map((useCase) => <li key={useCase}>{useCase}</li>)}
           </ul>
           <p>
-            如果目标体积非常小，而原图来自手机相机，缩小尺寸通常比持续降低 JPG 质量更有效。想了解具体判断方法，可以继续阅读
+            {pageConfig.guidance} 想了解具体判断方法，可以继续阅读
             {' '}<Link to="/blog/jpg-compress-to-target-size">JPG 图片怎么压缩到指定大小</Link>。
           </p>
 
           <h2>常见问题</h2>
-          {FAQ_ITEMS.map((item) => (
+          {faqItems.map((item) => (
             <section key={item.question}>
               <h3>{item.question}</h3>
               <p>{item.answer}</p>
             </section>
           ))}
+
+          <h2>其他目标大小</h2>
+          <p className="flex flex-wrap gap-x-4 gap-y-2">
+            {TARGET_SIZE_PAGE_CONFIGS
+              .filter((page) => page.path !== pageConfig.path)
+              .map((page) => (
+                <Link key={page.path} to={page.path}>{page.targetKb}KB 图片压缩</Link>
+              ))}
+            {isPresetPage && <Link to="/compress-image-to-size">自定义目标大小</Link>}
+          </p>
         </article>
       </section>
     </BlogLayout>

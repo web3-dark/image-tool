@@ -7,7 +7,9 @@ import CompressImageToSize from './pages/CompressImageToSize.jsx';
 import FormatToolPage from './pages/FormatToolPage.jsx';
 import ToolsIndex from './pages/ToolsIndex.jsx';
 import About from './pages/About.jsx';
+import RemoveImageMetadata from './pages/RemoveImageMetadata.jsx';
 import { FORMAT_TOOL_CONFIGS } from './config/tools.js';
+import { TARGET_SIZE_PAGE_CONFIGS } from './config/targetSizes.js';
 
 export const routes = [
   {
@@ -25,6 +27,11 @@ export const routes = [
         element: <CompressImageToSize />,
         entry: 'src/pages/CompressImageToSize.jsx',
       },
+      ...TARGET_SIZE_PAGE_CONFIGS.map((page) => ({
+        path: page.path.slice(1),
+        element: <CompressImageToSize key={page.path} pageConfig={page} />,
+        entry: 'src/pages/CompressImageToSize.jsx',
+      })),
       {
         path: 'tools',
         element: <ToolsIndex />,
@@ -39,6 +46,11 @@ export const routes = [
         path: 'about',
         element: <About />,
         entry: 'src/pages/About.jsx',
+      },
+      {
+        path: 'remove-image-metadata',
+        element: <RemoveImageMetadata />,
+        entry: 'src/pages/RemoveImageMetadata.jsx',
       },
       {
         path: 'blog',

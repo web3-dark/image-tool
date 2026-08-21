@@ -1,4 +1,5 @@
 import { FORMAT_TOOL_CONFIGS } from './tools.js';
+import { TARGET_SIZE_PAGE_CONFIGS } from './targetSizes.js';
 
 export const BLOG_POSTS = [
   {
@@ -43,22 +44,28 @@ export function getBlogPost(path) {
 export const SEO_PAGES = [
   {
     path: '/',
-    lastmod: '2026-08-18',
+    lastmod: '2026-08-21',
     changefreq: 'monthly',
     priority: '1.0',
   },
   {
     path: '/tools',
-    lastmod: '2026-08-18',
+    lastmod: '2026-08-21',
     changefreq: 'monthly',
     priority: '0.9',
   },
   {
     path: '/compress-image-to-size',
-    lastmod: '2026-08-18',
+    lastmod: '2026-08-21',
     changefreq: 'monthly',
     priority: '0.9',
   },
+  ...TARGET_SIZE_PAGE_CONFIGS.map((page) => ({
+    path: page.path,
+    lastmod: '2026-08-21',
+    changefreq: 'monthly',
+    priority: '0.9',
+  })),
   ...FORMAT_TOOL_CONFIGS.map((tool) => ({
     path: tool.path,
     lastmod: '2026-08-18',
@@ -76,6 +83,12 @@ export const SEO_PAGES = [
     lastmod: '2026-08-18',
     changefreq: 'yearly',
     priority: '0.5',
+  },
+  {
+    path: '/remove-image-metadata',
+    lastmod: '2026-08-21',
+    changefreq: 'monthly',
+    priority: '0.9',
   },
   ...BLOG_POSTS.map((post) => ({
     path: post.path,

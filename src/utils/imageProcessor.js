@@ -78,6 +78,58 @@ const canvasToBlob = (file, fmt) =>
     img.src = url;
   });
 
+/**
+ * 通过浏览器重新解码和编码图片，生成不携带原始 EXIF、GPS、相机型号等
+ * 文件级元数据的新图片。像素会被保留，但 JPEG / WebP 会发生一次高质量重编码。
+ *
+ * @param {File} file - JPG、PNG 或 WebP 图片
+ * @returns {Promise<Blob>} - 移除元数据后的图片
+ */
+export const stripImageMetadata = async (file) => {
+  const supportedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  if (!supportedTypes.includes(file.type)) {
+    throw new Error('清除元数据目前支持 JPG、PNG 和 WebP 图片');
+  }
+
+  const image = new Image();
+  const objectUrl = URL.createObjectURL(file);
+
+  try {
+    await new Promise((resolve, reject) => {
+      image.onload = resolve;
+      image.onerror = () => reject(new Error('图片加载失败，请确认文件没有损坏'));
+      image.src = objectUrl;
+    });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth || image.width;
+    canvas.height = image.naturalHeight || image.height;
+    const context = canvas.getContext('2d');
+
+    if (!context) {
+      throw new Error('当前浏览器无法处理这张图片');
+    }
+
+    // JPEG 不支持透明背景，明确填充白色，避免浏览器使用不一致的默认底色。
+    if (file.type === 'image/jpeg') {
+      context.fillStyle = '#ffffff';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    context.drawImage(image, 0, 0);
+
+    return await new Promise((resolve, reject) => {
+      const quality = file.type === 'image/png' ? undefined : 0.95;
+      canvas.toBlob(
+        (blob) => (blob ? resolve(blob) : reject(new Error('生成无元数据图片失败'))),
+        file.type,
+        quality,
+      );
+    });
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
+};
+
 
 export const compressImage = async (file, quality = 0.8, format = 'jpeg', onProgress = null) => {
   try {

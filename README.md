@@ -80,13 +80,15 @@ npm run seo:check
 
 ### 4. 启用访问统计（可选）
 
-项目已预留 [Umami](https://umami.is)（开源、无 Cookie、GDPR 合规）接入点。
+项目已接入可选的 [Cloudflare Web Analytics](https://developers.cloudflare.com/web-analytics/)。没有配置 token 时，不会加载任何统计脚本。
 
-在 [index.html](index.html) 中取消注释并替换参数：
+先在 Cloudflare Web Analytics 中为 `picthin.com` 创建站点，然后在 Cloudflare Pages 的构建环境变量中添加：
 
-```html
-<script defer src="https://YOUR_UMAMI_HOST/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+```bash
+VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN=你的站点Token
 ```
+
+这里填写的是公开的 Web Analytics 站点 token，不是 Cloudflare API Token。重新部署后，页面会自动加载统计脚本并覆盖单页应用的路由访问。
 
 ---
 
@@ -104,6 +106,7 @@ src/
 │   ├── BrowserCompat.jsx      # 浏览器兼容性提示
 │   ├── ErrorBoundary.jsx      # React 错误边界
 │   ├── PrivacyPolicy.jsx      # 隐私政策弹窗
+│   ├── PrivacyAnalytics.jsx   # 可选的匿名访问统计
 │   ├── Logo.jsx               # Logo 组件
 │   └── ui/                    # shadcn/ui 基础组件
 └── utils/

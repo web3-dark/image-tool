@@ -329,7 +329,7 @@ function App() {
                 免费在线图片压缩工具
               </h1>
               <p className="text-base md:text-lg text-foreground-muted mt-3 leading-7">
-                批量压缩 JPG、PNG、WebP、AVIF 和 GIF 图片，支持调整画质与转换格式。图片全程在浏览器本地处理，无需上传或注册。
+                批量压缩 JPG、PNG、WebP、AVIF 和 GIF 图片，支持调整画质与转换格式。证件、合同截图和私人照片全程在浏览器本地处理，无需上传或注册。
               </p>
             </section>
 
@@ -376,7 +376,28 @@ function App() {
                   className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
                 >
                   <h3 className="font-semibold text-foreground">压缩到指定大小</h3>
-                  <p className="text-sm text-foreground-muted mt-1">自动压到 100KB、200KB、500KB 或 1MB 以内</p>
+                  <p className="text-sm text-foreground-muted mt-1">自动压到 20KB、50KB、100KB、200KB 或自定义大小</p>
+                </Link>
+                <Link
+                  to="/compress-image-to-100kb"
+                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
+                >
+                  <h3 className="font-semibold text-foreground">图片压缩到 100KB</h3>
+                  <p className="text-sm text-foreground-muted mt-1">适合报名照片、头像和办公系统资料上传</p>
+                </Link>
+                <Link
+                  to="/compress-image-to-200kb"
+                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
+                >
+                  <h3 className="font-semibold text-foreground">图片压缩到 200KB</h3>
+                  <p className="text-sm text-foreground-muted mt-1">兼顾文件体积和细节，适合资料与网页配图</p>
+                </Link>
+                <Link
+                  to="/remove-image-metadata"
+                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
+                >
+                  <h3 className="font-semibold text-foreground">清除照片 EXIF / GPS</h3>
+                  <p className="text-sm text-foreground-muted mt-1">分享前清除位置、拍摄时间与设备信息</p>
                 </Link>
                 <Link
                   to="/compress-jpg"
@@ -384,27 +405,6 @@ function App() {
                 >
                   <h3 className="font-semibold text-foreground">JPG 在线压缩</h3>
                   <p className="text-sm text-foreground-muted mt-1">专门压缩照片和 JPG 图片，可调整输出画质</p>
-                </Link>
-                <Link
-                  to="/compress-png"
-                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
-                >
-                  <h3 className="font-semibold text-foreground">PNG 在线压缩</h3>
-                  <p className="text-sm text-foreground-muted mt-1">减小截图、图标和透明背景图片的体积</p>
-                </Link>
-                <Link
-                  to="/png-to-webp"
-                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
-                >
-                  <h3 className="font-semibold text-foreground">PNG 转 WebP</h3>
-                  <p className="text-sm text-foreground-muted mt-1">保留透明背景，生成更适合网页分发的格式</p>
-                </Link>
-                <Link
-                  to="/webp-to-jpg"
-                  className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
-                >
-                  <h3 className="font-semibold text-foreground">WebP 转 JPG</h3>
-                  <p className="text-sm text-foreground-muted mt-1">转换成兼容性更广的常用照片格式</p>
                 </Link>
                 <Link
                   to="/tools"

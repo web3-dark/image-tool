@@ -48,7 +48,7 @@ const PrivacyPolicy = ({ isOpen, onClose }) => {
 
         {/* 正文 */}
         <div className="flex-1 overflow-y-auto px-6 py-5 text-sm text-foreground space-y-4 leading-relaxed">
-          <p className="text-foreground-muted text-xs">最后更新：2026 年 3 月</p>
+          <p className="text-foreground-muted text-xs">最后更新：2026 年 8 月</p>
 
           <section>
             <h3 className="font-semibold mb-1">本地处理承诺</h3>
@@ -71,7 +71,8 @@ const PrivacyPolicy = ({ isOpen, onClose }) => {
           <section>
             <h3 className="font-semibold mb-1">可能收集的匿名数据</h3>
             <p className="text-foreground-muted">
-              如果您的访问产生了页面访问统计（通过匿名分析工具），我们仅收集不可识别个人身份的聚合数据，如页面访问量、使用的浏览器类型等，用于改善产品体验。
+              站点启用 Cloudflare Web Analytics 时，仅统计页面访问量、浏览器类型和页面性能等聚合信息，用于了解哪些工具有帮助和改善访问体验。
+              统计脚本不会读取您的图片内容、文件名或图片元数据。
             </p>
           </section>
 
@@ -85,7 +86,7 @@ const PrivacyPolicy = ({ isOpen, onClose }) => {
           <section>
             <h3 className="font-semibold mb-1">第三方服务</h3>
             <p className="text-foreground-muted">
-              本工具不集成任何第三方广告、社交媒体追踪或数据收集服务。所有依赖库均在本地运行。
+              本工具不集成第三方广告或社交媒体追踪。启用访问统计时会加载 Cloudflare Web Analytics；图片处理相关代码和依赖仍在您的设备本地运行。
             </p>
           </section>
 
