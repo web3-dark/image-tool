@@ -8,6 +8,8 @@
     "prebuild": "npm run seo:generate",
     "build": "vite-react-ssg build",
     "lint": "eslint .",
+    "test": "node --test tests/*.test.mjs",
+    "analytics:report": "node scripts/report-tool-analytics.mjs",
     "seo:generate": "node scripts/generate-seo-files.mjs",
     "seo:check": "node scripts/check-seo.mjs",
     "seo:baidu:push": "node scripts/push-baidu-urls.mjs",

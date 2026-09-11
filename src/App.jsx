@@ -17,6 +17,7 @@ import {
 } from './components/ui/select';
 import { getSiteUrl, SITE } from './config/site';
 import { compressImage, downloadBlob } from './utils/imageProcessor';
+import { startToolProcessing, trackToolEvent } from './utils/toolAnalytics';
 import { Zap, ShieldCheck, Palette, Layers, X, AlertCircle, Upload, Pencil } from 'lucide-react';
 
 const HOME_URL = getSiteUrl('/');
@@ -98,6 +99,7 @@ function App() {
 
       setResults(prev => prev.map((r, idx) => idx === i ? { ...r, status: 'processing' } : r));
 
+      const finishTracking = startToolProcessing('/', currentFormat);
       try {
         const compressed = await compressImage(
           file,
@@ -110,14 +112,16 @@ function App() {
           }
         );
 
-        if (processIdRef.current !== myId) return;
+        if (processIdRef.current !== myId) { finishTracking.cancel(); return; }
+        finishTracking();
 
         setResults(prev => prev.map((r, idx) =>
           idx === i ? { ...r, compressedBlob: compressed, status: 'done', progress: 100 } : r
         ));
         if (files.length === 1) setProgress(100);
       } catch (err) {
-        if (processIdRef.current !== myId) return;
+        if (processIdRef.current !== myId) { finishTracking.cancel(); return; }
+        finishTracking(err);
         setResults(prev => prev.map((r, idx) =>
           idx === i ? { ...r, status: 'error', error: err.message } : r
         ));
@@ -142,6 +146,7 @@ function App() {
     const detected = (files[0].type || '').split('/')[1] || '';
     const supported = ['jpeg', 'png', 'webp', 'gif', 'avif'];
     const autoFormat = supported.includes(detected) ? detected : formatRef.current;
+    trackToolEvent('image_selected', '/', { format: autoFormat, count: files.length });
     formatRef.current = autoFormat;
     setFormat(autoFormat);
 
@@ -157,6 +162,8 @@ function App() {
   handleImagesSelectedRef.current = handleImagesSelected;
 
   useEffect(() => {
+    const processing = processIdRef;
+    const debounce = qualityDebounceRef;
     const hasFiles = (e) => Array.from(e.dataTransfer?.types || []).includes('Files');
 
     const onEnter = (e) => {
@@ -193,6 +200,8 @@ function App() {
     window.addEventListener('dragleave', onLeave);
     window.addEventListener('drop', onDrop);
     return () => {
+      ++processing.current;
+      clearTimeout(debounce.current);
       window.removeEventListener('dragenter', onEnter);
       window.removeEventListener('dragover', onOver);
       window.removeEventListener('dragleave', onLeave);
@@ -230,6 +239,7 @@ function App() {
    */
   const handleDownload = (blob, fileName) => {
     downloadBlob(blob, fileName);
+    trackToolEvent('download_clicked', '/', { format });
   };
 
   /**
@@ -244,7 +254,7 @@ function App() {
 
     if (done.length === 1) {
       const r = done[0];
-      downloadBlob(r.compressedBlob, `${r.fileName}.${ext}`);
+      handleDownload(r.compressedBlob, `${r.fileName}.${ext}`);
       return;
     }
 
@@ -260,6 +270,7 @@ function App() {
     });
     const blob = await zip.generateAsync({ type: 'blob', compression: 'STORE' });
     downloadBlob(blob, 'picthin.zip');
+    trackToolEvent('download_clicked', '/', { format, count: done.length });
   };
 
   /**

@@ -48,7 +48,7 @@ const PrivacyPolicy = ({ isOpen, onClose }) => {
 
         {/* 正文 */}
         <div className="flex-1 overflow-y-auto px-6 py-5 text-sm text-foreground space-y-4 leading-relaxed">
-          <p className="text-foreground-muted text-xs">最后更新：2026 年 8 月</p>
+          <p className="text-foreground-muted text-xs">最后更新：2026 年 9 月</p>
 
           <section>
             <h3 className="font-semibold mb-1">本地处理承诺</h3>
@@ -72,7 +72,8 @@ const PrivacyPolicy = ({ isOpen, onClose }) => {
             <h3 className="font-semibold mb-1">可能收集的匿名数据</h3>
             <p className="text-foreground-muted">
               站点启用 Cloudflare Web Analytics 时，仅统计页面访问量、浏览器类型和页面性能等聚合信息，用于了解哪些工具有帮助和改善访问体验。
-              统计脚本不会读取您的图片内容、文件名或图片元数据。
+              启用工具使用统计时，还会记录工具类型、选择图片数量、处理成功或失败、取消处理、下载点击、处理耗时及固定错误类别，存储在 Cloudflare Analytics Engine 中。
+              不记录图片内容、文件名、图片元数据、原始错误信息或用户标识；工具使用统计遵循浏览器的 DNT 和 GPC 隐私偏好。
             </p>
           </section>
 

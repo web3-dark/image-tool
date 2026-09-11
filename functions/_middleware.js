@@ -12,5 +12,11 @@ export async function onRequest(context) {
     return Response.redirect(canonicalUrl, 301);
   }
 
-  return context.next();
+  const response = await context.next();
+  if (response.headers.get('content-type')?.includes('text/html') || requestUrl.pathname === '/sw.js') {
+    const freshResponse = new Response(response.body, response);
+    freshResponse.headers.set('Cache-Control', 'no-cache');
+    return freshResponse;
+  }
+  return response;
 }

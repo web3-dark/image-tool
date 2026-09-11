@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Head } from 'vite-react-ssg';
 import { Link } from 'react-router-dom';
 import { Download, Gauge, RefreshCw, ShieldCheck } from 'lucide-react';
@@ -13,6 +13,7 @@ import {
 } from '../utils/imageProcessor';
 import { getSiteUrl, SITE } from '../config/site';
 import { useObjectUrl } from '../hooks/useObjectUrl';
+import { startToolProcessing, trackToolEvent } from '../utils/toolAnalytics';
 import {
   GENERIC_TARGET_SIZE_PAGE,
   TARGET_SIZE_PAGE_CONFIGS,
@@ -45,6 +46,7 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
   const processIdRef = useRef(0);
+  useEffect(() => () => { ++processIdRef.current; }, []);
   const pageUrl = getSiteUrl(pageConfig.path);
   const isPresetPage = pageConfig.path !== GENERIC_TARGET_SIZE_PAGE.path;
   const faqItems = pageConfig.faq
@@ -104,6 +106,7 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
     setResult(null);
     setError('');
 
+    const finishTracking = startToolProcessing(pageConfig.path, nextFormat);
     try {
       const compressed = await compressImageToTargetSize(
         sourceFile,
@@ -113,17 +116,20 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
           if (processIdRef.current === processId) setProgress(nextProgress);
         },
       );
-      if (processIdRef.current !== processId) return;
+      if (processIdRef.current !== processId) { finishTracking.cancel(); return; }
+      finishTracking();
       setResult(compressed);
       setStatus('done');
     } catch (compressionError) {
-      if (processIdRef.current !== processId) return;
+      if (processIdRef.current !== processId) { finishTracking.cancel(); return; }
+      finishTracking(compressionError);
       setError(compressionError.message || '压缩失败，请更换图片后重试');
       setStatus('error');
     }
   };
 
   const handleImagesSelected = ([selectedFile]) => {
+    trackToolEvent('image_selected', pageConfig.path, { format });
     setFile(selectedFile);
     runCompression(selectedFile);
   };
@@ -133,6 +139,7 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
     const baseName = file.name.replace(/\.[^/.]+$/, '');
     const extension = format === 'jpeg' ? 'jpg' : format;
     downloadBlob(result, `${baseName}-${targetKb}kb.${extension}`);
+    trackToolEvent('download_clicked', pageConfig.path, { format });
   };
 
   return (

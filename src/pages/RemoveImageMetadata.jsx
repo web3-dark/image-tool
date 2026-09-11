@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Head } from 'vite-react-ssg';
 import { Link } from 'react-router-dom';
 import { Download, MapPinOff, RefreshCw, ShieldCheck } from 'lucide-react';
@@ -13,6 +13,7 @@ import {
 } from '../utils/imageProcessor';
 import { getSiteUrl, SITE } from '../config/site';
 import { useObjectUrl } from '../hooks/useObjectUrl';
+import { startToolProcessing, trackToolEvent } from '../utils/toolAnalytics';
 
 const PAGE_URL = getSiteUrl('/remove-image-metadata');
 const OG_IMAGE_URL = getSiteUrl('/og-image.png');
@@ -71,6 +72,7 @@ export default function RemoveImageMetadata() {
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
   const processIdRef = useRef(0);
+  useEffect(() => () => { ++processIdRef.current; }, []);
   const originalUrl = useObjectUrl(file);
   const resultUrl = useObjectUrl(result);
   const sizeChange = useMemo(
@@ -85,19 +87,23 @@ export default function RemoveImageMetadata() {
     setResult(null);
     setError('');
 
+    const finishTracking = startToolProcessing('/remove-image-metadata', sourceFile.type.split('/')[1]);
     try {
       const cleaned = await stripImageMetadata(sourceFile);
-      if (processIdRef.current !== processId) return;
+      if (processIdRef.current !== processId) { finishTracking.cancel(); return; }
+      finishTracking();
       setResult(cleaned);
       setStatus('done');
     } catch (processingError) {
-      if (processIdRef.current !== processId) return;
+      if (processIdRef.current !== processId) { finishTracking.cancel(); return; }
+      finishTracking(processingError);
       setError(processingError.message || '清除元数据失败，请更换图片后重试');
       setStatus('error');
     }
   };
 
   const handleImagesSelected = ([selectedFile]) => {
+    trackToolEvent('image_selected', '/remove-image-metadata', { format: selectedFile.type.split('/')[1] });
     setFile(selectedFile);
     processFile(selectedFile);
   };
@@ -107,6 +113,7 @@ export default function RemoveImageMetadata() {
     const baseName = file.name.replace(/\.[^/.]+$/, '');
     const extension = file.type === 'image/jpeg' ? 'jpg' : file.type.split('/')[1];
     downloadBlob(result, `${baseName}-no-metadata.${extension}`);
+    trackToolEvent('download_clicked', '/remove-image-metadata', { format: file.type.split('/')[1] });
   };
 
   const reset = () => {

@@ -90,6 +90,8 @@ VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN=你的站点Token
 
 这里填写的是公开的 Web Analytics 站点 token，不是 Cloudflare API Token。重新部署后，页面会自动加载统计脚本并覆盖单页应用的路由访问。
 
+工具的选择、处理结果和下载点击统计使用独立的匿名事件接口，启用方式及查看命令见 [工具统计与缓存验收](docs/tool-analytics.md)。
+
 ---
 
 ## 项目结构

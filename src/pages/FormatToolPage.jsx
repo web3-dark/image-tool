@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Head } from 'vite-react-ssg';
 import { Link } from 'react-router-dom';
 import { Download, RefreshCw, ShieldCheck, SlidersHorizontal } from 'lucide-react';
@@ -13,6 +13,7 @@ import {
 } from '../utils/imageProcessor';
 import { getSiteUrl, SITE } from '../config/site';
 import { useObjectUrl } from '../hooks/useObjectUrl';
+import { startToolProcessing, trackToolEvent } from '../utils/toolAnalytics';
 
 export default function FormatToolPage({ tool }) {
   const [file, setFile] = useState(null);
@@ -22,6 +23,7 @@ export default function FormatToolPage({ tool }) {
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
   const processIdRef = useRef(0);
+  useEffect(() => () => { ++processIdRef.current; }, []);
 
   const originalUrl = useObjectUrl(file);
   const resultUrl = useObjectUrl(result);
@@ -73,6 +75,7 @@ export default function FormatToolPage({ tool }) {
     setResult(null);
     setError('');
 
+    const finishTracking = startToolProcessing(tool.path, tool.outputFormat);
     try {
       const processed = await compressImage(
         sourceFile,
@@ -82,7 +85,8 @@ export default function FormatToolPage({ tool }) {
           if (processIdRef.current === processId) setProgress(nextProgress);
         },
       );
-      if (processIdRef.current !== processId) return;
+      if (processIdRef.current !== processId) { finishTracking.cancel(); return; }
+      finishTracking();
 
       const finalResult = isCompressionTool && processed.size >= sourceFile.size
         ? sourceFile
@@ -91,13 +95,15 @@ export default function FormatToolPage({ tool }) {
       setStatus('done');
       setProgress(100);
     } catch (processingError) {
-      if (processIdRef.current !== processId) return;
+      if (processIdRef.current !== processId) { finishTracking.cancel(); return; }
+      finishTracking(processingError);
       setError(processingError.message || '图片处理失败，请更换图片后重试');
       setStatus('error');
     }
   };
 
   const handleImagesSelected = ([selectedFile]) => {
+    trackToolEvent('image_selected', tool.path, { format: tool.outputFormat });
     setFile(selectedFile);
     processFile(selectedFile);
   };
@@ -116,6 +122,7 @@ export default function FormatToolPage({ tool }) {
     const extension = tool.outputFormat === 'jpeg' ? 'jpg' : tool.outputFormat;
     const suffix = isCompressionTool ? 'compressed' : `to-${extension}`;
     downloadBlob(result, `${baseName}-${suffix}.${extension}`);
+    trackToolEvent('download_clicked', tool.path, { format: tool.outputFormat });
   };
 
   return (
