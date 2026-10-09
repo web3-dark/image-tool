@@ -1,7 +1,7 @@
 import { useI18n } from '../i18n/useI18n.js';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Head } from 'vite-react-ssg';
-import { Link } from 'react-router-dom';
+import { Link } from '../components/LocalizedLink.jsx';
 import { Download, RefreshCw, ShieldCheck, SlidersHorizontal } from 'lucide-react';
 import BlogLayout from '../components/BlogLayout';
 import ImageUploader from '../components/ImageUploader';
@@ -134,11 +134,11 @@ export default function FormatToolPage({ tool }) {
         <html lang={locale} />
         <title>{t(tool.seoTitle)}</title>
         <meta name="description" content={t(tool.description)} />
-        <link rel="canonical" href={pageUrl} />
+        <link rel="canonical" href={localize(pageUrl)} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={t(`${t(tool.title)} - PicThin`)} />
         <meta property="og:description" content={t(tool.description)} />
-        <meta property="og:url" content={t(pageUrl)} />
+        <meta property="og:url" content={localize(pageUrl)} />
         <meta property="og:image" content={t(ogImageUrl)} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={t(`${t(tool.title)} - PicThin`)} />

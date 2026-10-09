@@ -1,7 +1,7 @@
 import { useI18n } from '../i18n/useI18n.js';
 import { createElement } from 'react';
 import { Head } from 'vite-react-ssg';
-import { Link } from 'react-router-dom';
+import { Link } from '../components/LocalizedLink.jsx';
 import { LockKeyhole, MonitorSmartphone, Workflow } from 'lucide-react';
 import BlogLayout from '../components/BlogLayout';
 import { getSiteUrl, SITE } from '../config/site';
@@ -34,11 +34,11 @@ export default function About() {
         <html lang={locale} />
         <title>{t("关于 PicThin - 本地、私密的在线图片处理工具")}</title>
         <meta name="description" content={t("了解 PicThin 的开发目的、浏览器本地图片处理方式、隐私原则和内容测试方法。")} />
-        <link rel="canonical" href={PAGE_URL} />
+        <link rel="canonical" href={localize(PAGE_URL)} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={t("关于 PicThin")} />
         <meta property="og:description" content={t("本地、私密、无需注册的在线图片压缩与转换工具。")} />
-        <meta property="og:url" content={t(PAGE_URL)} />
+        <meta property="og:url" content={localize(PAGE_URL)} />
         <meta property="og:image" content={t(getSiteUrl('/og-image.png'))} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={t("关于 PicThin")} />

@@ -1,5 +1,5 @@
 import { useI18n } from '../i18n/useI18n.js';
-import { Link } from 'react-router-dom';
+import { Link } from './LocalizedLink.jsx';
 import PrivacyPolicy from './PrivacyPolicy';
 import FeedbackButton from './FeedbackButton.jsx';
 import SiteHeader from './SiteHeader.jsx';

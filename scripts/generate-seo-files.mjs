@@ -2,7 +2,7 @@
 
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { SEO_PAGES } from '../src/config/content.js';
+import { LOCALIZED_SEO_PAGES } from '../src/config/localizedPages.js';
 
 const DEFAULT_SITE_URL = 'https://picthin.com';
 
@@ -16,7 +16,7 @@ function getSiteUrl(path, siteUrl) {
 }
 
 function buildSitemap(siteUrl) {
-  const urls = SEO_PAGES
+  const urls = LOCALIZED_SEO_PAGES
     .map((page) => `  <url>
     <loc>${getSiteUrl(page.path, siteUrl)}</loc>
     <lastmod>${page.lastmod}</lastmod>

@@ -1,6 +1,6 @@
 import { getLocalizedPost } from '../../content/en/posts.js';
 import { useI18n } from '../../i18n/useI18n.js';
-import { Link } from 'react-router-dom';
+import { Link } from '../../components/LocalizedLink.jsx';
 import BlogBreadcrumbs from '../../components/blog/BlogBreadcrumbs';
 import BlogLayout from '../../components/BlogLayout';
 import { BlogIndexSeo } from '../../components/blog/BlogSeo';

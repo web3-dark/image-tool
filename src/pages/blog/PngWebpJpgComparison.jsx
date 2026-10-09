@@ -1,6 +1,6 @@
 import { useI18n } from '../../i18n/useI18n.js';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../../components/LocalizedLink.jsx';
 import BlogPostShell from '../../components/blog/BlogPostShell';
 import ImageModal from '../../components/ImageModal';
 import { getBlogPost } from '../../config/content';

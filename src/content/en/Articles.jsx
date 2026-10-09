@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../../components/LocalizedLink.jsx';
 import ImageModal from '../../components/ImageModal.jsx';
 
 function PhotoUnder200KB() {

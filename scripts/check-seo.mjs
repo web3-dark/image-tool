@@ -2,7 +2,8 @@
 
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { SEO_PAGES } from '../src/config/content.js';
+import { LOCALIZED_SEO_PAGES as SEO_PAGES } from '../src/config/localizedPages.js';
+import { localizePath } from '../src/i18n/paths.js';
 import { onRequest as redirectDuplicateHost } from '../functions/_middleware.js';
 
 const SITE_URL = (process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://picthin.com').replace(/\/+$/, '');
@@ -82,12 +83,12 @@ for (const page of SEO_PAGES) {
   assertIncludes(sitemap, `<loc>${getSiteUrl(page.path)}</loc>`, 'sitemap.xml');
 }
 
-const htmlFiles = SEO_PAGES.map(({ path }) => [
+const htmlFiles = SEO_PAGES.map(({ path, basePath, language }) => [
   path === '/' ? 'index.html' : `${path.slice(1)}.html`,
-  path,
+  path, basePath, language,
 ]);
 
-for (const [file, path] of htmlFiles) {
+for (const [file, path, basePath, language] of htmlFiles) {
   const html = readDistFile(file);
   const url = getSiteUrl(path);
 
@@ -97,6 +98,34 @@ for (const [file, path] of htmlFiles) {
   assertIncludes(html, `property="og:image" content="${getSiteUrl('/og-image.png')}"`, file);
   assertIncludes(html, `name="twitter:image" content="${getSiteUrl('/og-image.png')}"`, file);
   assertIncludes(html, 'type="application/ld+json"', file);
+  assertIncludes(html, `<html lang="${language === 'en' ? 'en-US' : 'zh-CN'}"`, file);
+  for (const [lang, targetLanguage] of [['zh-Hans', 'zh'], ['en', 'en'], ['x-default', 'zh']]) {
+    assertIncludes(html, `rel="alternate" hreflang="${lang}" href="${getSiteUrl(localizePath(basePath, targetLanguage))}"`, file);
+  }
+  if ((html.match(/rel="canonical"/g) || []).length !== 1) throw new Error(`${file} must have exactly one canonical`);
+  if (/name="robots" content="[^"]*noindex/.test(html)) throw new Error(`${file} must be indexable`);
+
+  if (language === 'en') {
+    const h1 = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)?.[1];
+    if (!h1 || /[\u3400-\u9fff]/.test(h1)) throw new Error(`${file} must render its English heading without JavaScript`);
+    const languageLinks = /aria-label="(?:切换为中文|Switch to English)"/;
+    for (const tag of html.matchAll(/<a\b[^>]*>/g)) {
+      const href = tag[0].match(/href="([^"]*)"/)?.[1];
+      if (href && localizePath(href, 'en') !== href && !languageLinks.test(tag[0])) {
+        throw new Error(`${file} has a link that leaves English: ${href}`);
+      }
+    }
+    for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+      const schema = assertValidJson(match[1], file);
+      function checkUrls(value) {
+        if (typeof value === 'string' && value.startsWith(`${SITE_URL}/`)) {
+          const relative = value.slice(SITE_URL.length);
+          if (localizePath(relative, 'en') !== relative) throw new Error(`${file} has a Chinese schema URL: ${value}`);
+        } else if (value && typeof value === 'object') Object.values(value).forEach(checkUrls);
+      }
+      checkUrls(schema);
+    }
+  }
 
   if (/rel="modulepreload"[^>]+compression-[^>]+\.js/.test(html)) {
     throw new Error(`${file} should not preload the image compression engine`);
@@ -107,7 +136,7 @@ for (const [file, path] of htmlFiles) {
     throw new Error(`${file} should contain exactly one h1, found ${h1Count}`);
   }
 
-  if (path !== '/') {
+  if (basePath !== '/') {
     assertIncludes(html, '"@type":"BreadcrumbList"', file);
   }
 }

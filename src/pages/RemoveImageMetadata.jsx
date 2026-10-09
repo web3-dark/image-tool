@@ -1,7 +1,7 @@
 import { useI18n } from '../i18n/useI18n.js';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Head } from 'vite-react-ssg';
-import { Link } from 'react-router-dom';
+import { Link } from '../components/LocalizedLink.jsx';
 import { Download, MapPinOff, RefreshCw, ShieldCheck } from 'lucide-react';
 import BlogLayout from '../components/BlogLayout';
 import ImageUploader from '../components/ImageUploader';
@@ -132,11 +132,11 @@ export default function RemoveImageMetadata() {
         <html lang={locale} />
         <title>{t("清除照片 EXIF 和 GPS 信息 - 本地处理不上传 - PicThin")}</title>
         <meta name="description" content={t("免费清除 JPG、PNG、WebP 图片中的 EXIF、GPS 位置、拍摄时间和相机信息。浏览器本地处理，照片不上传服务器。")} />
-        <link rel="canonical" href={PAGE_URL} />
+        <link rel="canonical" href={localize(PAGE_URL)} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={t("清除照片 EXIF 和 GPS 信息 - PicThin")} />
         <meta property="og:description" content={t("分享照片前清除位置和拍摄设备信息，全程浏览器本地处理。")} />
-        <meta property="og:url" content={t(PAGE_URL)} />
+        <meta property="og:url" content={localize(PAGE_URL)} />
         <meta property="og:image" content={t(OG_IMAGE_URL)} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={t("清除照片 EXIF 和 GPS 信息 - PicThin")} />

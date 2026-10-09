@@ -1,7 +1,7 @@
 import EnglishArticle from '../../content/en/Articles.jsx';
 import { ENGLISH_POSTS, getLocalizedPost } from '../../content/en/posts.js';
 import { useI18n } from '../../i18n/useI18n.js';
-import { Link } from 'react-router-dom';
+import { Link } from '../LocalizedLink.jsx';
 import BlogLayout from '../BlogLayout';
 import BlogBreadcrumbs from './BlogBreadcrumbs';
 import { BlogArticleSeo } from './BlogSeo';

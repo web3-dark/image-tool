@@ -1,5 +1,5 @@
 import { useI18n } from '../../i18n/useI18n.js';
-import { Link } from 'react-router-dom';
+import { Link } from '../../components/LocalizedLink.jsx';
 import BlogPostShell from '../../components/blog/BlogPostShell';
 import { getBlogPost } from '../../config/content';
 

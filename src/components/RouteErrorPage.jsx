@@ -2,7 +2,7 @@ import { useI18n } from '../i18n/useI18n.js';
 import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
 
 export default function RouteErrorPage() {
-  const { t } = useI18n();
+  const { t, path } = useI18n();
   const error = useRouteError();
   const notFound = isRouteErrorResponse(error) && error.status === 404;
   return (
@@ -13,7 +13,7 @@ export default function RouteErrorPage() {
       </p>
       <div className="flex gap-4 text-sm">
         <button type="button" onClick={() => window.location.reload()} className="rounded-lg bg-primary px-5 py-3 text-primary-fg">{t("重新打开")}</button>
-        <a href="/" className="rounded-lg border border-border px-5 py-3">{t("返回首页")}</a>
+        <a href={path('/')} className="rounded-lg border border-border px-5 py-3">{t("返回首页")}</a>
       </div>
     </main>
   );

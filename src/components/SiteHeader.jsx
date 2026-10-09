@@ -1,7 +1,8 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink } from './LocalizedLink.jsx';
 import { useI18n } from '../i18n/useI18n.js';
 import { Logo } from './Logo';
 import LanguageSwitcher from './LanguageSwitcher.jsx';
+import LanguageSuggestion from './LanguageSuggestion.jsx';
 
 const NAVIGATION = [
   { to: '/', zh: '图片压缩', en: 'Compress' },
@@ -13,7 +14,8 @@ export default function SiteHeader() {
   const { language } = useI18n();
 
   return (
-    <header className="sticky top-0 z-50 shrink-0 border-b border-border bg-surface px-4 md:px-8">
+    <header className="sticky top-0 z-50 shrink-0 border-b border-border bg-surface">
+      <div className="px-4 md:px-8">
       <div className="mx-auto grid h-28 w-full max-w-6xl grid-cols-[128px_minmax(0,1fr)_144px] grid-rows-[64px_48px] items-center sm:h-[72px] sm:grid-rows-1 sm:gap-x-4">
         <Link to="/" aria-label="PicThin" className="col-start-1 row-start-1 w-32 rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary">
           <Logo size="sm" showText />
@@ -30,6 +32,8 @@ export default function SiteHeader() {
           <LanguageSwitcher />
         </div>
       </div>
+      </div>
+      <LanguageSuggestion />
     </header>
   );
 }

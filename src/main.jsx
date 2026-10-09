@@ -6,15 +6,19 @@ import './index.css'
 import './styles/blog.css'
 import { routes } from './routes.jsx'
 import { createClientRouterFactory } from './utils/clientRouter.js'
+import { getBasePath } from './i18n/paths.js'
 
 export const createRoot = ViteReactSSG(
   { routes, customCreateRouter: createClientRouterFactory(routes, createBrowserRouter) },
   ({ router, isClient }) => {
     if (isClient && router) {
-      router.subscribe(() => {
-        if (typeof window !== 'undefined') {
+      let previousPath = getBasePath(router.state.location.pathname);
+      router.subscribe(({ location }) => {
+        const nextPath = getBasePath(location.pathname);
+        if (typeof window !== 'undefined' && nextPath !== previousPath) {
           window.scrollTo(0, 0);
         }
+        previousPath = nextPath;
       });
     }
   }

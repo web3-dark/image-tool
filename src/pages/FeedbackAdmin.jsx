@@ -2,7 +2,7 @@ import LanguageSwitcher from '../components/LanguageSwitcher.jsx';
 import { useI18n } from '../i18n/useI18n.js';
 import { useEffect, useState } from 'react';
 import { Head } from 'vite-react-ssg';
-import { Link } from 'react-router-dom';
+import { Link } from '../components/LocalizedLink.jsx';
 
 const categories = { problem: '使用问题', suggestion: '功能建议', other: '其他反馈' };
 const buttonClass = 'rounded-lg border border-border bg-surface px-3 py-2 text-sm hover:bg-surface-muted disabled:opacity-50';

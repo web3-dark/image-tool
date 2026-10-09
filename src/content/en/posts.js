@@ -1,4 +1,4 @@
-// English articles are authored independently; they share URLs and tools with Chinese articles.
+// English articles are authored independently; locale routing supplies their /en URLs.
 export const ENGLISH_POSTS = {
   'registration-photo-under-200kb': {
     title: 'Photo too large for a form? Get it under 200 KB',

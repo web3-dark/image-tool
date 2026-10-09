@@ -1,5 +1,5 @@
 import { useI18n } from '../i18n/useI18n.js';
-import { Link } from 'react-router-dom';
+import { Link } from './LocalizedLink.jsx';
 
 export default function ToolUsageGuide({ guide }) {
   const { t } = useI18n();

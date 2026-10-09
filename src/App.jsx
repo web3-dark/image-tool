@@ -1,6 +1,6 @@
 import { useI18n } from './i18n/useI18n.js';
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from './components/LocalizedLink.jsx';
 import { Head } from 'vite-react-ssg';
 import ImageUploader from './components/ImageUploader';
 import PreviewPanel from './components/PreviewPanel';
@@ -293,9 +293,9 @@ function App() {
         <title>{t("本地图片压缩工具 - 图片不上传，保护隐私 | PicThin")}</title>
         <meta name="description" content={t("图片全程在浏览器本地处理，不上传服务器，保护你的隐私。支持 JPG、PNG、WebP、AVIF、GIF 批量压缩、画质调整与格式转换，手机电脑均可使用。")} />
         <meta name="keywords" content={t("图片压缩,在线压缩图片,PNG压缩,JPEG压缩,WebP转换,图片格式转换,免费图片压缩,批量压缩图片,图片瘦身,图片体积压缩")} />
-        <link rel="canonical" href={HOME_URL} />
+        <link rel="canonical" href={localize(HOME_URL)} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={t(HOME_URL)} />
+        <meta property="og:url" content={localize(HOME_URL)} />
         <meta property="og:title" content={t("本地图片压缩，保护你的隐私 | PicThin")} />
         <meta property="og:description" content={t("图片全程在浏览器本地处理，不会上传到服务器。支持批量压缩、画质调整与格式转换。")} />
         <meta property="og:image" content={t(OG_IMAGE_URL)} />

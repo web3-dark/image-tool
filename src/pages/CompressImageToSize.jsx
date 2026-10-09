@@ -1,7 +1,7 @@
 import { useI18n } from '../i18n/useI18n.js';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Head } from 'vite-react-ssg';
-import { Link } from 'react-router-dom';
+import { Link } from '../components/LocalizedLink.jsx';
 import { Download, Gauge, RefreshCw, ShieldCheck } from 'lucide-react';
 import BlogLayout from '../components/BlogLayout';
 import ImageUploader from '../components/ImageUploader';
@@ -151,11 +151,11 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
         <html lang={locale} />
         <title>{t(pageConfig.seoTitle)}</title>
         <meta name="description" content={t(pageConfig.description)} />
-        <link rel="canonical" href={pageUrl} />
+        <link rel="canonical" href={localize(pageUrl)} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={t(`${t(pageConfig.title)} - PicThin`)} />
         <meta property="og:description" content={t(pageConfig.description)} />
-        <meta property="og:url" content={t(pageUrl)} />
+        <meta property="og:url" content={localize(pageUrl)} />
         <meta property="og:image" content={t(OG_IMAGE_URL)} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={t(`${t(pageConfig.title)} - PicThin`)} />

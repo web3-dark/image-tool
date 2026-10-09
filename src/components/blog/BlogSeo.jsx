@@ -49,11 +49,11 @@ export function BlogIndexSeo({ description }) {
       <html lang={locale} />
       <title>{t("图片压缩指南 - JPG PNG WebP 格式与体积优化 - picthin")}</title>
       <meta name="description" content={t(description)} />
-      <link rel="canonical" href={pageUrl} />
+      <link rel="canonical" href={localize(pageUrl)} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={t("图片压缩指南 - picthin")} />
       <meta property="og:description" content={t(description)} />
-      <meta property="og:url" content={t(pageUrl)} />
+      <meta property="og:url" content={localize(pageUrl)} />
       <meta property="og:image" content={t(OG_IMAGE_URL)} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={t("图片压缩指南 - picthin")} />
@@ -98,11 +98,11 @@ export function BlogArticleSeo({ post, extraSchemas = [] }) {
       <title>{t(post.seoTitle || `${t(post.title)} - picthin`)}</title>
       <meta name="description" content={t(post.description)} />
       <meta name="keywords" content={t(post.keywords)} />
-      <link rel="canonical" href={pageUrl} />
+      <link rel="canonical" href={localize(pageUrl)} />
       <meta property="og:type" content="article" />
       <meta property="og:title" content={t(post.ogTitle || post.title)} />
       <meta property="og:description" content={t(post.description)} />
-      <meta property="og:url" content={t(pageUrl)} />
+      <meta property="og:url" content={localize(pageUrl)} />
       <meta property="og:image" content={t(OG_IMAGE_URL)} />
       <meta property="article:published_time" content={t(post.datePublished)} />
       <meta property="article:modified_time" content={t(post.dateModified)} />

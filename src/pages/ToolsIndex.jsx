@@ -1,7 +1,7 @@
 import { useI18n } from '../i18n/useI18n.js';
 import { createElement } from 'react';
 import { Head } from 'vite-react-ssg';
-import { Link } from 'react-router-dom';
+import { Link } from '../components/LocalizedLink.jsx';
 import { ArrowRight, Gauge, Images, MapPinOff } from 'lucide-react';
 import BlogLayout from '../components/BlogLayout';
 import { FORMAT_TOOL_CONFIGS } from '../config/tools';
@@ -60,11 +60,11 @@ export default function ToolsIndex() {
         <html lang={locale} />
         <title>{t("在线图片工具 - 本地压缩、清除 EXIF 与格式转换 - PicThin")}</title>
         <meta name="description" content={t("PicThin 免费在线图片工具：压缩到 20KB、50KB、100KB、200KB，清除 EXIF/GPS，以及图片格式转换。全程浏览器本地处理。")} />
-        <link rel="canonical" href={PAGE_URL} />
+        <link rel="canonical" href={localize(PAGE_URL)} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={t("PicThin 在线图片工具")} />
         <meta property="og:description" content={t("图片压缩、清除 EXIF/GPS 和格式转换，全程在浏览器本地完成。")} />
-        <meta property="og:url" content={t(PAGE_URL)} />
+        <meta property="og:url" content={localize(PAGE_URL)} />
         <meta property="og:image" content={t(OG_IMAGE_URL)} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={t("PicThin 在线图片工具")} />

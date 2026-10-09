@@ -16,7 +16,7 @@ import FeedbackAdmin from './pages/FeedbackAdmin.jsx';
 import { FORMAT_TOOL_CONFIGS } from './config/tools.js';
 import { TARGET_SIZE_PAGE_CONFIGS } from './config/targetSizes.js';
 
-export const routes = [
+const baseRoutes = [
   {
     path: '/',
     element: <RootLayout />,
@@ -96,3 +96,13 @@ export const routes = [
     ],
   },
 ];
+
+// Reuse page elements so switching language preserves in-memory image work.
+const publicRoutes = baseRoutes[0].children.filter((route) => route.path !== 'admin/feedback');
+export const routes = [{
+  ...baseRoutes[0],
+  children: [
+    ...baseRoutes[0].children,
+    ...publicRoutes.map(({ index, path, ...route }) => ({ ...route, path: index ? 'en' : `en/${path}` })),
+  ],
+}];
