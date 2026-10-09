@@ -111,21 +111,26 @@ export default function FeedbackDialog({ onClose }) {
   return createPortal(
     <dialog ref={dialog} aria-labelledby="feedback-title"
       onCancel={(event) => { event.preventDefault(); if (!busy) onClose(); }}
-      className="m-auto w-[calc(100%_-_2rem)] max-w-lg max-h-[90dvh] overflow-y-auto rounded-2xl border border-border bg-surface p-0 text-foreground shadow-xl backdrop:bg-black/40 backdrop:backdrop-blur-sm">
-      <div className="flex items-start justify-between border-b border-border p-5 sm:p-6">
+      className="m-auto w-[calc(100%_-_2rem)] max-w-lg max-h-[90dvh] overflow-hidden rounded-2xl border border-border bg-surface p-0 text-foreground shadow-xl open:flex open:flex-col backdrop:bg-black/40 backdrop:backdrop-blur-sm">
+      <div className="flex shrink-0 items-start justify-between gap-3 border-b border-border p-5 sm:p-6">
         <div>
           <h2 id="feedback-title" className="text-xl font-semibold">{t("意见反馈")}</h2>
           <p className="mt-1 text-sm text-foreground-muted">{t("遇到问题，或有想要的功能？告诉我们。")}</p>
         </div>
         <button type="button" aria-label={t("关闭反馈")} disabled={busy} onClick={onClose}
-          className="rounded-lg p-2 hover:bg-surface-muted disabled:opacity-40"><X size={20} /></button>
+          className="shrink-0 rounded-lg p-2 hover:bg-surface-muted disabled:opacity-40"><X size={20} /></button>
       </div>
-      {sent ? <div className="p-8 text-center" role="status">
+      {sent ? <div className="flex min-h-0 flex-col overflow-hidden">
+        <div className="min-h-0 overflow-y-auto overscroll-contain p-8 text-center" role="status">
         <CheckCircle2 className="mx-auto mb-4 text-primary" size={40} />
         <h3 className="text-lg font-semibold">{t("反馈已收到，谢谢你！")}</h3>
         <p className="mt-2 text-sm text-foreground-muted">{t("我们会认真查看。若留下了邮箱，需要进一步了解时会与你联系。")}</p>
-        <button type="button" onClick={onClose} className="mt-6 rounded-lg bg-primary px-8 py-2.5 text-primary-fg">{t("完成")}</button>
-      </div> : <form onSubmit={submit} className="space-y-4 p-5 sm:p-6">
+        </div>
+        <div className="shrink-0 border-t border-border bg-surface px-5 py-4 text-center sm:px-6">
+          <button type="button" onClick={onClose} className="rounded-lg bg-primary px-8 py-2.5 text-primary-fg">{t("完成")}</button>
+        </div>
+      </div> : <form onSubmit={submit} className="flex min-h-0 flex-col overflow-hidden">
+        <div className="min-h-0 space-y-4 overflow-y-auto overscroll-contain p-5 sm:p-6">
         <fieldset disabled={busy} className="space-y-4 disabled:opacity-70">
           <div className="space-y-1.5">
             <label htmlFor="feedback-category" className="block text-sm font-medium">{t("反馈类型")}</label>
@@ -156,10 +161,13 @@ export default function FeedbackDialog({ onClose }) {
           <button type="button" disabled={busy} className="ml-2 underline" onClick={() => { setToken(''); setVerificationError(''); setAttempt((value) => value + 1); }}>{t("重新验证")}</button>
         </div>}
         {error && <p className="text-sm text-red-600" role="alert">{t(error)}</p>}
+        </div>
+        <div className="shrink-0 border-t border-border bg-surface px-5 py-4 sm:px-6">
         <button type="submit" disabled={busy || !token || message.trim().length < 2}
           className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3 text-sm font-medium text-primary-fg transition-opacity disabled:opacity-50">
           {busy && <LoaderCircle size={16} className="animate-spin" />}{t(busy ? '正在提交…' : '提交反馈')}
         </button>
+        </div>
       </form>}
     </dialog>, document.body,
   );
