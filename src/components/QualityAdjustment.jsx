@@ -1,3 +1,4 @@
+import { useI18n } from '../i18n/useI18n.js';
 import React, { useState, useMemo } from 'react';
 import '../styles/QualityAdjustment.css';
 import { estimateCompressedSize, formatFileSize } from '../utils/imageProcessor';
@@ -11,6 +12,7 @@ const QualityAdjustment = ({
   originalFileSize = 0,
   format = 'jpeg'
 }) => {
+  const { t } = useI18n();
   const [localQuality, setLocalQuality] = useState(quality);
 
   // 计算估算的压缩大小
@@ -79,9 +81,9 @@ const QualityAdjustment = ({
   return (
     <div className="quality-adjustment-container">
       <div className="quality-header">
-        <h3 className="quality-title">压缩质量</h3>
+        <h3 className="quality-title">{t("压缩质量")}</h3>
         <span className="quality-label" style={{ color: getQualityColor() }}>
-          {getQualityLabel()}
+          {t(getQualityLabel())}
         </span>
       </div>
 
@@ -103,7 +105,7 @@ const QualityAdjustment = ({
 
       {/* 质量值显示和输入 */}
       <div className="quality-input-wrapper">
-        <label htmlFor="quality-input" className="quality-input-label">质量:</label>
+        <label htmlFor="quality-input" className="quality-input-label">{t("质量:")}</label>
         <input
           id="quality-input"
           type="number"
@@ -121,25 +123,25 @@ const QualityAdjustment = ({
         <button
           className={`preset-button ${localQuality <= 50 ? 'active' : ''}`}
           onClick={() => applyPreset(40)}
-          title="最小文件大小，但质量会降低"
+          title={t("最小文件大小，但质量会降低")}
         >
-          <span className="preset-name">低</span>
+          <span className="preset-name">{t("低")}</span>
           <span className="preset-quality">40%</span>
         </button>
         <button
           className={`preset-button ${localQuality > 50 && localQuality < 80 ? 'active' : ''}`}
           onClick={() => applyPreset(70)}
-          title="平衡质量和文件大小（推荐）"
+          title={t("平衡质量和文件大小（推荐）")}
         >
-          <span className="preset-name">中</span>
+          <span className="preset-name">{t("中")}</span>
           <span className="preset-quality">70%</span>
         </button>
         <button
           className={`preset-button ${localQuality >= 80 ? 'active' : ''}`}
           onClick={() => applyPreset(90)}
-          title="保持高质量，文件会较大"
+          title={t("保持高质量，文件会较大")}
         >
-          <span className="preset-name">高</span>
+          <span className="preset-name">{t("高")}</span>
           <span className="preset-quality">90%</span>
         </button>
       </div>
@@ -148,16 +150,16 @@ const QualityAdjustment = ({
       {originalFileSize > 0 && (
         <div className="quality-estimation">
           <div className="estimation-row">
-            <span className="estimation-label">原始大小:</span>
-            <span className="estimation-value">{formatFileSize(originalFileSize)}</span>
+            <span className="estimation-label">{t("原始大小:")}</span>
+            <span className="estimation-value">{t(formatFileSize(originalFileSize))}</span>
           </div>
           <div className="estimation-row">
-            <span className="estimation-label">估算大小:</span>
-            <span className="estimation-value">{formatFileSize(estimatedSize)}</span>
+            <span className="estimation-label">{t("估算大小:")}</span>
+            <span className="estimation-value">{t(formatFileSize(estimatedSize))}</span>
           </div>
           <div className="estimation-row saving">
-            <span className="estimation-label">节省空间:</span>
-            <span className="estimation-value saving-value">{savingPercentage}%</span>
+            <span className="estimation-label">{t("节省空间:")}</span>
+            <span className="estimation-value saving-value">{t(savingPercentage)}%</span>
           </div>
         </div>
       )}

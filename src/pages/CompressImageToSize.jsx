@@ -1,9 +1,11 @@
+import { useI18n } from '../i18n/useI18n.js';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Head } from 'vite-react-ssg';
 import { Link } from 'react-router-dom';
 import { Download, Gauge, RefreshCw, ShieldCheck } from 'lucide-react';
 import BlogLayout from '../components/BlogLayout';
 import ImageUploader from '../components/ImageUploader';
+import ToolUsageGuide from '../components/ToolUsageGuide';
 import { Button } from '../components/ui/button';
 import {
   calculateSavingPercentage,
@@ -38,6 +40,7 @@ const GENERIC_FAQ_ITEMS = [
 ];
 
 export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_PAGE }) {
+  const { t, localize, locale } = useI18n();
   const [file, setFile] = useState(null);
   const [targetKb, setTargetKb] = useState(pageConfig.targetKb);
   const [format, setFormat] = useState('jpeg');
@@ -145,47 +148,45 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
   return (
     <BlogLayout>
       <Head>
-        <html lang="zh-CN" />
-        <title>{pageConfig.seoTitle}</title>
-        <meta name="description" content={pageConfig.description} />
+        <html lang={locale} />
+        <title>{t(pageConfig.seoTitle)}</title>
+        <meta name="description" content={t(pageConfig.description)} />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={`${pageConfig.title} - PicThin`} />
-        <meta property="og:description" content={pageConfig.description} />
-        <meta property="og:url" content={pageUrl} />
-        <meta property="og:image" content={OG_IMAGE_URL} />
+        <meta property="og:title" content={t(`${t(pageConfig.title)} - PicThin`)} />
+        <meta property="og:description" content={t(pageConfig.description)} />
+        <meta property="og:url" content={t(pageUrl)} />
+        <meta property="og:image" content={t(OG_IMAGE_URL)} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${pageConfig.title} - PicThin`} />
-        <meta name="twitter:description" content={pageConfig.description} />
-        <meta name="twitter:image" content={OG_IMAGE_URL} />
+        <meta name="twitter:title" content={t(`${t(pageConfig.title)} - PicThin`)} />
+        <meta name="twitter:description" content={t(pageConfig.description)} />
+        <meta name="twitter:image" content={t(OG_IMAGE_URL)} />
         {schemas.map((schema, index) => (
-          <script key={index} type="application/ld+json">{JSON.stringify(schema)}</script>
+          <script key={index} type="application/ld+json">{JSON.stringify(localize(schema))}</script>
         ))}
       </Head>
 
       <section className="max-w-4xl mx-auto px-4 md:px-6 py-10 md:py-14">
         <header className="max-w-3xl mb-8">
           <p className="text-sm text-foreground-muted mb-3">
-            <Link to="/" className="hover:text-primary">首页</Link>
+            <Link to="/" className="hover:text-primary">{t("首页")}</Link>
             <span className="mx-2">/</span>
-            <Link to="/tools" className="hover:text-primary">图片工具</Link>
+            <Link to="/tools" className="hover:text-primary">{t("图片工具")}</Link>
             <span className="mx-2">/</span>
-            <span>{pageConfig.shortTitle}</span>
+            <span>{t(pageConfig.shortTitle)}</span>
           </p>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-            {pageConfig.title}
+            {t(pageConfig.title)}
           </h1>
           <p className="text-base md:text-lg text-foreground-muted mt-4 leading-8">
-            {pageConfig.lead}
+            {t(pageConfig.lead)}
           </p>
         </header>
 
         <div className="rounded-xl border border-border bg-surface p-4 md:p-6 shadow-sm">
           <div className="grid md:grid-cols-[1fr_auto] gap-5 items-end mb-6">
             <div>
-              <label htmlFor="target-size" className="block text-sm font-semibold text-foreground mb-2">
-                目标文件大小
-              </label>
+              <label htmlFor="target-size" className="block text-sm font-semibold text-foreground mb-2">{t("目标文件大小")}</label>
               <div className="flex items-center gap-2">
                 <input
                   id="target-size"
@@ -205,7 +206,7 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
                 />
                 <span className="text-sm font-medium text-foreground-muted">KB</span>
               </div>
-              <div className="flex flex-wrap gap-2 mt-3" aria-label="常用目标大小">
+              <div className="flex flex-wrap gap-2 mt-3" aria-label={t("常用目标大小")}>
                 {TARGET_PRESETS.map((preset) => (
                   <button
                     key={preset}
@@ -220,14 +221,14 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
                         : 'border-border text-foreground-muted hover:border-primary hover:text-primary'
                     }`}
                   >
-                    {preset === 1024 ? '1MB' : `${preset}KB`}
+                    {t(preset === 1024 ? '1MB' : `${preset}KB`)}
                   </button>
                 ))}
               </div>
             </div>
 
             <fieldset>
-              <legend className="block text-sm font-semibold text-foreground mb-2">输出格式</legend>
+              <legend className="block text-sm font-semibold text-foreground mb-2">{t("输出格式")}</legend>
               <div className="flex rounded-md border border-border p-1 bg-surface-muted">
                 {[
                   ['jpeg', 'JPG'],
@@ -245,7 +246,7 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
                       format === value ? 'bg-surface text-primary shadow-sm' : 'text-foreground-muted hover:text-foreground'
                     }`}
                   >
-                    {label}
+                    {t(label)}
                   </button>
                 ))}
               </div>
@@ -259,58 +260,55 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
               <div className="grid md:grid-cols-2 gap-4">
                 <figure className="rounded-lg border border-border bg-surface-muted overflow-hidden">
                   <div className="aspect-[4/3] flex items-center justify-center p-3">
-                    {originalUrl && <img src={originalUrl} alt="原始图片预览" className="max-w-full max-h-full object-contain" />}
+                    {originalUrl && <img src={originalUrl} alt={t("原始图片预览")} className="max-w-full max-h-full object-contain" />}
                   </div>
                   <figcaption className="border-t border-border bg-surface px-4 py-3 text-sm">
-                    <span className="font-medium text-foreground">原始图片</span>
-                    <span className="text-foreground-muted ml-2">{formatFileSize(file.size)}</span>
+                    <span className="font-medium text-foreground">{t("原始图片")}</span>
+                    <span className="text-foreground-muted ml-2">{t(formatFileSize(file.size))}</span>
                   </figcaption>
                 </figure>
 
                 <figure className="rounded-lg border border-border bg-surface-muted overflow-hidden">
                   <div className="aspect-[4/3] flex items-center justify-center p-3">
                     {resultUrl ? (
-                      <img src={resultUrl} alt="压缩后图片预览" className="max-w-full max-h-full object-contain" />
+                      <img src={resultUrl} alt={t("压缩后图片预览")} className="max-w-full max-h-full object-contain" />
                     ) : (
                       <div className="text-center text-foreground-muted" aria-live="polite">
                         <Gauge className="w-8 h-8 mx-auto mb-2 text-primary" />
-                        {status === 'processing' ? `正在压缩 ${Math.round(progress)}%` : '等待压缩结果'}
+                        {t(status === 'processing' ? `正在压缩 ${Math.round(progress)}%` : '等待压缩结果')}
                       </div>
                     )}
                   </div>
                   <figcaption className="border-t border-border bg-surface px-4 py-3 text-sm">
-                    <span className="font-medium text-foreground">压缩结果</span>
-                    <span className="text-foreground-muted ml-2">{result ? formatFileSize(result.size) : '—'}</span>
+                    <span className="font-medium text-foreground">{t("压缩结果")}</span>
+                    <span className="text-foreground-muted ml-2">{t(result ? formatFileSize(result.size) : '—')}</span>
                   </figcaption>
                 </figure>
               </div>
 
               {status === 'processing' && (
-                <div className="h-2 overflow-hidden rounded-full bg-surface-muted" aria-label={`压缩进度 ${Math.round(progress)}%`}>
+                <div className="h-2 overflow-hidden rounded-full bg-surface-muted" aria-label={t(`压缩进度 ${Math.round(progress)}%`)}>
                   <div className="h-full bg-primary transition-all" style={{ width: `${Math.max(4, progress)}%` }} />
                 </div>
               )}
 
               {error && (
                 <p className="rounded-md border border-danger/20 bg-danger/10 px-4 py-3 text-sm text-danger" role="alert">
-                  {error}
+                  {t(error)}
                 </p>
               )}
 
               {result && (
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-lg bg-primary-muted px-4 py-4">
                   <div>
-                    <p className="font-semibold text-foreground">
-                      已压缩到 {formatFileSize(result.size)}
+                    <p className="font-semibold text-foreground">{t("已压缩到")}{t(formatFileSize(result.size))}
                     </p>
                     <p className="text-sm text-foreground-muted mt-1">
-                      {savingPercentage >= 0 ? `比原图节省 ${savingPercentage}%` : '原图已很小，本次主要完成格式转换'}
+                      {t(savingPercentage >= 0 ? `比原图节省 ${savingPercentage}%` : '原图已很小，本次主要完成格式转换')}
                     </p>
                   </div>
                   <Button onClick={handleDownload} className="md:min-w-36">
-                    <Download className="w-4 h-4 mr-2" />
-                    下载图片
-                  </Button>
+                    <Download className="w-4 h-4 mr-2" />{t("下载图片")}</Button>
                 </div>
               )}
 
@@ -320,9 +318,7 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
                   onClick={() => runCompression()}
                   disabled={status === 'processing'}
                 >
-                  <RefreshCw className="w-4 h-4 mr-2" />
-                  按当前设置重新压缩
-                </Button>
+                  <RefreshCw className="w-4 h-4 mr-2" />{t("按当前设置重新压缩")}</Button>
                 <button
                   type="button"
                   onClick={() => {
@@ -333,50 +329,43 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
                     setError('');
                   }}
                   className="text-sm text-foreground-muted hover:text-primary px-2"
-                >
-                  更换图片
-                </button>
+                >{t("更换图片")}</button>
               </div>
             </div>
           )}
 
           <p className="flex items-center gap-2 text-xs text-foreground-muted mt-4">
-            <ShieldCheck className="w-4 h-4 text-success" />
-            图片只在当前设备中处理，不会上传到服务器。JPG 输出不保留透明背景，透明图片建议选择 WebP。
-          </p>
+            <ShieldCheck className="w-4 h-4 text-success" />{t("图片只在当前设备中处理，不会上传到服务器。JPG 输出不保留透明背景，透明图片建议选择 WebP。")}</p>
         </div>
 
         <article className="blog-article mt-12">
-          <h2>{isPresetPage ? `怎样把图片压到 ${pageConfig.targetKb}KB 以内？` : '怎样把图片压到指定 KB？'}</h2>
-          <p>
-            只降低质量并不总能达到目标体积。PicThin 会先在保持原始尺寸的前提下调整编码质量；如果图片仍然过大，再逐步缩小像素尺寸。相比一次把质量拉得很低，这种方法通常能保留更多可见细节。
-          </p>
+          <ToolUsageGuide guide={pageConfig.guide} />
+          <h2>{t(isPresetPage ? `怎样把图片压到 ${pageConfig.targetKb}KB 以内？` : '怎样把图片压到指定 KB？')}</h2>
+          <p>{t("只降低质量并不总能达到目标体积。PicThin 会先在保持原始尺寸的前提下调整编码质量；如果图片仍然过大，再逐步缩小像素尺寸。相比一次把质量拉得很低，这种方法通常能保留更多可见细节。")}</p>
 
-          <h2>{isPresetPage ? `哪些情况适合 ${pageConfig.targetKb}KB？` : '常见目标大小怎么选'}</h2>
+          <h2>{t(isPresetPage ? `哪些情况适合 ${pageConfig.targetKb}KB？` : '常见目标大小怎么选')}</h2>
           <ul>
-            {pageConfig.useCases.map((useCase) => <li key={useCase}>{useCase}</li>)}
+            {pageConfig.useCases.map((useCase) => <li key={useCase}>{t(useCase)}</li>)}
           </ul>
           <p>
-            {pageConfig.guidance} 想了解具体判断方法，可以继续阅读
-            {' '}<Link to="/blog/jpg-compress-to-target-size">JPG 图片怎么压缩到指定大小</Link>。
-          </p>
+            {t(pageConfig.guidance)}{t("想了解具体判断方法，可以继续阅读")}{t(' ')}<Link to="/blog/jpg-compress-to-target-size">{t("JPG 图片怎么压缩到指定大小")}</Link>{t("。")}</p>
 
-          <h2>常见问题</h2>
+          <h2>{t("常见问题")}</h2>
           {faqItems.map((item) => (
             <section key={item.question}>
-              <h3>{item.question}</h3>
-              <p>{item.answer}</p>
+              <h3>{t(item.question)}</h3>
+              <p>{t(item.answer)}</p>
             </section>
           ))}
 
-          <h2>其他目标大小</h2>
+          <h2>{t("其他目标大小")}</h2>
           <p className="flex flex-wrap gap-x-4 gap-y-2">
             {TARGET_SIZE_PAGE_CONFIGS
               .filter((page) => page.path !== pageConfig.path)
               .map((page) => (
-                <Link key={page.path} to={page.path}>{page.targetKb}KB 图片压缩</Link>
+                <Link key={page.path} to={page.path}>{t(page.targetKb)}{t("KB 图片压缩")}</Link>
               ))}
-            {isPresetPage && <Link to="/compress-image-to-size">自定义目标大小</Link>}
+            {isPresetPage && <Link to="/compress-image-to-size">{t("自定义目标大小")}</Link>}
           </p>
         </article>
       </section>

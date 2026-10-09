@@ -1,3 +1,4 @@
+import { useI18n } from '../i18n/useI18n.js';
 import React, { useState, useRef } from 'react';
 import { validateImageFile } from '../utils/imageProcessor';
 
@@ -10,6 +11,7 @@ const ImageUploader = ({
   acceptedTypes = null,
   supportedText = 'JPG、PNG、GIF、WebP、AVIF',
 }) => {
+  const { t } = useI18n();
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
@@ -68,12 +70,12 @@ const ImageUploader = ({
       if (validation.valid && matchesPageType) {
         validFiles.push(file);
       } else {
-        errors.push(`${file.name}: ${validation.valid ? `此工具仅支持 ${supportedText}` : validation.error}`);
+        errors.push({ name: file.name, message: validation.valid ? `此工具仅支持 ${supportedText}` : validation.error });
       }
     });
 
     if (errors.length > 0) {
-      setError(errors.join('\n'));
+      setError(errors);
     }
 
     if (validFiles.length > 0) {
@@ -116,14 +118,14 @@ const ImageUploader = ({
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
         <h3 className="text-lg font-semibold text-foreground mb-1">
-          <span className="md:hidden">点击选择图片</span>
-          <span className="hidden md:inline">拖拽图片到这里</span>
+          <span className="md:hidden">{t("点击选择图片")}</span>
+          <span className="hidden md:inline">{t("拖拽图片到这里")}</span>
         </h3>
         <p className="text-sm text-foreground-muted mb-2">
-          <span className="md:hidden">支持从相册或文件中选择</span>
-          <span className="hidden md:inline">或点击选择文件</span>
+          <span className="md:hidden">{t("支持从相册或文件中选择")}</span>
+          <span className="hidden md:inline">{t("或点击选择文件")}</span>
         </p>
-        <p className="text-xs text-foreground-muted">{supportedText}</p>
+        <p className="text-xs text-foreground-muted">{t(supportedText)}</p>
 
         <input
           ref={fileInputRef}
@@ -137,7 +139,7 @@ const ImageUploader = ({
 
       {error && (
         <div className="mt-3 p-3 bg-danger/10 border border-danger/20 rounded-md text-danger text-sm whitespace-pre-line">
-          {error}
+          {error.map(({ name, message }) => `${name}: ${t(message)}`).join('\n')}
         </div>
       )}
     </div>

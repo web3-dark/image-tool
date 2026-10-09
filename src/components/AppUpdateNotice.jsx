@@ -1,6 +1,8 @@
+import { useI18n } from '../i18n/useI18n.js';
 import { useEffect, useState } from 'react';
 
 export default function AppUpdateNotice() {
+  const { t } = useI18n();
   const [updateAvailable, setUpdateAvailable] = useState(false);
 
   useEffect(() => {
@@ -42,10 +44,10 @@ export default function AppUpdateNotice() {
   if (!updateAvailable) return null;
   return (
     <div role="status" className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-lg rounded-xl border border-border bg-surface p-4 shadow-lg">
-      <p className="text-sm text-foreground">有新版本可用。请先下载当前图片，再刷新页面。</p>
+      <p className="text-sm text-foreground">{t("有新版本可用。请先下载当前图片，再刷新页面。")}</p>
       <div className="mt-3 flex gap-4 text-sm">
-        <button className="font-semibold text-primary" onClick={() => window.location.reload()}>刷新页面</button>
-        <button className="text-foreground-muted" onClick={() => setUpdateAvailable(false)}>稍后再说</button>
+        <button className="font-semibold text-primary" onClick={() => window.location.reload()}>{t("刷新页面")}</button>
+        <button className="text-foreground-muted" onClick={() => setUpdateAvailable(false)}>{t("稍后再说")}</button>
       </div>
     </div>
   );

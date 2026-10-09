@@ -1,3 +1,4 @@
+import { useI18n } from '../i18n/useI18n.js';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Head } from 'vite-react-ssg';
 import { Link } from 'react-router-dom';
@@ -67,6 +68,7 @@ const SCHEMAS = [
 ];
 
 export default function RemoveImageMetadata() {
+  const { t, localize, locale } = useI18n();
   const [file, setFile] = useState(null);
   const [result, setResult] = useState(null);
   const [status, setStatus] = useState('idle');
@@ -127,39 +129,35 @@ export default function RemoveImageMetadata() {
   return (
     <BlogLayout>
       <Head>
-        <html lang="zh-CN" />
-        <title>清除照片 EXIF 和 GPS 信息 - 本地处理不上传 - PicThin</title>
-        <meta name="description" content="免费清除 JPG、PNG、WebP 图片中的 EXIF、GPS 位置、拍摄时间和相机信息。浏览器本地处理，照片不上传服务器。" />
+        <html lang={locale} />
+        <title>{t("清除照片 EXIF 和 GPS 信息 - 本地处理不上传 - PicThin")}</title>
+        <meta name="description" content={t("免费清除 JPG、PNG、WebP 图片中的 EXIF、GPS 位置、拍摄时间和相机信息。浏览器本地处理，照片不上传服务器。")} />
         <link rel="canonical" href={PAGE_URL} />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="清除照片 EXIF 和 GPS 信息 - PicThin" />
-        <meta property="og:description" content="分享照片前清除位置和拍摄设备信息，全程浏览器本地处理。" />
-        <meta property="og:url" content={PAGE_URL} />
-        <meta property="og:image" content={OG_IMAGE_URL} />
+        <meta property="og:title" content={t("清除照片 EXIF 和 GPS 信息 - PicThin")} />
+        <meta property="og:description" content={t("分享照片前清除位置和拍摄设备信息，全程浏览器本地处理。")} />
+        <meta property="og:url" content={t(PAGE_URL)} />
+        <meta property="og:image" content={t(OG_IMAGE_URL)} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="清除照片 EXIF 和 GPS 信息 - PicThin" />
-        <meta name="twitter:description" content="分享照片前清除位置和拍摄设备信息，全程浏览器本地处理。" />
-        <meta name="twitter:image" content={OG_IMAGE_URL} />
+        <meta name="twitter:title" content={t("清除照片 EXIF 和 GPS 信息 - PicThin")} />
+        <meta name="twitter:description" content={t("分享照片前清除位置和拍摄设备信息，全程浏览器本地处理。")} />
+        <meta name="twitter:image" content={t(OG_IMAGE_URL)} />
         {SCHEMAS.map((schema, index) => (
-          <script key={index} type="application/ld+json">{JSON.stringify(schema)}</script>
+          <script key={index} type="application/ld+json">{JSON.stringify(localize(schema))}</script>
         ))}
       </Head>
 
       <section className="max-w-4xl mx-auto px-4 md:px-6 py-10 md:py-14">
         <header className="max-w-3xl mb-8">
           <p className="text-sm text-foreground-muted mb-3">
-            <Link to="/" className="hover:text-primary">首页</Link>
+            <Link to="/" className="hover:text-primary">{t("首页")}</Link>
             <span className="mx-2">/</span>
-            <Link to="/tools" className="hover:text-primary">图片工具</Link>
+            <Link to="/tools" className="hover:text-primary">{t("图片工具")}</Link>
             <span className="mx-2">/</span>
-            <span>清除图片元数据</span>
+            <span>{t("清除图片元数据")}</span>
           </p>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-            清除照片 EXIF 和 GPS 信息
-          </h1>
-          <p className="text-base md:text-lg text-foreground-muted mt-4 leading-8">
-            分享证件、合同截图或私人照片前，生成一份不携带原始位置、拍摄时间和设备信息的新图片。文件全程留在当前浏览器。
-          </p>
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">{t("清除照片 EXIF 和 GPS 信息")}</h1>
+          <p className="text-base md:text-lg text-foreground-muted mt-4 leading-8">{t("分享证件、合同截图或私人照片前，生成一份不携带原始位置、拍摄时间和设备信息的新图片。文件全程留在当前浏览器。")}</p>
         </header>
 
         <div className="rounded-xl border border-border bg-surface p-4 md:p-6 shadow-sm">
@@ -175,99 +173,82 @@ export default function RemoveImageMetadata() {
               <div className="grid md:grid-cols-2 gap-4">
                 <figure className="rounded-lg border border-border bg-surface-muted overflow-hidden">
                   <div className="aspect-[4/3] flex items-center justify-center p-3">
-                    {originalUrl && <img src={originalUrl} alt="原始图片预览" className="max-w-full max-h-full object-contain" />}
+                    {originalUrl && <img src={originalUrl} alt={t("原始图片预览")} className="max-w-full max-h-full object-contain" />}
                   </div>
                   <figcaption className="border-t border-border bg-surface px-4 py-3 text-sm">
-                    <span className="font-medium text-foreground">原始文件</span>
-                    <span className="text-foreground-muted ml-2">{formatFileSize(file.size)}</span>
+                    <span className="font-medium text-foreground">{t("原始文件")}</span>
+                    <span className="text-foreground-muted ml-2">{t(formatFileSize(file.size))}</span>
                   </figcaption>
                 </figure>
 
                 <figure className="rounded-lg border border-border bg-surface-muted overflow-hidden">
                   <div className="aspect-[4/3] flex items-center justify-center p-3">
                     {resultUrl ? (
-                      <img src={resultUrl} alt="清除元数据后的图片预览" className="max-w-full max-h-full object-contain" />
+                      <img src={resultUrl} alt={t("清除元数据后的图片预览")} className="max-w-full max-h-full object-contain" />
                     ) : (
                       <div className="text-center text-foreground-muted" aria-live="polite">
                         <MapPinOff className="w-8 h-8 mx-auto mb-2 text-primary" />
-                        {status === 'processing' ? '正在清除元数据…' : '等待处理结果'}
+                        {t(status === 'processing' ? '正在清除元数据…' : '等待处理结果')}
                       </div>
                     )}
                   </div>
                   <figcaption className="border-t border-border bg-surface px-4 py-3 text-sm">
-                    <span className="font-medium text-foreground">无元数据副本</span>
-                    <span className="text-foreground-muted ml-2">{result ? formatFileSize(result.size) : '—'}</span>
+                    <span className="font-medium text-foreground">{t("无元数据副本")}</span>
+                    <span className="text-foreground-muted ml-2">{t(result ? formatFileSize(result.size) : '—')}</span>
                   </figcaption>
                 </figure>
               </div>
 
               {error && (
                 <p className="rounded-md border border-danger/20 bg-danger/10 px-4 py-3 text-sm text-danger" role="alert">
-                  {error}
+                  {t(error)}
                 </p>
               )}
 
               {result && (
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-lg bg-primary-muted px-4 py-4">
                   <div>
-                    <p className="font-semibold text-foreground">已生成不携带原始元数据的新图片</p>
+                    <p className="font-semibold text-foreground">{t("已生成不携带原始元数据的新图片")}</p>
                     <p className="text-sm text-foreground-muted mt-1">
-                      {sizeChange >= 0
+                      {t(sizeChange >= 0
                         ? `文件体积同时减少 ${sizeChange}%`
-                        : `重新编码后体积增加 ${Math.abs(sizeChange)}%，清除元数据不保证文件更小`}
+                        : `重新编码后体积增加 ${Math.abs(sizeChange)}%，清除元数据不保证文件更小`)}
                     </p>
                   </div>
                   <Button onClick={handleDownload} className="md:min-w-40">
-                    <Download className="w-4 h-4 mr-2" />
-                    下载无元数据图片
-                  </Button>
+                    <Download className="w-4 h-4 mr-2" />{t("下载无元数据图片")}</Button>
                 </div>
               )}
 
               <div className="flex flex-wrap gap-3">
                 <Button variant="outline" onClick={() => processFile()} disabled={status === 'processing'}>
-                  <RefreshCw className="w-4 h-4 mr-2" />
-                  重新处理
-                </Button>
-                <button type="button" onClick={reset} className="text-sm text-foreground-muted hover:text-primary px-2">
-                  更换图片
-                </button>
+                  <RefreshCw className="w-4 h-4 mr-2" />{t("重新处理")}</Button>
+                <button type="button" onClick={reset} className="text-sm text-foreground-muted hover:text-primary px-2">{t("更换图片")}</button>
               </div>
             </div>
           )}
 
           <p className="flex items-center gap-2 text-xs text-foreground-muted mt-4">
-            <ShieldCheck className="w-4 h-4 text-success" />
-            原始图片与处理结果都不会上传。请保留原文件，无元数据副本适合分享和提交，不建议替代唯一原件。
-          </p>
+            <ShieldCheck className="w-4 h-4 text-success" />{t("原始图片与处理结果都不会上传。请保留原文件，无元数据副本适合分享和提交，不建议替代唯一原件。")}</p>
         </div>
 
         <article className="blog-article mt-12">
-          <h2>照片为什么可能包含位置信息？</h2>
-          <p>
-            手机和相机会把拍摄时间、设备型号、方向参数，有时还包括 GPS 经纬度写进图片元数据。聊天软件或平台可能会主动删除这些信息，但不能假设所有接收方都会这样处理。
-          </p>
+          <h2>{t("照片为什么可能包含位置信息？")}</h2>
+          <p>{t("手机和相机会把拍摄时间、设备型号、方向参数，有时还包括 GPS 经纬度写进图片元数据。聊天软件或平台可能会主动删除这些信息，但不能假设所有接收方都会这样处理。")}</p>
 
-          <h2>PicThin 怎样清除元数据</h2>
-          <p>
-            浏览器先在当前设备解码图片像素，再生成一个新的 JPG、PNG 或 WebP 文件。新文件只保留画面和必要的格式信息，不复制原文件中的 EXIF、GPS 或相机信息。整个过程不需要把图片传给服务器。
-          </p>
+          <h2>{t("PicThin 怎样清除元数据")}</h2>
+          <p>{t("浏览器先在当前设备解码图片像素，再生成一个新的 JPG、PNG 或 WebP 文件。新文件只保留画面和必要的格式信息，不复制原文件中的 EXIF、GPS 或相机信息。整个过程不需要把图片传给服务器。")}</p>
 
-          <h2>常见问题</h2>
+          <h2>{t("常见问题")}</h2>
           {FAQ_ITEMS.map((item) => (
             <section key={item.question}>
-              <h3>{item.question}</h3>
-              <p>{item.answer}</p>
+              <h3>{t(item.question)}</h3>
+              <p>{t(item.answer)}</p>
             </section>
           ))}
 
-          <h2>继续减小文件体积</h2>
-          <p>
-            清除元数据的主要目的不是压缩。如果还需要符合上传上限，可以继续使用
-            {' '}<Link to="/compress-image-to-100kb">压缩到 100KB</Link>、
-            <Link to="/compress-image-to-200kb">压缩到 200KB</Link> 或
-            {' '}<Link to="/compress-image-to-size">自定义目标大小</Link>。
-          </p>
+          <h2>{t("继续减小文件体积")}</h2>
+          <p>{t("清除元数据的主要目的不是压缩。如果还需要符合上传上限，可以继续使用")}{t(' ')}<Link to="/compress-image-to-100kb">{t("压缩到 100KB")}</Link>{t("、")}<Link to="/compress-image-to-200kb">{t("压缩到 200KB")}</Link>{t("或")}{t(' ')}<Link to="/compress-image-to-size">{t("自定义目标大小")}</Link>{t("。")}</p>
         </article>
       </section>
     </BlogLayout>

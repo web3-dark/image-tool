@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" role="img" aria-label="File sizes for the same 3000 by 2000 landscape photo">
+  <title>File size comparison: PNG / JPG / WebP / AVIF</title>
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .title-text { font: 600 18px -apple-system, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; fill: #0F172A; }
+      .label { font: 600 14px -apple-system, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; fill: #0F172A; }
+      .sub-label { font: 400 12px -apple-system, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; fill: #475569; }
+      .value { font: 700 14px -apple-system, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; fill: #0F172A; }
+      .caption { font: 400 12px -apple-system, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; fill: #94A3B8; }
+      .bar-png { fill: #FF9500; }
+      .bar-jpg { fill: #0A84FF; }
+      .bar-webp { fill: #34C759; }
+      .bar-avif { fill: #5B45DE; }
+    </style>
+  </defs>
+  <rect class="bg" width="800" height="380"/>
+  <text class="title-text" x="40" y="36">One 3000×2000 landscape photo in four formats</text>
+
+  <g transform="translate(40,75)">
+    <text class="label" x="0" y="14">PNG (lossless)</text>
+    <text class="sub-label" x="0" y="32">Large photo files</text>
+    <rect class="bar-png" x="160" y="0" width="460" height="36" rx="4"/>
+    <text class="value" x="630" y="24">8.2 MB</text>
+  </g>
+
+  <g transform="translate(40,150)">
+    <text class="label" x="0" y="14">JPG (quality 80%)</text>
+    <text class="sub-label" x="0" y="32">Lossy photo compression</text>
+    <rect class="bar-jpg" x="160" y="0" width="33" height="36" rx="4"/>
+    <text class="value" x="201" y="24">580 KB</text>
+  </g>
+
+  <g transform="translate(40,225)">
+    <text class="label" x="0" y="14">WebP (quality 80%)</text>
+    <text class="sub-label" x="0" y="32">35% smaller than JPG</text>
+    <rect class="bar-webp" x="160" y="0" width="21" height="36" rx="4"/>
+    <text class="value" x="189" y="24">380 KB</text>
+  </g>
+
+  <g transform="translate(40,300)">
+    <text class="label" x="0" y="14">AVIF (quality 60%)</text>
+    <text class="sub-label" x="0" y="32">Smallest; slower encoding</text>
+    <rect class="bar-avif" x="160" y="0" width="14" height="36" rx="4"/>
+    <text class="value" x="182" y="24">240 KB</text>
+  </g>
+
+  <text class="caption" x="40" y="368">Bars are proportional to file size. Approximate results for one photo at typical quality settings.</text>
+</svg>

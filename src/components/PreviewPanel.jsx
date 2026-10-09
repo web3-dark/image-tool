@@ -1,3 +1,4 @@
+import { useI18n } from '../i18n/useI18n.js';
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { fileToDataURL, formatFileSize, calculateSavingPercentage } from '../utils/imageProcessor';
@@ -13,6 +14,7 @@ const PreviewPanel = ({
   onDownload,
   isProcessing = false,
 }) => {
+  const { t } = useI18n();
   const [originalDataURL, setOriginalDataURL] = useState(null);
   const [compressedDataURL, setCompressedDataURL] = useState(null);
   const [comparisonMode, setComparisonMode] = useState('split'); // 'split' 或 'slider'
@@ -107,12 +109,12 @@ const PreviewPanel = ({
   );
 
   if (!originalDataURL) {
-    return <div className="flex items-center justify-center h-full text-foreground-muted">加载中...</div>;
+    return <div className="flex items-center justify-center h-full text-foreground-muted">{t("加载中...")}</div>;
   }
 
   return (
     <div className="flex flex-col h-full gap-4 p-4">
-      <h3 className="text-lg font-semibold text-foreground">预览效果</h3>
+      <h3 className="text-lg font-semibold text-foreground">{t("预览效果")}</h3>
 
       {/* 模式切换按钮 */}
       <div className="hidden md:flex gap-2">
@@ -120,25 +122,21 @@ const PreviewPanel = ({
           variant={comparisonMode === 'split' ? 'default' : 'outline'}
           size="sm"
           onClick={() => setComparisonMode('split')}
-          title="并排对比"
+          title={t("并排对比")}
         >
           <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M12 2v20M2 12h20" />
-          </svg>
-          并排对比
-        </Button>
+          </svg>{t("并排对比")}</Button>
         <Button
           variant={comparisonMode === 'slider' ? 'default' : 'outline'}
           size="sm"
           onClick={() => setComparisonMode('slider')}
-          title="滑块对比"
+          title={t("滑块对比")}
           className="hidden md:inline-flex"
         >
           <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M12 2v20M6 6h12v12H6z" />
-          </svg>
-          滑块对比
-        </Button>
+          </svg>{t("滑块对比")}</Button>
       </div>
 
       {/* 预览内容 */}
@@ -148,15 +146,15 @@ const PreviewPanel = ({
         <div className={`flex-1 flex ${isPortrait ? 'flex-col' : 'flex-row'} gap-4 min-h-0`}>
           {/* 原始图片 */}
           <div className="flex-1 flex flex-col gap-2 min-w-0 min-h-0">
-            <p className="text-sm font-medium text-foreground">原始图片</p>
+            <p className="text-sm font-medium text-foreground">{t("原始图片")}</p>
             <div
               className="flex-1 relative bg-surface-muted rounded-lg overflow-hidden cursor-zoom-in group min-h-0"
               onClick={() => openImageModal(originalDataURL, '原始图片')}
-              title="点击放大查看"
+              title={t("点击放大查看")}
             >
               <img
                 src={originalDataURL}
-                alt="原始图片"
+                alt={t("原始图片")}
                 onLoad={handleOriginalLoad}
                 className="absolute inset-0 w-full h-full object-contain"
               />
@@ -164,22 +162,22 @@ const PreviewPanel = ({
                 <span className="text-white text-2xl">🔍</span>
               </div>
             </div>
-            <p className="text-xs text-foreground-muted">文件大小: <span className="font-medium text-foreground">{formatFileSize(originalFile?.size || 0)}</span></p>
+            <p className="text-xs text-foreground-muted">{t("文件大小:")}<span className="font-medium text-foreground">{t(formatFileSize(originalFile?.size || 0))}</span></p>
           </div>
 
           {/* 压缩后图片 */}
           <div className="flex-1 flex flex-col gap-2 min-w-0 min-h-0">
-            <p className="text-sm font-medium text-foreground">压缩后图片</p>
+            <p className="text-sm font-medium text-foreground">{t("压缩后图片")}</p>
             <div
               className="flex-1 relative bg-surface-muted rounded-lg overflow-hidden cursor-zoom-in group min-h-0"
               onClick={() => compressedDataURL && openImageModal(compressedDataURL, '压缩后图片')}
-              title="点击放大查看"
+              title={t("点击放大查看")}
             >
               {compressedDataURL && (
                 <>
                   <img
                     src={compressedDataURL}
-                    alt="压缩后图片"
+                    alt={t("压缩后图片")}
                     className="absolute inset-0 w-full h-full object-contain"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -188,7 +186,7 @@ const PreviewPanel = ({
                 </>
               )}
             </div>
-            <p className="text-xs text-foreground-muted">文件大小: <span className="font-medium text-foreground">{formatFileSize(compressedBlob?.size || 0)}</span></p>
+            <p className="text-xs text-foreground-muted">{t("文件大小:")}<span className="font-medium text-foreground">{t(formatFileSize(compressedBlob?.size || 0))}</span></p>
           </div>
         </div>
       ) : (
@@ -202,7 +200,7 @@ const PreviewPanel = ({
           {compressedDataURL && (
             <img
               src={compressedDataURL}
-              alt="压缩后图片"
+              alt={t("压缩后图片")}
               draggable={false}
               className="absolute inset-0 w-full h-full object-contain pointer-events-none"
             />
@@ -211,7 +209,7 @@ const PreviewPanel = ({
           {/* 上层：原始图片，按滑块位置剪裁，只露出左半部分 */}
           <img
             src={originalDataURL}
-            alt="原始图片"
+            alt={t("原始图片")}
             draggable={false}
             className="absolute inset-0 w-full h-full object-contain pointer-events-none"
             style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
@@ -231,8 +229,8 @@ const PreviewPanel = ({
 
           {/* 标签 */}
           <div className="absolute bottom-3 left-3 right-3 flex justify-between pointer-events-none">
-            <span className="bg-black/60 text-white px-2 py-1 rounded text-xs font-medium">原始</span>
-            <span className="bg-black/60 text-white px-2 py-1 rounded text-xs font-medium">压缩</span>
+            <span className="bg-black/60 text-white px-2 py-1 rounded text-xs font-medium">{t("原始")}</span>
+            <span className="bg-black/60 text-white px-2 py-1 rounded text-xs font-medium">{t("压缩")}</span>
           </div>
         </div>
       )}
@@ -242,18 +240,18 @@ const PreviewPanel = ({
         {/* 统计信息 */}
         <div className="flex justify-between w-full md:flex-1 text-sm">
           <div className="flex flex-col gap-0.5">
-            <span className="text-foreground-muted">{savingPercentage >= 0 ? '节省空间' : '文件增大'}</span>
+            <span className="text-foreground-muted">{t(savingPercentage >= 0 ? '节省空间' : '文件增大')}</span>
             <span className={`font-semibold ${savingPercentage >= 0 ? 'text-success' : 'text-danger'}`}>
-              {Math.abs(savingPercentage)}%
+              {t(Math.abs(savingPercentage))}%
             </span>
           </div>
           <div className="flex flex-col gap-0.5">
-            <span className="text-foreground-muted">原始大小</span>
-            <span className="font-semibold text-foreground">{formatFileSize(originalFile?.size || 0)}</span>
+            <span className="text-foreground-muted">{t("原始大小")}</span>
+            <span className="font-semibold text-foreground">{t(formatFileSize(originalFile?.size || 0))}</span>
           </div>
           <div className="flex flex-col gap-0.5">
-            <span className="text-foreground-muted">压缩后</span>
-            <span className="font-semibold text-foreground">{formatFileSize(compressedBlob?.size || 0)}</span>
+            <span className="text-foreground-muted">{t("压缩后")}</span>
+            <span className="font-semibold text-foreground">{t(formatFileSize(compressedBlob?.size || 0))}</span>
           </div>
         </div>
 
@@ -272,16 +270,12 @@ const PreviewPanel = ({
               <>
                 <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <polyline points="20 6 9 17 4 12" />
-                </svg>
-                下载成功
-              </>
+                </svg>{t("下载成功")}</>
             ) : (
               <>
                 <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
-                </svg>
-                下载图片
-              </>
+                </svg>{t("下载图片")}</>
             )}
           </Button>
         )}
@@ -291,7 +285,7 @@ const PreviewPanel = ({
       <ImageModal
         isOpen={modalOpen}
         imageUrl={modalImage}
-        imageTitle={modalTitle}
+        imageTitle={t(modalTitle)}
         onClose={closeImageModal}
       />
     </div>

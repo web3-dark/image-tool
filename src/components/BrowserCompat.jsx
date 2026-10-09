@@ -1,3 +1,4 @@
+import { useI18n } from '../i18n/useI18n.js';
 import React, { useState, useEffect } from 'react';
 
 /**
@@ -27,6 +28,7 @@ function checkCompatibility() {
  * 仅在检测到不兼容 API 时显示
  */
 const BrowserCompat = () => {
+  const { t } = useI18n();
   const [issues, setIssues] = useState([]);
   const [dismissed, setDismissed] = useState(false);
 
@@ -60,13 +62,11 @@ const BrowserCompat = () => {
         <line x1="12" y1="17" x2="12.01" y2="17" />
       </svg>
       <div className="flex-1 text-sm">
-        <span className="font-medium">浏览器兼容性提示：</span>
-        您的浏览器不支持 {issues.join('、')}，建议升级到 Chrome 80+、Safari 16+ 或 Firefox 113+ 以获得最佳体验。
-      </div>
+        <span className="font-medium">{t("浏览器兼容性提示：")}</span>{t("您的浏览器不支持")}{issues.map((issue) => t(issue)).join(', ')}{t("，建议升级到 Chrome 80+、Safari 16+ 或 Firefox 113+ 以获得最佳体验。")}</div>
       <button
         onClick={() => setDismissed(true)}
         className="flex-shrink-0 text-amber-600 hover:text-amber-800"
-        aria-label="关闭提示"
+        aria-label={t("关闭提示")}
       >
         <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
           <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />

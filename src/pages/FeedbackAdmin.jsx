@@ -1,3 +1,5 @@
+import LanguageSwitcher from '../components/LanguageSwitcher.jsx';
+import { useI18n } from '../i18n/useI18n.js';
 import { useEffect, useState } from 'react';
 import { Head } from 'vite-react-ssg';
 import { Link } from 'react-router-dom';
@@ -6,6 +8,7 @@ const categories = { problem: '使用问题', suggestion: '功能建议', other:
 const buttonClass = 'rounded-lg border border-border bg-surface px-3 py-2 text-sm hover:bg-surface-muted disabled:opacity-50';
 
 export default function FeedbackAdmin() {
+  const { t, locale } = useI18n();
   const [secret, setSecret] = useState('');
   const [token, setToken] = useState('');
   const [status, setStatus] = useState('new');
@@ -74,49 +77,49 @@ export default function FeedbackAdmin() {
   }
 
   return <main className="min-h-screen bg-bg px-4 py-10 text-foreground">
-    <Head><title>反馈管理 - PicThin</title><meta name="robots" content="noindex,nofollow" /></Head>
+    <Head><title>{t("反馈管理 - PicThin")}</title><meta name="robots" content="noindex,nofollow" /></Head>
     <div className="mx-auto max-w-3xl">
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-        <div><h1 className="text-2xl font-bold">反馈管理</h1><p className="mt-2 text-sm text-foreground-muted">私密收件箱 · PicThin</p></div>
-        <div className="flex gap-3"><Link to="/" className={buttonClass}>返回网站</Link>{token && <button disabled={busy} onClick={logout} className={buttonClass}>退出</button>}</div>
+        <div><h1 className="text-2xl font-bold">{t("反馈管理")}</h1><p className="mt-2 text-sm text-foreground-muted">{t("私密收件箱 · PicThin")}</p></div>
+        <div className="flex flex-wrap items-center gap-3"><LanguageSwitcher /><Link to="/" className={buttonClass}>{t("返回网站")}</Link>{token && <button disabled={busy} onClick={logout} className={buttonClass}>{t("退出")}</button>}</div>
       </div>
       {!token ? <form className="space-y-4 rounded-xl border border-border bg-surface p-6" onSubmit={(event) => {
         event.preventDefault(); setError(''); setCursors([null]); setToken(secret.trim()); setSecret('');
       }}>
-        <label className="block text-sm font-medium" htmlFor="admin-secret">管理密钥</label>
+        <label className="block text-sm font-medium" htmlFor="admin-secret">{t("管理密钥")}</label>
         <input id="admin-secret" type="password" required minLength={32} maxLength={256} value={secret} autoComplete="off"
           onChange={(event) => setSecret(event.target.value)} className="w-full rounded-lg border border-border bg-bg px-3 py-3"
-          placeholder="输入专属管理密钥" />
-        <p className="text-xs text-foreground-muted">密钥只在当前页面内存中使用，刷新或退出后需要重新输入。</p>
-        <button className="rounded-lg bg-primary px-5 py-2.5 text-primary-fg">查看反馈</button>
+          placeholder={t("输入专属管理密钥")} />
+        <p className="text-xs text-foreground-muted">{t("密钥只在当前页面内存中使用，刷新或退出后需要重新输入。")}</p>
+        <button className="rounded-lg bg-primary px-5 py-2.5 text-primary-fg">{t("查看反馈")}</button>
       </form> : <>
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex gap-2" role="group" aria-label="处理状态">
+          <div className="flex gap-2" role="group" aria-label={t("处理状态")}>
             {[['new', '待处理'], ['done', '已处理'], ['all', '全部']].map(([value, label]) => <button key={value} disabled={busy}
               aria-pressed={status === value} onClick={() => { setStatus(value); setCursors([null]); }}
-              className={`${buttonClass} ${status === value ? 'border-primary text-primary' : ''}`}>{label}</button>)}
+              className={`${buttonClass} ${status === value ? 'border-primary text-primary' : ''}`}>{t(label)}</button>)}
           </div>
-          <button disabled={busy} onClick={() => setRevision((value) => value + 1)} className={buttonClass}>刷新</button>
+          <button disabled={busy} onClick={() => setRevision((value) => value + 1)} className={buttonClass}>{t("刷新")}</button>
         </div>
-        {busy && <p role="status" className="mb-4 text-sm text-foreground-muted">正在加载…</p>}
-        {!busy && !error && items.length === 0 && <p className="rounded-xl border border-border bg-surface py-16 text-center text-foreground-muted">这里暂时没有反馈。</p>}
+        {busy && <p role="status" className="mb-4 text-sm text-foreground-muted">{t("正在加载…")}</p>}
+        {!busy && !error && items.length === 0 && <p className="rounded-xl border border-border bg-surface py-16 text-center text-foreground-muted">{t("这里暂时没有反馈。")}</p>}
         <div className="space-y-4">{items.map((item) => <article key={item.id} className="rounded-xl border border-border bg-surface p-5 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-foreground-muted">
-            <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">{categories[item.category]}</span>
-            <time dateTime={new Date(item.created_at).toISOString()}>{new Date(item.created_at).toLocaleString('zh-CN')}</time>
+            <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">{t(categories[item.category])}</span>
+            <time dateTime={new Date(item.created_at).toISOString()}>{t(new Date(item.created_at).toLocaleString(locale))}</time>
           </div>
           <p className="my-4 whitespace-pre-wrap break-words text-sm leading-7">{item.message}</p>
-          <div className="space-y-1 break-all text-xs text-foreground-muted"><p>来源页面：{item.page}</p><p>联系邮箱：{item.email || '未填写'}</p></div>
+          <div className="space-y-1 break-all text-xs text-foreground-muted"><p>{t("来源页面：")}{t(item.page)}</p><p>{t("联系邮箱：")}{item.email || t('未填写')}</p></div>
           <div className="mt-5 flex items-center justify-between gap-3 border-t border-border pt-4">
-            <span className="text-xs text-foreground-muted">{item.status === 'done' ? '已处理' : '待处理'}</span>
-            <div className="flex gap-2"><button disabled={busy} onClick={() => update(item)} className={buttonClass}>{item.status === 'new' ? '标为已处理' : '恢复待处理'}</button>
-              <button disabled={busy} onClick={() => update(item, true)} className={`${buttonClass} text-red-600`}>删除</button></div>
+            <span className="text-xs text-foreground-muted">{t(item.status === 'done' ? '已处理' : '待处理')}</span>
+            <div className="flex gap-2"><button disabled={busy} onClick={() => update(item)} className={buttonClass}>{t(item.status === 'new' ? '标为已处理' : '恢复待处理')}</button>
+              <button disabled={busy} onClick={() => update(item, true)} className={`${buttonClass} text-red-600`}>{t("删除")}</button></div>
           </div>
         </article>)}</div>
-        <div className="mt-6 flex justify-between"><button disabled={busy || cursors.length === 1} className={buttonClass} onClick={() => setCursors((value) => value.slice(0, -1))}>上一页</button>
-          <button disabled={busy || !nextCursor} className={buttonClass} onClick={() => setCursors((value) => [...value, nextCursor])}>下一页</button></div>
+        <div className="mt-6 flex justify-between"><button disabled={busy || cursors.length === 1} className={buttonClass} onClick={() => setCursors((value) => value.slice(0, -1))}>{t("上一页")}</button>
+          <button disabled={busy || !nextCursor} className={buttonClass} onClick={() => setCursors((value) => [...value, nextCursor])}>{t("下一页")}</button></div>
       </>}
-      {error && <p role="alert" className="mt-5 text-sm text-red-600">{error}</p>}
+      {error && <p role="alert" className="mt-5 text-sm text-red-600">{t(error)}</p>}
     </div>
   </main>;
 }

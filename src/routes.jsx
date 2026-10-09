@@ -4,6 +4,9 @@ import App from './App.jsx';
 import BlogIndex from './pages/blog/BlogIndex.jsx';
 import JpgCompressToTargetSize from './pages/blog/JpgCompressToTargetSize.jsx';
 import PngWebpJpgComparison from './pages/blog/PngWebpJpgComparison.jsx';
+import RegistrationPhotoUnder200kb from './pages/blog/RegistrationPhotoUnder200kb.jsx';
+import CompressPngKeepTransparency from './pages/blog/CompressPngKeepTransparency.jsx';
+import WebpUploadConvertJpg from './pages/blog/WebpUploadConvertJpg.jsx';
 import CompressImageToSize from './pages/CompressImageToSize.jsx';
 import FormatToolPage from './pages/FormatToolPage.jsx';
 import ToolsIndex from './pages/ToolsIndex.jsx';
@@ -64,6 +67,21 @@ export const routes = [
         path: 'blog',
         element: <BlogIndex />,
         entry: 'src/pages/blog/BlogIndex.jsx',
+      },
+      {
+        path: 'blog/registration-photo-under-200kb',
+        element: <RegistrationPhotoUnder200kb />,
+        entry: 'src/pages/blog/RegistrationPhotoUnder200kb.jsx',
+      },
+      {
+        path: 'blog/compress-png-keep-transparency',
+        element: <CompressPngKeepTransparency />,
+        entry: 'src/pages/blog/CompressPngKeepTransparency.jsx',
+      },
+      {
+        path: 'blog/webp-upload-convert-jpg',
+        element: <WebpUploadConvertJpg />,
+        entry: 'src/pages/blog/WebpUploadConvertJpg.jsx',
       },
       {
         path: 'blog/jpg-compress-to-target-size',

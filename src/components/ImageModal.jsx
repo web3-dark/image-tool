@@ -1,3 +1,4 @@
+import { useI18n } from '../i18n/useI18n.js';
 import React, { useEffect } from 'react';
 import '../styles/ImageModal.css';
 
@@ -6,6 +7,7 @@ import '../styles/ImageModal.css';
  * ESC 键关闭、打开时锁定 body 滚动；调用方不需要重复绑定。
  */
 const ImageModal = ({ isOpen, imageUrl, imageTitle, onClose }) => {
+  const { t } = useI18n();
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e) => { if (e.key === 'Escape') onClose?.(); };
@@ -26,7 +28,7 @@ const ImageModal = ({ isOpen, imageUrl, imageTitle, onClose }) => {
     <div className="image-modal-overlay" onClick={onClose}>
       <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
         {/* 关闭按钮 */}
-        <button className="modal-close-button" onClick={onClose} title="关闭">
+        <button className="modal-close-button" onClick={onClose} title={t("关闭")}>
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
           </svg>

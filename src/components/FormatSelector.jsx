@@ -1,3 +1,4 @@
+import { useI18n } from '../i18n/useI18n.js';
 import React, { useState, useEffect } from 'react';
 import '../styles/FormatSelector.css';
 import { getSupportedFormats } from '../utils/imageProcessor';
@@ -6,6 +7,7 @@ import { getSupportedFormats } from '../utils/imageProcessor';
  * 格式选择组件 - 显示支持的图片格式
  */
 const FormatSelector = ({ selectedFormat = 'jpeg', onFormatChange }) => {
+  const { t } = useI18n();
   const [formats, setFormats] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -49,12 +51,12 @@ const FormatSelector = ({ selectedFormat = 'jpeg', onFormatChange }) => {
   };
 
   if (loading) {
-    return <div className="format-selector-container">加载格式列表中...</div>;
+    return <div className="format-selector-container">{t("加载格式列表中...")}</div>;
   }
 
   return (
     <div className="format-selector-container">
-      <h3 className="format-title">输出格式</h3>
+      <h3 className="format-title">{t("输出格式")}</h3>
 
       <div className="format-grid">
         {formats.map((format) => (
@@ -63,11 +65,11 @@ const FormatSelector = ({ selectedFormat = 'jpeg', onFormatChange }) => {
             className={`format-button ${selectedFormat === format.value ? 'active' : ''} ${!format.supported ? 'disabled' : ''}`}
             onClick={() => format.supported && handleFormatSelect(format.value)}
             disabled={!format.supported}
-            title={format.supported ? getFormatDescription(format.value) : '您的浏览器不支持此格式'}
+            title={t(format.supported ? getFormatDescription(format.value) : '您的浏览器不支持此格式')}
           >
-            <div className="format-name">{format.name}</div>
+            <div className="format-name">{t(format.name)}</div>
             <div className="format-description">
-              {format.supported ? getFormatDescription(format.value) : '不支持'}
+              {t(format.supported ? getFormatDescription(format.value) : '不支持')}
             </div>
             {selectedFormat === format.value && (
               <div className="format-checkmark">✓</div>
@@ -77,9 +79,7 @@ const FormatSelector = ({ selectedFormat = 'jpeg', onFormatChange }) => {
       </div>
 
       <div className="format-info">
-        <p className="format-note">
-          💡 选择的格式将用于压缩和转换图片。
-        </p>
+        <p className="format-note">{t("💡 选择的格式将用于压缩和转换图片。")}</p>
       </div>
     </div>
   );

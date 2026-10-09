@@ -1,17 +1,19 @@
+import { useI18n } from '../../i18n/useI18n.js';
 import { Link } from 'react-router-dom';
 
 export default function BlogBreadcrumbs({ current }) {
+  const { t } = useI18n();
   return (
     <p className="text-sm text-foreground-muted mb-3">
-      <Link to="/" className="hover:text-primary">首页</Link>
+      <Link to="/" className="hover:text-primary">{t("首页")}</Link>
       <span className="mx-2">/</span>
       {current === '博客' ? (
-        <span>博客</span>
+        <span>{t("博客")}</span>
       ) : (
         <>
-          <Link to="/blog" className="hover:text-primary">博客</Link>
+          <Link to="/blog" className="hover:text-primary">{t("博客")}</Link>
           <span className="mx-2">/</span>
-          <span>{current}</span>
+          <span>{t(current)}</span>
         </>
       )}
     </p>

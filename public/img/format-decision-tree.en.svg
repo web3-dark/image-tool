@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" role="img" aria-label="Image format decision tree">
+  <title>Image format decision flowchart</title>
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .box { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.5; }
+      .box-decision { fill: #E6F2FF; stroke: #0A84FF; stroke-width: 1.5; }
+      .box-result { fill: #0A84FF; stroke: none; }
+      .box-result-alt { fill: #34C759; stroke: none; }
+      .text-decision { font: 600 14px -apple-system, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; fill: #0F172A; }
+      .text-result { font: 700 14px -apple-system, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; fill: #FFFFFF; }
+      .text-result-sub { font: 400 10px -apple-system, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; fill: #FFFFFF; opacity: 0.85; }
+      .label-yes { font: 700 12px -apple-system, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; fill: #34C759; }
+      .label-no { font: 700 12px -apple-system, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; fill: #FF3B30; }
+      .arrow { stroke: #94A3B8; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+      .title { font: 700 18px -apple-system, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; fill: #0F172A; }
+    </style>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#94A3B8"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="820" height="480"/>
+  <text class="title" x="410" y="32" text-anchor="middle">Choose an image format in three steps</text>
+
+
+  <g transform="translate(330,60)">
+    <rect class="box-decision" x="0" y="0" width="160" height="56" rx="12"/>
+    <text class="text-decision" x="80" y="34" text-anchor="middle">Need transparency?</text>
+  </g>
+
+
+  <path class="arrow" d="M380 116 L200 156"/>
+  <text class="label-yes" x="270" y="135">Yes</text>
+  <path class="arrow" d="M440 116 L620 156"/>
+  <text class="label-no" x="540" y="135">No</text>
+
+
+  <g transform="translate(120,160)">
+    <rect class="box-decision" x="0" y="0" width="160" height="56" rx="12"/>
+    <text class="text-decision" x="80" y="34" text-anchor="middle">Icon or logo?</text>
+  </g>
+
+
+  <g transform="translate(540,160)">
+    <rect class="box-decision" x="0" y="0" width="160" height="56" rx="12"/>
+    <text class="text-decision" x="80" y="34" text-anchor="middle">Photograph?</text>
+  </g>
+
+
+  <path class="arrow" d="M170 216 L90 290"/>
+  <text class="label-yes" x="115" y="260">Yes</text>
+  <path class="arrow" d="M230 216 L310 290"/>
+  <text class="label-no" x="290" y="260">No</text>
+
+
+  <path class="arrow" d="M590 216 L510 290"/>
+  <text class="label-yes" x="535" y="260">Yes</text>
+  <path class="arrow" d="M650 216 L730 290"/>
+  <text class="label-no" x="710" y="260">No</text>
+
+
+  <g transform="translate(10,290)">
+    <rect class="box-result-alt" x="0" y="0" width="160" height="62" rx="12"/>
+    <text class="text-result" x="80" y="28" text-anchor="middle">SVG (preferred)</text>
+    <text class="text-result-sub" x="80" y="48" text-anchor="middle">Fallback: PNG</text>
+  </g>
+
+
+  <g transform="translate(230,290)">
+    <rect class="box-result" x="0" y="0" width="160" height="62" rx="12"/>
+    <text class="text-result" x="80" y="28" text-anchor="middle">WebP</text>
+    <text class="text-result-sub" x="80" y="48" text-anchor="middle">Fallback: PNG</text>
+  </g>
+
+
+  <g transform="translate(430,290)">
+    <rect class="box-result" x="0" y="0" width="160" height="62" rx="12"/>
+    <text class="text-result" x="80" y="28" text-anchor="middle">WebP (preferred)</text>
+    <text class="text-result-sub" x="80" y="48" text-anchor="middle">Fallback: JPG (also for WeChat)</text>
+  </g>
+
+
+  <g transform="translate(650,290)">
+    <rect class="box-result-alt" x="0" y="0" width="160" height="62" rx="12"/>
+    <text class="text-result" x="80" y="28" text-anchor="middle">SVG / PNG</text>
+    <text class="text-result-sub" x="80" y="48" text-anchor="middle">Line art / charts</text>
+  </g>
+
+
+  <g transform="translate(40,395)">
+    <rect x="0" y="0" width="740" height="64" rx="10" fill="#F1F5F9" stroke="#E2E8F0"/>
+    <text class="text-decision" x="20" y="26" fill="#0F172A">Tip: AVIF can be smaller than WebP. Try it first with &lt;picture&gt;.</text>
+    <text x="20" y="48" font="400 12px -apple-system, sans-serif" fill="#475569">Offer AVIF first, then WebP, then JPG/PNG as a fallback for older browsers.</text>
+  </g>
+</svg>

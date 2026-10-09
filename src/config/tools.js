@@ -26,9 +26,10 @@ export const FORMAT_TOOL_CONFIGS = [
   },
   {
     path: '/compress-png',
+    dateModified: '2026-10-01',
     shortTitle: 'PNG 图片压缩',
     title: 'PNG 图片压缩工具',
-    seoTitle: 'PNG 图片压缩工具 - 免费在线减小 PNG 体积 - PicThin',
+    seoTitle: 'PNG 压缩 - 保留透明背景、减小图片体积 - PicThin',
     description: '免费在线压缩 PNG 图片，通过颜色量化减小文件体积并保留透明背景。所有图片在浏览器本地处理，不上传服务器。',
     lead: '通过减少图片中不必要的颜色数量来压缩 PNG，适合图标、截图和透明背景素材。压缩过程完全在当前设备完成。',
     inputTypes: ['image/png'],
@@ -43,6 +44,17 @@ export const FORMAT_TOOL_CONFIGS = [
       ['可观察画质变化', '较低质量会减少可用颜色，渐变和照片类 PNG 需要重点检查色带。'],
     ],
     useCases: ['透明背景 Logo 与图标', '软件界面和网页截图', '颜色相对简单的插画与图表'],
+    guide: {
+      title: '怎样压缩 PNG 并保留透明背景？',
+      steps: [
+        '选择 PNG 原图，工具会按当前输出质量自动处理；可以先使用默认 82%。',
+        '比较原图与结果的体积；若仍然偏大，降低质量后点击“压缩 PNG”重新处理。',
+        '下载 PNG，把它放在浅色和深色背景上检查透明边缘，再放大查看小字与渐变。',
+      ],
+      check: '保留透明背景不等于像素完全不变。低于 100% 时会减少颜色数量，渐变可能出现色带；若结果没有更小，本工具会保留原文件。',
+      path: '/blog/compress-png-keep-transparency',
+      label: 'PNG 怎么压小并保留透明背景',
+    },
     faq: [
       ['为什么照片用 PNG 很难压小？', '照片包含大量连续色彩和细节，PNG 的无损编码不擅长这类内容。照片通常转换为 JPG 或 WebP 后体积会更小。'],
       ['压缩后透明背景还在吗？', '会保留。输出仍是 PNG，并继续支持 Alpha 透明通道。'],
@@ -76,10 +88,11 @@ export const FORMAT_TOOL_CONFIGS = [
   },
   {
     path: '/webp-to-jpg',
+    dateModified: '2026-10-01',
     shortTitle: 'WebP 转 JPG',
     title: 'WebP 转 JPG 在线工具',
-    seoTitle: 'WebP 转 JPG 在线工具 - 免费本地转换图片 - PicThin',
-    description: '免费在线将 WebP 图片转换为 JPG，可调整画质并直接下载。转换在浏览器本地完成，不上传图片，兼容手机和电脑。',
+    seoTitle: 'WebP 转 JPG - 解决图片格式无法上传 - PicThin',
+    description: '表单或软件不接受 WebP？免费在浏览器本地转换为 JPG，预览画质后直接下载。附格式、文件大小和透明背景检查方法，无需上传原图。',
     lead: '把 WebP 转换为兼容性更广的 JPG，适合发送给不支持 WebP 的软件、网站表单和旧设备。',
     inputTypes: ['image/webp'],
     acceptedLabel: 'WebP',
@@ -93,6 +106,17 @@ export const FORMAT_TOOL_CONFIGS = [
       ['处理过程私密', 'WebP 文件仅由当前浏览器读取和编码，不会上传到第三方服务器。'],
     ],
     useCases: ['旧软件无法打开 WebP', '网站表单只接受 JPG/JPEG', '将网页下载的 WebP 转为常用照片格式'],
+    guide: {
+      title: 'WebP 无法上传，怎样转成 JPG？',
+      steps: [
+        '确认目标系统接受 JPG/JPEG，再选择 WebP 文件；不要只修改文件名的后缀。',
+        '使用默认 88% 输出质量预览结果。需要调整时，移动质量滑杆后点击“转换为 JPG”。',
+        '下载 JPG，重新选择下载的文件上传；若仍然被拒绝，继续检查文件体积和像素尺寸。',
+      ],
+      check: 'JPG 不支持透明背景，也不能保留动画。此工具适合静态图片；带透明背景的素材请检查转换后的底色，转换后的文件也可能比原图更大。',
+      path: '/blog/webp-upload-convert-jpg',
+      label: 'WebP 图片无法上传：正确转成 JPG 的方法',
+    },
     faq: [
       ['转换成 JPG 后透明背景会怎样？', 'JPG 不支持透明背景。透明区域会被转换为不透明背景，因此透明素材更适合转换为 PNG。'],
       ['转换会增加文件大小吗？', '有可能。WebP 通常比 JPG 编码效率更高，转换后的文件是否变大取决于图片内容和质量设置。'],

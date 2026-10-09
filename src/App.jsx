@@ -1,3 +1,4 @@
+import { useI18n } from './i18n/useI18n.js';
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Head } from 'vite-react-ssg';
@@ -7,6 +8,7 @@ import BatchResultsPanel from './components/BatchResultsPanel';
 import BrowserCompat from './components/BrowserCompat';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import FeedbackButton from './components/FeedbackButton.jsx';
+import LanguageSwitcher from './components/LanguageSwitcher.jsx';
 import { Logo } from './components/Logo';
 import { Slider } from './components/ui/slider';
 import {
@@ -51,6 +53,7 @@ const HOME_JSON_LD = {
  * 主应用组件
  */
 function App() {
+  const { t, localize } = useI18n();
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [results, setResults] = useState([]);
   const [quality, setQuality] = useState(80);
@@ -288,45 +291,42 @@ function App() {
   return (
     <div className="flex flex-col h-screen w-full bg-bg overflow-hidden">
       <Head>
-        <title>本地图片压缩工具 - 图片不上传，保护隐私 | PicThin</title>
-        <meta name="description" content="图片全程在浏览器本地处理，不上传服务器，保护你的隐私。支持 JPG、PNG、WebP、AVIF、GIF 批量压缩、画质调整与格式转换，手机电脑均可使用。" />
-        <meta name="keywords" content="图片压缩,在线压缩图片,PNG压缩,JPEG压缩,WebP转换,图片格式转换,免费图片压缩,批量压缩图片,图片瘦身,图片体积压缩" />
+        <title>{t("本地图片压缩工具 - 图片不上传，保护隐私 | PicThin")}</title>
+        <meta name="description" content={t("图片全程在浏览器本地处理，不上传服务器，保护你的隐私。支持 JPG、PNG、WebP、AVIF、GIF 批量压缩、画质调整与格式转换，手机电脑均可使用。")} />
+        <meta name="keywords" content={t("图片压缩,在线压缩图片,PNG压缩,JPEG压缩,WebP转换,图片格式转换,免费图片压缩,批量压缩图片,图片瘦身,图片体积压缩")} />
         <link rel="canonical" href={HOME_URL} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={HOME_URL} />
-        <meta property="og:title" content="本地图片压缩，保护你的隐私 | PicThin" />
-        <meta property="og:description" content="图片全程在浏览器本地处理，不会上传到服务器。支持批量压缩、画质调整与格式转换。" />
-        <meta property="og:image" content={OG_IMAGE_URL} />
-        <meta property="og:image:alt" content="图片压缩工具 - 支持 JPEG PNG WebP AVIF 格式" />
+        <meta property="og:url" content={t(HOME_URL)} />
+        <meta property="og:title" content={t("本地图片压缩，保护你的隐私 | PicThin")} />
+        <meta property="og:description" content={t("图片全程在浏览器本地处理，不会上传到服务器。支持批量压缩、画质调整与格式转换。")} />
+        <meta property="og:image" content={t(OG_IMAGE_URL)} />
+        <meta property="og:image:alt" content={t("图片压缩工具 - 支持 JPEG PNG WebP AVIF 格式")} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="本地图片压缩，保护你的隐私 | PicThin" />
-        <meta name="twitter:description" content="图片全程在浏览器本地处理，不会上传到服务器。支持批量压缩、画质调整与格式转换。" />
-        <meta name="twitter:image" content={OG_IMAGE_URL} />
-        <script type="application/ld+json">{JSON.stringify(HOME_JSON_LD)}</script>
+        <meta name="twitter:title" content={t("本地图片压缩，保护你的隐私 | PicThin")} />
+        <meta name="twitter:description" content={t("图片全程在浏览器本地处理，不会上传到服务器。支持批量压缩、画质调整与格式转换。")} />
+        <meta name="twitter:image" content={t(OG_IMAGE_URL)} />
+        <script type="application/ld+json">{JSON.stringify(localize(HOME_JSON_LD))}</script>
       </Head>
       {/* 浏览器兼容性提示 */}
       <BrowserCompat />
 
       {/* 页头 */}
       <header className="flex-shrink-0 border-b border-border bg-surface px-4 md:px-8 py-3">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <Logo size="sm" showText={true} />
-            <span className="hidden md:inline text-sm text-foreground-muted truncate">智能图片压缩 • 本地处理 • 隐私优先</span>
+            <span className="hidden md:inline text-sm text-foreground-muted truncate">{t("智能图片压缩 • 本地处理 • 隐私优先")}</span>
           </div>
-          <nav className="flex items-center">
+          <nav className="ml-auto flex flex-wrap items-center gap-1">
             <Link
               to="/tools"
               className="text-sm text-foreground-muted hover:text-primary transition-colors px-3 py-1.5 rounded-md hover:bg-primary-muted"
-            >
-              全部工具
-            </Link>
+            >{t("全部工具")}</Link>
             <Link
               to="/blog"
               className="text-sm text-foreground-muted hover:text-primary transition-colors px-3 py-1.5 rounded-md hover:bg-primary-muted"
-            >
-              压缩指南
-            </Link>
+            >{t("压缩指南")}</Link>
+            <LanguageSwitcher />
           </nav>
         </div>
       </header>
@@ -337,21 +337,17 @@ function App() {
           // 初始界面 - 上传页面
           <div className="flex flex-col gap-6 w-full max-w-4xl mx-auto py-12 px-4 md:px-8">
             <section className="max-w-3xl">
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-                本地图片压缩，保护你的隐私
-              </h1>
-              <p className="text-base md:text-lg text-foreground-muted mt-3 leading-7">
-                图片全程在你的浏览器内处理，不会上传到服务器，证件、合同截图和私人照片都留在你的设备上。支持 JPG、PNG、WebP、AVIF 和 GIF 批量压缩、画质调整与格式转换。
-              </p>
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">{t("本地图片压缩，保护你的隐私")}</h1>
+              <p className="text-base md:text-lg text-foreground-muted mt-3 leading-7">{t("图片全程在你的浏览器内处理，不会上传到服务器，证件、合同截图和私人照片都留在你的设备上。支持 JPG、PNG、WebP、AVIF 和 GIF 批量压缩、画质调整与格式转换。")}</p>
             </section>
 
             {/* 上传区域 */}
             <section className="flex flex-col gap-4">
               <div>
-                <h2 className="text-xl font-semibold text-foreground">上传图片</h2>
+                <h2 className="text-xl font-semibold text-foreground">{t("上传图片")}</h2>
                 <p className="text-sm text-foreground-muted mt-1">
-                  <span className="md:hidden">选择一张或多张图片，快速压缩处理</span>
-                  <span className="hidden md:inline">选择或拖拽图片，支持批量处理多张</span>
+                  <span className="md:hidden">{t("选择一张或多张图片，快速压缩处理")}</span>
+                  <span className="hidden md:inline">{t("选择或拖拽图片，支持批量处理多张")}</span>
                 </p>
               </div>
               <ImageUploader
@@ -370,62 +366,68 @@ function App() {
               ].map(({ Icon: FeatureIcon, title, desc }) => (
                 <div key={title} className="p-4 rounded-lg border border-border bg-surface hover:shadow-md transition-shadow">
                   <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary-muted text-primary mb-3">
-                    {React.createElement(FeatureIcon, { className: 'w-5 h-5' })}
+                    {t(React.createElement(FeatureIcon, { className: 'w-5 h-5' }))}
                   </div>
-                  <h3 className="font-semibold text-foreground mb-1">{title}</h3>
-                  <p className="text-sm text-foreground-muted">{desc}</p>
+                  <h3 className="font-semibold text-foreground mb-1">{t(title)}</h3>
+                  <p className="text-sm text-foreground-muted">{t(desc)}</p>
                 </div>
               ))}
             </div>
 
             <section aria-labelledby="popular-tools-title" className="pt-2">
-              <h2 id="popular-tools-title" className="text-xl font-semibold text-foreground mb-3">
-                常用图片工具与指南
-              </h2>
+              <h2 id="popular-tools-title" className="text-xl font-semibold text-foreground mb-3">{t("常用图片工具与指南")}</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
                 <Link
                   to="/compress-image-to-size"
                   className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
                 >
-                  <h3 className="font-semibold text-foreground">压缩到指定大小</h3>
-                  <p className="text-sm text-foreground-muted mt-1">自动压到 20KB、50KB、100KB、200KB 或自定义大小</p>
+                  <h3 className="font-semibold text-foreground">{t("压缩到指定大小")}</h3>
+                  <p className="text-sm text-foreground-muted mt-1">{t("自动压到 20KB、50KB、100KB、200KB 或自定义大小")}</p>
                 </Link>
                 <Link
                   to="/compress-image-to-100kb"
                   className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
                 >
-                  <h3 className="font-semibold text-foreground">图片压缩到 100KB</h3>
-                  <p className="text-sm text-foreground-muted mt-1">适合报名照片、头像和办公系统资料上传</p>
+                  <h3 className="font-semibold text-foreground">{t("图片压缩到 100KB")}</h3>
+                  <p className="text-sm text-foreground-muted mt-1">{t("适合报名照片、头像和办公系统资料上传")}</p>
                 </Link>
                 <Link
                   to="/compress-image-to-200kb"
                   className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
                 >
-                  <h3 className="font-semibold text-foreground">图片压缩到 200KB</h3>
-                  <p className="text-sm text-foreground-muted mt-1">兼顾文件体积和细节，适合资料与网页配图</p>
+                  <h3 className="font-semibold text-foreground">{t("图片压缩到 200KB")}</h3>
+                  <p className="text-sm text-foreground-muted mt-1">{t("兼顾文件体积和细节，适合资料与网页配图")}</p>
                 </Link>
                 <Link
                   to="/remove-image-metadata"
                   className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
                 >
-                  <h3 className="font-semibold text-foreground">清除照片 EXIF / GPS</h3>
-                  <p className="text-sm text-foreground-muted mt-1">分享前清除位置、拍摄时间与设备信息</p>
+                  <h3 className="font-semibold text-foreground">{t("清除照片 EXIF / GPS")}</h3>
+                  <p className="text-sm text-foreground-muted mt-1">{t("分享前清除位置、拍摄时间与设备信息")}</p>
                 </Link>
                 <Link
                   to="/compress-jpg"
                   className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
                 >
-                  <h3 className="font-semibold text-foreground">JPG 在线压缩</h3>
-                  <p className="text-sm text-foreground-muted mt-1">专门压缩照片和 JPG 图片，可调整输出画质</p>
+                  <h3 className="font-semibold text-foreground">{t("JPG 在线压缩")}</h3>
+                  <p className="text-sm text-foreground-muted mt-1">{t("专门压缩照片和 JPG 图片，可调整输出画质")}</p>
                 </Link>
                 <Link
                   to="/tools"
                   className="rounded-lg border border-border bg-surface p-4 hover:border-primary hover:shadow-sm transition-all"
                 >
-                  <h3 className="font-semibold text-foreground">查看全部图片工具</h3>
-                  <p className="text-sm text-foreground-muted mt-1">根据文件格式和目标体积选择合适工具</p>
+                  <h3 className="font-semibold text-foreground">{t("查看全部图片工具")}</h3>
+                  <p className="text-sm text-foreground-muted mt-1">{t("根据文件格式和目标体积选择合适工具")}</p>
                 </Link>
               </div>
+              <nav aria-label={t("图片上传问题指南")} className="mt-5 rounded-lg border border-border bg-surface p-4">
+                <h3 className="font-semibold text-foreground mb-3">{t("遇到这些图片问题？")}</h3>
+                <ul className="space-y-3 text-sm text-primary">
+                  <li><Link to="/blog/registration-photo-under-200kb" className="hover:underline">{t("报名照片超过 200KB：压缩与上传失败排查")}</Link></li>
+                  <li><Link to="/blog/compress-png-keep-transparency" className="hover:underline">{t("PNG 怎么压小并保留透明背景")}</Link></li>
+                  <li><Link to="/blog/webp-upload-convert-jpg" className="hover:underline">{t("WebP 图片无法上传：正确转成 JPG")}</Link></li>
+                </ul>
+              </nav>
             </section>
           </div>
         ) : (
@@ -442,7 +444,7 @@ function App() {
                 setResults([]);
               }}
               className="absolute top-1 right-3 w-8 h-8 flex items-center justify-center rounded-full border border-border bg-surface text-foreground-muted hover:text-foreground hover:border-foreground transition-colors"
-              title="更换图片"
+              title={t("更换图片")}
             >
               <X className="w-4 h-4" strokeWidth={2.5} />
             </button>
@@ -452,7 +454,7 @@ function App() {
               {/* 文件名（仅单张时显示） */}
               {isSingleFile && (
                 <div className="flex-1 flex items-center gap-2">
-                  <span className="text-sm text-foreground-muted whitespace-nowrap">文件名称</span>
+                  <span className="text-sm text-foreground-muted whitespace-nowrap">{t("文件名称")}</span>
                   <div className="flex items-center gap-1 flex-1">
                     <div className="relative flex-1 min-w-0">
                       <input
@@ -461,11 +463,11 @@ function App() {
                         className="w-full pl-3 pr-9 py-1.5 text-sm border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-surface"
                         value={customFileName}
                         onChange={(e) => setCustomFileName(e.target.value)}
-                        placeholder="输入文件名"
+                        placeholder={t("输入文件名")}
                       />
                       <button
                         type="button"
-                        title="编辑文件名"
+                        title={t("编辑文件名")}
                         tabIndex={-1}
                         onClick={() => {
                           const el = customNameInputRef.current;
@@ -478,7 +480,7 @@ function App() {
                         <Pencil className="w-3.5 h-3.5" />
                       </button>
                     </div>
-                    <span className="text-sm text-foreground-muted">.{format === 'jpg' ? 'jpeg' : format}</span>
+                    <span className="text-sm text-foreground-muted">.{t(format === 'jpg' ? 'jpeg' : format)}</span>
                   </div>
                 </div>
               )}
@@ -488,7 +490,7 @@ function App() {
                 {/* 质量滑块 */}
                 {format !== 'gif' && (
                   <div className="flex items-center gap-3 min-w-fit">
-                    <label className="text-sm font-medium text-foreground whitespace-nowrap">质量:</label>
+                    <label className="text-sm font-medium text-foreground whitespace-nowrap">{t("质量:")}</label>
                     <Slider
                       value={[quality]}
                       onValueChange={(val) => handleQualityChange(val[0])}
@@ -498,16 +500,16 @@ function App() {
                       disabled={isProcessing}
                       className="w-32"
                     />
-                    <span className="text-sm text-foreground-muted min-w-[3rem]">{quality}%</span>
+                    <span className="text-sm text-foreground-muted min-w-[3rem]">{t(quality)}%</span>
                   </div>
                 )}
 
                 {/* 格式选择 */}
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-3">
-                    <label className="text-sm font-medium text-foreground whitespace-nowrap">格式:</label>
+                    <label htmlFor="output-format" className="text-sm font-medium text-foreground whitespace-nowrap">{t("格式:")}</label>
                     <Select value={format} onValueChange={handleFormatChange} disabled={isProcessing}>
-                      <SelectTrigger className="w-28">
+                      <SelectTrigger id="output-format" className="w-28">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -520,10 +522,10 @@ function App() {
                     </Select>
                   </div>
                   {format === 'png' && (
-                    <p className="text-xs text-warning">照片转 PNG 体积会增大，建议用 WebP</p>
+                    <p className="text-xs text-warning">{t("照片转 PNG 体积会增大，建议用 WebP")}</p>
                   )}
                   {format === 'gif' && (
-                    <p className="text-xs text-warning">无损格式，照片转换后体积会大幅增加；动态 GIF 仅保留第一帧</p>
+                    <p className="text-xs text-warning">{t("无损格式，照片转换后体积会大幅增加；动态 GIF 仅保留第一帧")}</p>
                   )}
                 </div>
               </div>
@@ -547,7 +549,7 @@ function App() {
                   {isProcessing && (
                     <div className="flex flex-col items-center justify-center h-full gap-4 px-8">
                       <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                      <p className="text-sm text-foreground-muted">正在处理... {progress > 0 ? `${progress}%` : ''}</p>
+                      <p className="text-sm text-foreground-muted">{t("正在处理...")}{t(progress > 0 ? `${progress}%` : '')}</p>
                       {progress > 0 && (
                         <div className="w-full max-w-xs h-1.5 bg-surface-muted rounded-full overflow-hidden">
                           <div
@@ -562,7 +564,7 @@ function App() {
                   {error && (
                     <div className="flex items-center gap-3 p-4 bg-danger/10 border border-danger/20 rounded-md text-danger">
                       <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                      <span className="text-sm">{error}</span>
+                      <span className="text-sm">{t(error)}</span>
                     </div>
                   )}
                 </>
@@ -585,14 +587,12 @@ function App() {
       {/* 页脚 */}
       <footer className="flex-shrink-0 border-t border-border bg-surface px-8 pt-4 safe-area-bottom">
         <div className="flex flex-wrap items-center justify-center gap-3 text-base font-medium text-foreground">
-          <span>图片仅在本地处理，不上传服务器，隐私安全有保障</span>
+          <span>{t("图片仅在本地处理，不上传服务器，隐私安全有保障")}</span>
           <span className="w-px h-4 bg-border inline-block mx-1" aria-hidden="true" />
           <button
             onClick={() => setPrivacyOpen(true)}
             className="underline underline-offset-2 hover:text-primary transition-colors"
-          >
-            隐私政策
-          </button>
+          >{t("隐私政策")}</button>
           <FeedbackButton />
         </div>
       </footer>
@@ -605,8 +605,8 @@ function App() {
         <div className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center bg-primary/15 backdrop-blur-sm">
           <div className="m-6 px-12 py-16 rounded-2xl border-4 border-dashed border-primary bg-surface/95 shadow-lg flex flex-col items-center gap-4">
             <Upload className="w-14 h-14 text-primary" strokeWidth={1.75} />
-            <h3 className="text-2xl font-semibold text-foreground">释放鼠标上传图片</h3>
-            <p className="text-sm text-foreground-muted">支持 JPG、PNG、GIF、WebP、AVIF，可一次拖多张</p>
+            <h3 className="text-2xl font-semibold text-foreground">{t("释放鼠标上传图片")}</h3>
+            <p className="text-sm text-foreground-muted">{t("支持 JPG、PNG、GIF、WebP、AVIF，可一次拖多张")}</p>
           </div>
         </div>
       )}
