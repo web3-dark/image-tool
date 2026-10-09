@@ -28,7 +28,7 @@ class ErrorBoundary extends React.Component {
           <div className="text-center">
             <h1 className="text-xl font-semibold text-foreground mb-2">页面出错了</h1>
             <p className="text-sm text-foreground-muted max-w-sm">
-              {this.state.error?.message || '发生了未知错误，请刷新页面重试'}
+              页面暂时无法正常显示，请检查网络后刷新重试。
             </p>
           </div>
           <button

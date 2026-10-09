@@ -1,4 +1,5 @@
 import RootLayout from './RootLayout.jsx';
+import RouteErrorPage from './components/RouteErrorPage.jsx';
 import App from './App.jsx';
 import BlogIndex from './pages/blog/BlogIndex.jsx';
 import JpgCompressToTargetSize from './pages/blog/JpgCompressToTargetSize.jsx';
@@ -16,6 +17,7 @@ export const routes = [
   {
     path: '/',
     element: <RootLayout />,
+    errorElement: <RouteErrorPage />,
     entry: 'src/RootLayout.jsx',
     children: [
       {
