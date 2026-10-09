@@ -288,19 +288,19 @@ function App() {
   return (
     <div className="flex flex-col h-screen w-full bg-bg overflow-hidden">
       <Head>
-        <title>图片压缩工具 - 免费在线压缩 JPEG PNG WebP，本地处理不上传</title>
-        <meta name="description" content="免费在线图片压缩工具，支持 JPEG、PNG、WebP、AVIF、GIF 格式，全程本地处理，不上传服务器，保护隐私。支持批量压缩，手机电脑均可使用。" />
+        <title>本地图片压缩工具 - 图片不上传，保护隐私 | PicThin</title>
+        <meta name="description" content="图片全程在浏览器本地处理，不上传服务器，保护你的隐私。支持 JPG、PNG、WebP、AVIF、GIF 批量压缩、画质调整与格式转换，手机电脑均可使用。" />
         <meta name="keywords" content="图片压缩,在线压缩图片,PNG压缩,JPEG压缩,WebP转换,图片格式转换,免费图片压缩,批量压缩图片,图片瘦身,图片体积压缩" />
         <link rel="canonical" href={HOME_URL} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={HOME_URL} />
-        <meta property="og:title" content="图片压缩工具 - 免费在线压缩 JPEG PNG WebP" />
-        <meta property="og:description" content="免费在线图片压缩工具，全程本地处理，不上传服务器，保护隐私。" />
+        <meta property="og:title" content="本地图片压缩，保护你的隐私 | PicThin" />
+        <meta property="og:description" content="图片全程在浏览器本地处理，无需上传服务器。支持批量压缩、画质调整与格式转换。" />
         <meta property="og:image" content={OG_IMAGE_URL} />
         <meta property="og:image:alt" content="图片压缩工具 - 支持 JPEG PNG WebP AVIF 格式" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="图片压缩工具 - 免费在线压缩 JPEG PNG WebP" />
-        <meta name="twitter:description" content="免费在线图片压缩工具，全程本地处理，不上传服务器，保护隐私。" />
+        <meta name="twitter:title" content="本地图片压缩，保护你的隐私 | PicThin" />
+        <meta name="twitter:description" content="图片全程在浏览器本地处理，无需上传服务器。支持批量压缩、画质调整与格式转换。" />
         <meta name="twitter:image" content={OG_IMAGE_URL} />
         <script type="application/ld+json">{JSON.stringify(HOME_JSON_LD)}</script>
       </Head>
@@ -338,10 +338,10 @@ function App() {
           <div className="flex flex-col gap-6 w-full max-w-4xl mx-auto py-12 px-4 md:px-8">
             <section className="max-w-3xl">
               <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-                免费在线图片压缩工具
+                本地图片压缩，保护你的隐私
               </h1>
               <p className="text-base md:text-lg text-foreground-muted mt-3 leading-7">
-                批量压缩 JPG、PNG、WebP、AVIF 和 GIF 图片，支持调整画质与转换格式。证件、合同截图和私人照片全程在浏览器本地处理，无需上传或注册。
+                图片全程在你的浏览器内处理，无需上传服务器，证件、合同截图和私人照片都留在你的设备上。支持 JPG、PNG、WebP、AVIF 和 GIF 批量压缩、画质调整与格式转换。
               </p>
             </section>
 
