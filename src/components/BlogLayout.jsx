@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Logo } from './Logo';
 import PrivacyPolicy from './PrivacyPolicy';
+import FeedbackButton from './FeedbackButton.jsx';
 import { useState } from 'react';
 
 export default function BlogLayout({ children }) {
@@ -50,6 +51,7 @@ export default function BlogLayout({ children }) {
             >
               隐私政策
             </button>
+            <FeedbackButton />
           </div>
         </div>
       </footer>

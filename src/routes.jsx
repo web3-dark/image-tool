@@ -8,6 +8,7 @@ import FormatToolPage from './pages/FormatToolPage.jsx';
 import ToolsIndex from './pages/ToolsIndex.jsx';
 import About from './pages/About.jsx';
 import RemoveImageMetadata from './pages/RemoveImageMetadata.jsx';
+import FeedbackAdmin from './pages/FeedbackAdmin.jsx';
 import { FORMAT_TOOL_CONFIGS } from './config/tools.js';
 import { TARGET_SIZE_PAGE_CONFIGS } from './config/targetSizes.js';
 
@@ -17,6 +18,11 @@ export const routes = [
     element: <RootLayout />,
     entry: 'src/RootLayout.jsx',
     children: [
+      {
+        path: 'admin/feedback',
+        element: <FeedbackAdmin />,
+        entry: 'src/pages/FeedbackAdmin.jsx',
+      },
       {
         index: true,
         element: <App />,

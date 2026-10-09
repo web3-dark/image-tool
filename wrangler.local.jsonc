@@ -1,0 +1,14 @@
+{
+  "name": "picthin-feedback-local",
+  "pages_build_output_dir": "dist",
+  // Match the installed local workerd runtime; production keeps its Pages setting.
+  "compatibility_date": "2026-08-27",
+  "d1_databases": [
+    {
+      "binding": "FEEDBACK_DB",
+      "database_name": "picthin-feedback-local",
+      "database_id": "00000000-0000-0000-0000-000000000001",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

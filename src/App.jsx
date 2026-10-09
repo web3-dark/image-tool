@@ -6,6 +6,7 @@ import PreviewPanel from './components/PreviewPanel';
 import BatchResultsPanel from './components/BatchResultsPanel';
 import BrowserCompat from './components/BrowserCompat';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import FeedbackButton from './components/FeedbackButton.jsx';
 import { Logo } from './components/Logo';
 import { Slider } from './components/ui/slider';
 import {
@@ -583,7 +584,7 @@ function App() {
 
       {/* 页脚 */}
       <footer className="flex-shrink-0 border-t border-border bg-surface px-8 pt-4 safe-area-bottom">
-        <div className="flex items-center justify-center gap-3 text-base font-medium text-foreground">
+        <div className="flex flex-wrap items-center justify-center gap-3 text-base font-medium text-foreground">
           <span>图片仅在本地处理，不上传服务器，隐私安全有保障</span>
           <span className="w-px h-4 bg-border inline-block mx-1" aria-hidden="true" />
           <button
@@ -592,6 +593,7 @@ function App() {
           >
             隐私政策
           </button>
+          <FeedbackButton />
         </div>
       </footer>
 

@@ -1,0 +1,7 @@
+# Copy to .dev.vars for local Pages development only. Never use test keys in production.
+# Configure the actual site key and secret together with TURNSTILE_HOSTNAMES.
+TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET=
+TURNSTILE_HOSTNAMES=localhost,127.0.0.1
+# Generate a random 64-character hexadecimal key. Do not reuse an account password.
+FEEDBACK_ADMIN_TOKEN=

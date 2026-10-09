@@ -96,6 +96,8 @@ VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN=你的站点Token
 
 ## 项目结构
 
+私密意见反馈的数据库、管理入口和部署设置见 [反馈功能说明](docs/feedback.md)。
+
 ```text
 src/
 ├── App.jsx                    # 主应用，状态管理

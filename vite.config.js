@@ -83,7 +83,7 @@ export default defineConfig(({ isSsrBuild }) => ({
         // 运行时缓存策略
         runtimeCaching: [
           {
-            urlPattern: ({ request, url }) => request.mode === 'navigate' && !url.pathname.startsWith('/api/'),
+            urlPattern: ({ request, url }) => request.mode === 'navigate' && !url.pathname.startsWith('/api/') && !url.pathname.startsWith('/admin/'),
             handler: 'NetworkFirst',
             options: {
               cacheName: 'picthin-pages-v2',

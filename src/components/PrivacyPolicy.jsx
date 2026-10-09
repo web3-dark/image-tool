@@ -48,7 +48,7 @@ const PrivacyPolicy = ({ isOpen, onClose }) => {
 
         {/* 正文 */}
         <div className="flex-1 overflow-y-auto px-6 py-5 text-sm text-foreground space-y-4 leading-relaxed">
-          <p className="text-foreground-muted text-xs">最后更新：2026 年 9 月</p>
+          <p className="text-foreground-muted text-xs">最后更新：2026 年 10 月</p>
 
           <section>
             <h3 className="font-semibold mb-1">本地处理承诺</h3>
@@ -64,7 +64,7 @@ const PrivacyPolicy = ({ isOpen, onClose }) => {
               <li>您的图片内容</li>
               <li>图片文件名或元数据</li>
               <li>处理结果或压缩后的文件</li>
-              <li>任何个人身份信息</li>
+              <li>图片处理过程中不要求提供个人身份信息</li>
             </ul>
           </section>
 
@@ -78,6 +78,17 @@ const PrivacyPolicy = ({ isOpen, onClose }) => {
           </section>
 
           <section>
+            <h3 className="font-semibold mb-1">主动提交的意见反馈</h3>
+            <p className="text-foreground-muted">
+              仅在您主动提交反馈时，我们会将反馈类型、留言、选填邮箱、当前页面路径和提交时间保存在 Cloudflare D1 中，仅供站长查看和处理。
+              邮箱用于联系您了解或回复问题，您也可以不填写。反馈不包含正在处理的图片、图片文件名、页面查询参数或浏览记录。
+              留言会保留供问题跟进，您可通过反馈入口提出删除请求；站长可以删除留言及邮箱。
+              为防止垃圾提交，反馈表单使用 Cloudflare Turnstile 验证；接口会用短期轮换的加密摘要限制提交频率，不在留言库中保存原始 IP。
+              过期限频记录会在后续通过验证的提交中清理。
+            </p>
+          </section>
+
+          <section>
             <h3 className="font-semibold mb-1">Cookie 与本地存储</h3>
             <p className="text-foreground-muted">
               本工具不使用 Cookie 追踪您的行为。浏览器可能在 Service Worker 缓存中存储应用资源，以支持离线使用，这些数据不包含任何个人信息。
@@ -87,7 +98,8 @@ const PrivacyPolicy = ({ isOpen, onClose }) => {
           <section>
             <h3 className="font-semibold mb-1">第三方服务</h3>
             <p className="text-foreground-muted">
-              本工具不集成第三方广告或社交媒体追踪。启用访问统计时会加载 Cloudflare Web Analytics；图片处理相关代码和依赖仍在您的设备本地运行。
+              本工具不集成第三方广告或社交媒体追踪。启用访问统计时会加载 Cloudflare Web Analytics；打开反馈表单时会加载 Cloudflare Turnstile，反馈内容由 Cloudflare 托管。
+              图片处理相关代码和依赖仍在您的设备本地运行。
             </p>
           </section>
 
