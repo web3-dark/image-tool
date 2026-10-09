@@ -3,6 +3,22 @@ import { TARGET_SIZE_PAGE_CONFIGS } from './targetSizes.js';
 
 export const BLOG_POSTS = [
   {
+    path: '/blog/png-larger-after-compression', slug: 'png-larger-after-compression',
+    title: 'PNG 为什么越压越大？先检查格式和颜色',
+    seoTitle: 'PNG 压缩后变大怎么办？格式、颜色与文件大小排查 - PicThin',
+    description: 'PNG 重新保存或 JPG 转 PNG 后文件变大，不一定是故障。用可下载样例比较体积，按照片、截图、透明素材的用途选择下一步。',
+    datePublished: '2026-10-10', dateModified: '2026-10-10',
+    category: '实用教程', readingTime: '4 分钟', keywords: 'PNG压缩后变大,PNG文件太大,JPG转PNG变大,图片压缩没有变小',
+  },
+  {
+    path: '/blog/compress-without-losing-quality', slug: 'compress-without-losing-quality',
+    title: '图片怎么压小又保持清楚？画质检查与设置方法',
+    seoTitle: '图片压缩如何保持清晰？画质、像素与文件大小 - PicThin',
+    description: '分清无损和看起来清楚，使用真实 JPG 对照样例检查细节；学习照片、截图与透明图的质量设置，以及严格 KB 限制下的取舍。',
+    datePublished: '2026-10-10', dateModified: '2026-10-10',
+    category: '实用教程', readingTime: '4 分钟', keywords: '图片压缩保持清晰,图片压缩画质,JPG压缩质量,无损压缩',
+  },
+  {
     path: '/blog/registration-photo-under-200kb',
     slug: 'registration-photo-under-200kb',
     title: '报名照片超过 200KB：压缩步骤与上传失败排查',
@@ -110,7 +126,7 @@ export const SEO_PAGES = [
   })),
   {
     path: '/blog',
-    lastmod: '2026-10-01',
+    lastmod: '2026-10-10',
     changefreq: 'weekly',
     priority: '0.7',
   },

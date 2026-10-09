@@ -24,7 +24,7 @@ export default function SiteHeader() {
           className="col-span-3 col-start-1 row-start-2 grid h-12 grid-cols-3 items-center sm:col-span-1 sm:col-start-2 sm:row-start-1 sm:w-60 sm:justify-self-end">
           {NAVIGATION.map(({ to, ...labels }) => (
             <NavLink key={to} to={to} end={to === '/'}
-              className={({ isActive }) => `flex h-11 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary ${isActive ? 'text-primary bg-primary-muted' : 'text-foreground-muted hover:bg-surface-muted hover:text-foreground'}`}
+              className={({ isActive }) => `flex h-11 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary ${isActive ? 'text-foreground bg-primary-muted' : 'text-foreground-muted hover:bg-surface-muted hover:text-foreground'}`}
             >{labels[language]}</NavLink>
           ))}
         </nav>

@@ -1,3 +1,5 @@
+import PngLargerAfterCompression from './pages/blog/PngLargerAfterCompression.jsx';
+import CompressWithoutLosingQuality from './pages/blog/CompressWithoutLosingQuality.jsx';
 import RootLayout from './RootLayout.jsx';
 import RouteErrorPage from './components/RouteErrorPage.jsx';
 import App from './App.jsx';
@@ -23,6 +25,8 @@ const baseRoutes = [
     errorElement: <RouteErrorPage />,
     entry: 'src/RootLayout.jsx',
     children: [
+      { path: 'blog/png-larger-after-compression', element: <PngLargerAfterCompression />, entry: 'src/pages/blog/PngLargerAfterCompression.jsx' },
+      { path: 'blog/compress-without-losing-quality', element: <CompressWithoutLosingQuality />, entry: 'src/pages/blog/CompressWithoutLosingQuality.jsx' },
       {
         path: 'admin/feedback',
         element: <FeedbackAdmin />,

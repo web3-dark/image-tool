@@ -1,3 +1,4 @@
+import { PngLargerArticle, QualityArticle } from './CompressionTroubleshooting.jsx';
 import { useState } from 'react';
 import { Link } from '../../components/LocalizedLink.jsx';
 import ImageModal from '../../components/ImageModal.jsx';
@@ -173,6 +174,8 @@ function ImageFormats() {
 }
 
 const ARTICLES = {
+  'png-larger-after-compression': PngLargerArticle,
+  'compress-without-losing-quality': QualityArticle,
   'registration-photo-under-200kb': PhotoUnder200KB,
   'compress-png-keep-transparency': TransparentPNG,
   'webp-upload-convert-jpg': WebPToJPG,

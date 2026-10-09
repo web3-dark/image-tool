@@ -1,5 +1,17 @@
 // English articles are authored independently; locale routing supplies their /en URLs.
 export const ENGLISH_POSTS = {
+  'png-larger-after-compression': {
+    title: 'Why did my PNG get bigger after compression?',
+    description: 'A bigger output file does not always mean a broken compressor. Compare real PNG and JPG samples, check what changed, and choose a format that fits the job.',
+    category: 'Troubleshooting', readingTime: '4 min read',
+    keywords: 'PNG bigger after compression,PNG file too large,JPG to PNG,reduce PNG size',
+  },
+  'compress-without-losing-quality': {
+    title: 'How to make an image smaller and keep it looking sharp',
+    description: 'Compare real JPG samples, check the details that matter, and find a useful balance between file size and image quality for photos, screenshots, and uploads.',
+    category: 'How-to guides', readingTime: '4 min read',
+    keywords: 'compress image without losing quality,reduce photo size,JPG quality,lossless compression',
+  },
   'registration-photo-under-200kb': {
     title: 'Photo too large for a form? Get it under 200 KB',
     description: 'Make a photo fit a 200 KB upload limit, check its dimensions, and troubleshoot a form that still rejects it.',

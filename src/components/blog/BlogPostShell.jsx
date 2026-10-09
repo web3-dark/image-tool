@@ -1,3 +1,4 @@
+import { BLOG_POSTS } from '../../config/content.js';
 import EnglishArticle from '../../content/en/Articles.jsx';
 import { ENGLISH_POSTS, getLocalizedPost } from '../../content/en/posts.js';
 import { useI18n } from '../../i18n/useI18n.js';
@@ -10,6 +11,7 @@ export default function BlogPostShell({ post: originalPost, extraSchemas, afterA
   const { t, language } = useI18n();
   const post = getLocalizedPost(originalPost, language);
   const hasEnglishArticle = language === 'en' && Boolean(ENGLISH_POSTS[post.slug]);
+  const related = BLOG_POSTS.filter((item) => ['png-larger-after-compression', 'compress-without-losing-quality'].includes(item.slug) && item.slug !== post.slug).map((item) => getLocalizedPost(item, language));
   return (
     <BlogLayout>
       <BlogArticleSeo post={post} extraSchemas={hasEnglishArticle ? [] : extraSchemas} />
@@ -31,6 +33,10 @@ export default function BlogPostShell({ post: originalPost, extraSchemas, afterA
         </header>
 
         {hasEnglishArticle ? <EnglishArticle slug={post.slug} /> : children}
+        {related.length > 0 && <section aria-label={language === 'en' ? 'Related guides' : '相关阅读'}>
+          <h2>{language === 'en' ? 'More help with compression' : '更多压缩问题'}</h2>
+          <ul>{related.map((item) => <li key={item.path}><Link to={item.path}>{item.title}</Link></li>)}</ul>
+        </section>}
       </article>
 
       {!hasEnglishArticle && afterArticle}
