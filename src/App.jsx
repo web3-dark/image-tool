@@ -295,12 +295,12 @@ function App() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={HOME_URL} />
         <meta property="og:title" content="本地图片压缩，保护你的隐私 | PicThin" />
-        <meta property="og:description" content="图片全程在浏览器本地处理，无需上传服务器。支持批量压缩、画质调整与格式转换。" />
+        <meta property="og:description" content="图片全程在浏览器本地处理，不会上传到服务器。支持批量压缩、画质调整与格式转换。" />
         <meta property="og:image" content={OG_IMAGE_URL} />
         <meta property="og:image:alt" content="图片压缩工具 - 支持 JPEG PNG WebP AVIF 格式" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="本地图片压缩，保护你的隐私 | PicThin" />
-        <meta name="twitter:description" content="图片全程在浏览器本地处理，无需上传服务器。支持批量压缩、画质调整与格式转换。" />
+        <meta name="twitter:description" content="图片全程在浏览器本地处理，不会上传到服务器。支持批量压缩、画质调整与格式转换。" />
         <meta name="twitter:image" content={OG_IMAGE_URL} />
         <script type="application/ld+json">{JSON.stringify(HOME_JSON_LD)}</script>
       </Head>
@@ -341,7 +341,7 @@ function App() {
                 本地图片压缩，保护你的隐私
               </h1>
               <p className="text-base md:text-lg text-foreground-muted mt-3 leading-7">
-                图片全程在你的浏览器内处理，无需上传服务器，证件、合同截图和私人照片都留在你的设备上。支持 JPG、PNG、WebP、AVIF 和 GIF 批量压缩、画质调整与格式转换。
+                图片全程在你的浏览器内处理，不会上传到服务器，证件、合同截图和私人照片都留在你的设备上。支持 JPG、PNG、WebP、AVIF 和 GIF 批量压缩、画质调整与格式转换。
               </p>
             </section>
 

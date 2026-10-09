@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Gauge, Images, MapPinOff } from 'lucide-react';
 import BlogLayout from '../components/BlogLayout';
 import { FORMAT_TOOL_CONFIGS } from '../config/tools';
-import { TARGET_SIZE_PAGE_CONFIGS } from '../config/targetSizes';
 import { getSiteUrl } from '../config/site';
 
 const PAGE_URL = getSiteUrl('/tools');
@@ -17,12 +16,6 @@ const TOOL_CARDS = [
     description: '自动压到 20KB、50KB、100KB、200KB、1MB 或自定义体积以内。',
     icon: Gauge,
   },
-  ...TARGET_SIZE_PAGE_CONFIGS.map((page) => ({
-    path: page.path,
-    title: page.shortTitle,
-    description: page.lead,
-    icon: Gauge,
-  })),
   {
     path: '/remove-image-metadata',
     title: '清除照片 EXIF / GPS',
