@@ -12,6 +12,9 @@ export default function RegistrationPhotoUnder200kb() {
       <p className="lead">{t("报名页面提示“照片不能超过 200KB”时，先确认它接受的格式和像素尺寸，再压缩文件。体积达标只是其中一项；照片底色、裁剪比例和人物位置仍需符合该报名系统的要求。")}</p>
       <p><Link to="/compress-image-to-200kb">{t("打开 200KB 图片压缩工具")}</Link>{t("，可以直接使用预设目标。原图在浏览器本地处理，无需把报名照片发到服务器。")}</p>
 
+      <h2>考试、入学和资格认证报名，先确认该项照片要求</h2>
+      <p>200KB 是本教程的操作示例，不是所有考试或学校的统一规定。不同报名入口、不同材料字段可能有不同要求。如果系统要求专用照片审核工具，或对人像比例、背景有说明，应先按它的流程准备照片，再处理文件体积。</p>
+      <p>上限为 100KB 时使用<Link to="/compress-image-to-100kb">100KB 工具</Link>；其他大小使用<Link to="/compress-image-to-size">自定义目标</Link>。需要交的是证书或求职证明图片时，可以阅读<Link to="/blog/job-application-image-upload">附件上传失败排查</Link>。不要把人像照片与材料扫描图混为一项。</p>
       <h2>{t("先看清三个限制")}</h2>
       <ul>
         <li><strong>{t("文件体积：")}</strong>{t("KB、MB 表示文件占用空间。例如上限是 200KB，压缩结果必须不超过这个上限。")}</li>

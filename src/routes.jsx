@@ -1,3 +1,5 @@
+import JobApplicationImageUpload from './pages/blog/JobApplicationImageUpload.jsx';
+import CompressIdDocumentImages from './pages/blog/CompressIdDocumentImages.jsx';
 import PngLargerAfterCompression from './pages/blog/PngLargerAfterCompression.jsx';
 import CompressImagesWithoutUploading from './pages/blog/CompressImagesWithoutUploading.jsx';
 import CompressWithoutLosingQuality from './pages/blog/CompressWithoutLosingQuality.jsx';
@@ -26,6 +28,8 @@ const baseRoutes = [
     errorElement: <RouteErrorPage />,
     entry: 'src/RootLayout.jsx',
     children: [
+      { path: 'blog/job-application-image-upload', element: <JobApplicationImageUpload />, entry: 'src/pages/blog/JobApplicationImageUpload.jsx' },
+      { path: 'blog/compress-id-document-images', element: <CompressIdDocumentImages />, entry: 'src/pages/blog/CompressIdDocumentImages.jsx' },
       { path: 'blog/compress-images-without-uploading', element: <CompressImagesWithoutUploading />, entry: 'src/pages/blog/CompressImagesWithoutUploading.jsx' },
       { path: 'blog/png-larger-after-compression', element: <PngLargerAfterCompression />, entry: 'src/pages/blog/PngLargerAfterCompression.jsx' },
       { path: 'blog/compress-without-losing-quality', element: <CompressWithoutLosingQuality />, entry: 'src/pages/blog/CompressWithoutLosingQuality.jsx' },

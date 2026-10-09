@@ -6,6 +6,7 @@ import { Download, Gauge, RefreshCw, ShieldCheck } from 'lucide-react';
 import BlogLayout from '../components/BlogLayout';
 import ImageUploader from '../components/ImageUploader';
 import ToolUsageGuide from '../components/ToolUsageGuide';
+import ScenarioGuides from '../components/ScenarioGuides.jsx';
 import { Button } from '../components/ui/button';
 import {
   calculateSavingPercentage,
@@ -338,6 +339,7 @@ export default function CompressImageToSize({ pageConfig = GENERIC_TARGET_SIZE_P
             <ShieldCheck className="w-4 h-4 text-success" />{t("图片只在当前设备中处理，不会上传到服务器。JPG 输出不保留透明背景，透明图片建议选择 WebP。")}</p>
         </div>
 
+        {!isPresetPage && <ScenarioGuides />}
         <article className="blog-article mt-12">
           <ToolUsageGuide guide={pageConfig.guide} />
           <h2>{t(isPresetPage ? `怎样把图片压到 ${pageConfig.targetKb}KB 以内？` : '怎样把图片压到指定 KB？')}</h2>

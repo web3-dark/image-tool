@@ -3,6 +3,24 @@ import { TARGET_SIZE_PAGE_CONFIGS } from './targetSizes.js';
 
 export const BLOG_POSTS = [
   {
+    path: '/blog/job-application-image-upload', slug: 'job-application-image-upload',
+    title: '求职附件上传失败？照片与证书图片的压缩方法',
+    seoTitle: '求职照片和证书图片太大怎么办？附件上传排查 - PicThin',
+    description: '招聘网站提示附件太大？区分头像、证书图片与 PDF / Word 简历，按格式和大小限制本地压缩，并排查尺寸、总附件上限与清晰度问题。',
+    datePublished: '2026-10-10', dateModified: '2026-10-10',
+    category: '上传问题', readingTime: '4 分钟', keywords: '求职照片压缩,招聘附件太大,证书图片压缩,简历附件上传失败',
+    relatedSlugs: ['registration-photo-under-200kb', 'compress-id-document-images', 'webp-upload-convert-jpg'],
+  },
+  {
+    path: '/blog/compress-id-document-images', slug: 'compress-id-document-images',
+    title: '证件扫描图片太大？在本地压缩并检查文字清晰度',
+    seoTitle: '身份证、护照扫描图片怎么压缩？本地处理不上传 - PicThin',
+    description: '身份证、护照资料页和证明材料图片太大时，按接收平台要求在浏览器本地压缩，检查小字、边缘和像素尺寸。说明 PDF、证件照与隐私边界。',
+    datePublished: '2026-10-10', dateModified: '2026-10-10',
+    category: '上传问题', readingTime: '5 分钟', keywords: '身份证图片压缩,护照扫描图片压缩,证件图片太大,扫描图片压缩,本地图片压缩',
+    relatedSlugs: ['compress-images-without-uploading', 'job-application-image-upload', 'compress-without-losing-quality'],
+  },
+  {
     path: '/blog/compress-images-without-uploading', slug: 'compress-images-without-uploading',
     title: '图片压缩会上传吗？如何验证浏览器本地处理',
     seoTitle: '不上传图片怎么压缩？本地处理与隐私验证方法 - PicThin',
@@ -29,14 +47,15 @@ export const BLOG_POSTS = [
   {
     path: '/blog/registration-photo-under-200kb',
     slug: 'registration-photo-under-200kb',
-    title: '报名照片超过 200KB：压缩步骤与上传失败排查',
-    seoTitle: '报名照片怎么压缩到 200KB 以内？格式与尺寸检查 - PicThin',
+    title: '考试、入学报名照片超过 200KB：压缩与上传排查',
+    seoTitle: '考试、入学报名照片怎么压到 200KB？格式与尺寸检查 - PicThin',
     description: '照片超过上传限制时，先确认格式、像素和文件大小，再压缩到 200KB 以内。附本地处理步骤、示例结果，以及压完仍无法上传的排查方法。',
     datePublished: '2026-10-01',
-    dateModified: '2026-10-01',
+    dateModified: '2026-10-10',
     category: '上传问题',
     readingTime: '4 分钟',
-    keywords: '报名照片200KB,照片压缩到200KB,图片上传失败,照片文件大小',
+    keywords: '报名照片200KB,考试报名照片压缩,入学照片压缩,照片压缩到200KB,图片上传失败',
+    relatedSlugs: ['job-application-image-upload', 'compress-id-document-images', 'compress-without-losing-quality'],
   },
   {
     path: '/blog/compress-png-keep-transparency',
@@ -110,13 +129,13 @@ export const SEO_PAGES = [
   },
   {
     path: '/tools',
-    lastmod: '2026-08-21',
+    lastmod: '2026-10-10',
     changefreq: 'monthly',
     priority: '0.9',
   },
   {
     path: '/compress-image-to-size',
-    lastmod: '2026-08-21',
+    lastmod: '2026-10-10',
     changefreq: 'monthly',
     priority: '0.9',
   },

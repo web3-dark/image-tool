@@ -1,5 +1,17 @@
 // English articles are authored independently; locale routing supplies their /en URLs.
 export const ENGLISH_POSTS = {
+  'job-application-image-upload': {
+    title: 'Job application attachment too large? Fix photo and certificate uploads',
+    description: 'Check whether a job portal needs an image, PDF, or Word document. Reduce photo attachments locally and troubleshoot size, format, and readability problems.',
+    category: 'Upload fixes', readingTime: '4 min read',
+    keywords: 'job application attachment too large,compress certificate image,job application photo,resume attachment upload failed',
+  },
+  'compress-id-document-images': {
+    title: 'Reduce an ID or document image without uploading it',
+    description: 'Make a smaller copy of an ID or passport scan in your browser. Check text, edges, format, and dimensions before submitting it to an application portal.',
+    category: 'Upload fixes', readingTime: '5 min read',
+    keywords: 'compress ID image,reduce passport scan size,compress scanned document image,private image compression',
+  },
   'compress-images-without-uploading': {
     title: 'Compress images without uploading them: how to check',
     description: 'See what stays in your browser, inspect network requests with a sample image, and try an offline check. Understand what local processing does—and does not—protect.',

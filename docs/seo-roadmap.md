@@ -57,7 +57,7 @@ npm run seo:check
 ## 2026-10-10 实施与复查流程
 
 - 中英文使用独立静态网址，语言由 URL 决定；首次偏好不匹配只提示切换。
-- 当前 22 个公开页面各有中文和英文版本，共 44 个 URL；后台管理页不进入 sitemap。
+- 当前 24 个公开页面各有中文和英文版本，共 48 个 URL；后台管理页不进入 sitemap。
 - 每次新增指南，配置中文元数据、独立英文元数据/正文、路由，并让指南列表和相关文章提供可抓取链接。
 - 教程样例标明原始文件大小和编码条件，示例结果不作为所有图片的性能保证。图片写明真实宽高并延迟加载。
 - 构建后执行 `npm run seo:check`，核对静态正文、canonical、双向 hreflang、站内链接和 sitemap。
@@ -99,3 +99,13 @@ npm run seo:check
 - https://developers.google.com/search/updates#may-2026
 - https://developers.google.com/search/docs/appearance/structured-data/software-app
 - https://developer.chrome.com/docs/devtools/network
+
+## 2026-10-10 用户场景搜索覆盖
+
+- 复用并增强报名照片页，补充考试、入学与资格认证的不同要求，不新增仅替换人群名的重复页面。
+- 新增求职图片附件指南：区分头像、证书与 PDF / Word 简历，覆盖单文件与合计上限、格式和尺寸错误。
+- 新增证件扫描图片指南：区分资料页与人像照片，说明本地处理、文字检查、最低尺寸与正式提交边界，不承诺通过审核。
+- 两篇新文均提供独立撰写的英文正文和元数据；复用 Article、canonical、hreflang 与 sitemap 生成流程。
+- 工具列表及通用指定大小页提供六类场景入口：报名、求职、证件、透明商品素材、设计与网页格式、分享前元数据清理。已有相关内容保持原 URL。
+- 场景文章按相关性互链。关键词字段不视为排名保证，主要依靠可索引正文、清楚的标题、真实操作步骤和内部链接。
+- 观察新增 URL 的收录、展示、查询与实际访问；发布与 sitemap 更新不代表搜索引擎已经收录。

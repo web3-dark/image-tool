@@ -1,3 +1,4 @@
+import { JobApplicationImages, IdDocumentImages } from './ApplicationImages.jsx';
 import { PngLargerArticle, QualityArticle } from './CompressionTroubleshooting.jsx';
 import LocalImagePrivacy from './LocalImagePrivacy.jsx';
 import { useState } from 'react';
@@ -7,6 +8,9 @@ import ImageModal from '../../components/ImageModal.jsx';
 function PhotoUnder200KB() {
   return <>
     <p className="lead">You have the right photo, but the form says it’s too large. If the limit is 200 KB, you need a smaller file—not necessarily a different photo. Start by checking the form’s requirements, then make a copy that fits.</p>
+    <h2>For exam and school application photos</h2>
+    <p>The 200 KB limit in this guide is an example, not a rule shared by every application. Check the specific upload field. A school, exam provider, or certification service may require a particular portrait crop, background, or preparation tool. Start with a photo that meets those instructions; PicThin does not crop or change its background.</p>
+    <p>If the form says 100 KB, use <Link to="/compress-image-to-100kb">the 100 KB tool</Link>. For another limit, <Link to="/compress-image-to-size">set your own target</Link>. If you are uploading a certificate rather than a portrait, check <Link to="/blog/job-application-image-upload">the attachment troubleshooting guide</Link>.</p>
     <h2>Check more than the file size</h2>
     <p>A form can reject a photo for several reasons. Before you compress it, look for these three requirements:</p>
     <ul>
@@ -175,6 +179,8 @@ function ImageFormats() {
 }
 
 const ARTICLES = {
+  'job-application-image-upload': JobApplicationImages,
+  'compress-id-document-images': IdDocumentImages,
   'compress-images-without-uploading': LocalImagePrivacy,
   'png-larger-after-compression': PngLargerArticle,
   'compress-without-losing-quality': QualityArticle,

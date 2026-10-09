@@ -1,4 +1,5 @@
 import { useI18n } from '../i18n/useI18n.js';
+import ScenarioGuides from '../components/ScenarioGuides.jsx';
 import { createElement } from 'react';
 import { Head } from 'vite-react-ssg';
 import { Link } from '../components/LocalizedLink.jsx';
@@ -107,6 +108,7 @@ export default function ToolsIndex() {
           ))}
         </div>
 
+        <ScenarioGuides />
         <section className="mt-12 rounded-xl border border-border bg-surface-muted p-5 md:p-6">
           <h2 className="text-xl font-semibold text-foreground">{t("不知道该选哪个？")}</h2>
           <p className="text-foreground-muted leading-7 mt-2">{t("照片通常用 JPG，透明图标和截图通常用 PNG，网页分发可优先考虑 WebP。可以先阅读")}{t(' ')}<Link to="/blog/png-webp-jpg-comparison" className="text-primary hover:underline">{t("图片格式完整对比")}</Link>{t("， 或直接使用")}<Link to="/" className="text-primary hover:underline">{t("通用批量图片压缩")}</Link>{t("。")}</p>
