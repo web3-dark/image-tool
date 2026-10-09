@@ -78,6 +78,7 @@ export default function About() {
 
         <h2>{t("图片是怎样处理的")}</h2>
         <p>{t("用户选择图片后，浏览器会在本机内存中读取文件，通过 Canvas、图片编码器和 Web Worker 完成压缩或格式转换。处理结果只用于页面预览和用户主动下载，不会写入 PicThin 的数据库。")}</p>
+        <p><Link to="/blog/compress-images-without-uploading">{locale === 'en-US' ? 'How to check that your images stay in your browser' : '如何验证图片没有上传：网络检查与断网测试'}</Link></p>
 
         <h2>{t("内容与测试方法")}</h2>
         <p>{t("PicThin 的教程围绕工具的实际使用场景编写。涉及压缩效果时，会使用明确的格式、尺寸、质量参数和文件大小进行对比；涉及浏览器兼容性时，会优先参考格式规范和浏览器支持数据。文章不会仅为了更新日期而修改时间。")}</p>

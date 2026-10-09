@@ -5,7 +5,16 @@ let imageCompressionPromise;
 
 const loadImageCompression = () => {
   if (!imageCompressionPromise) {
-    imageCompressionPromise = import('browser-image-compression').then((module) => module.default);
+    imageCompressionPromise = Promise.all([
+      import('browser-image-compression'),
+      import('browser-image-compression/dist/browser-image-compression.js?url'),
+    ]).then(([module, worker]) => ({
+      imageCompression: module.default,
+      libURL: new URL(worker.default, window.location.href).href,
+    })).catch((error) => {
+      imageCompressionPromise = undefined;
+      throw error;
+    });
   }
   return imageCompressionPromise;
 };
@@ -141,12 +150,13 @@ export const compressImage = async (file, quality = 0.8, format = 'jpeg', onProg
       return await compressPng(file, quality, onProgress);
     }
     // JPEG / WebP / AVIF：支持有损压缩，quality 直接控制画质
-    const imageCompression = await loadImageCompression();
+    const { imageCompression, libURL } = await loadImageCompression();
     const options = {
       maxSizeMB: (file.size / (1024 * 1024)) * quality,
       maxWidthOrHeight: 4096,
       initialQuality: quality,
       useWebWorker: true,
+      libURL,
       fileType: `image/${fmt}`,
       alwaysKeepResolution: true,
       onProgress: onProgress ? (p) => onProgress(p) : undefined,
@@ -202,7 +212,7 @@ export const compressImageToTargetSize = async (
 
   // 留出少量编码差异余量，确保下载结果不超过用户填写的上限。
   const targetSizeMB = (targetBytes * 0.98) / (1024 * 1024);
-  const imageCompression = await loadImageCompression();
+  const { imageCompression, libURL } = await loadImageCompression();
 
   for (let attempt = 0; attempt < 5; attempt += 1) {
     const attemptStart = attempt * 20;
@@ -212,6 +222,7 @@ export const compressImageToTargetSize = async (
       initialQuality: 0.92,
       maxIteration: 14,
       useWebWorker: true,
+      libURL,
       fileType: `image/${fmt}`,
       alwaysKeepResolution: false,
       onProgress: onProgress

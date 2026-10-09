@@ -169,6 +169,18 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://picthin.com/blog/compress-images-without-uploading</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://picthin.com/en/blog/compress-images-without-uploading</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://picthin.com/blog/png-larger-after-compression</loc>
     <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>

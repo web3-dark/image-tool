@@ -21,6 +21,15 @@ export default function RootLayout() {
       <ErrorBoundary>
         <Head>
           <html lang={locale} />
+          <meta property="og:site_name" content="PicThin" />
+          {pathname === '/' && <script type="application/ld+json">{JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'PicThin',
+            alternateName: 'picthin.com',
+            url: getSiteUrl('/'),
+            inLanguage: ['zh-CN', 'en-US'],
+          })}</script>}
           <meta property="og:locale" content={language === 'en' ? 'en_US' : 'zh_CN'} />
           <meta name="apple-mobile-web-app-title" content={t('图片压缩')} />
           {isPublicPage(pathname) && <>

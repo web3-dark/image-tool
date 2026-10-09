@@ -11,7 +11,7 @@ export default function BlogPostShell({ post: originalPost, extraSchemas, afterA
   const { t, language } = useI18n();
   const post = getLocalizedPost(originalPost, language);
   const hasEnglishArticle = language === 'en' && Boolean(ENGLISH_POSTS[post.slug]);
-  const related = BLOG_POSTS.filter((item) => ['png-larger-after-compression', 'compress-without-losing-quality'].includes(item.slug) && item.slug !== post.slug).map((item) => getLocalizedPost(item, language));
+  const related = BLOG_POSTS.filter((item) => ['compress-images-without-uploading', 'png-larger-after-compression', 'compress-without-losing-quality'].includes(item.slug) && item.slug !== post.slug).map((item) => getLocalizedPost(item, language));
   return (
     <BlogLayout>
       <BlogArticleSeo post={post} extraSchemas={hasEnglishArticle ? [] : extraSchemas} />

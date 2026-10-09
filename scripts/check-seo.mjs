@@ -98,12 +98,37 @@ for (const [file, path, basePath, language] of htmlFiles) {
   assertIncludes(html, `property="og:image" content="${getSiteUrl('/og-image.png')}"`, file);
   assertIncludes(html, `name="twitter:image" content="${getSiteUrl('/og-image.png')}"`, file);
   assertIncludes(html, 'type="application/ld+json"', file);
+  assertIncludes(html, 'property="og:site_name" content="PicThin"', file);
   assertIncludes(html, `<html lang="${language === 'en' ? 'en-US' : 'zh-CN'}"`, file);
   for (const [lang, targetLanguage] of [['zh-Hans', 'zh'], ['en', 'en'], ['x-default', 'zh']]) {
     assertIncludes(html, `rel="alternate" hreflang="${lang}" href="${getSiteUrl(localizePath(basePath, targetLanguage))}"`, file);
   }
   if ((html.match(/rel="canonical"/g) || []).length !== 1) throw new Error(`${file} must have exactly one canonical`);
   if (/name="robots" content="[^"]*noindex/.test(html)) throw new Error(`${file} must be indexable`);
+
+  const schemas = [...html.matchAll(/<script\b[^>]*\btype="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
+    .map((match) => assertValidJson(match[1], file));
+  if (path === '/') {
+    const websites = schemas.filter((schema) => schema['@type'] === 'WebSite');
+    if (websites.length !== 1 || websites[0].name !== 'PicThin' || websites[0].url !== getSiteUrl('/')) {
+      throw new Error('The domain home page must identify the PicThin website and its canonical URL');
+    }
+  }
+  if (basePath.startsWith('/blog/')) {
+    const article = html.match(/<article\b[^>]*>([\s\S]*?)<\/article>/)?.[1];
+    const bodyText = article?.replace(/<[^>]*>/g, '').trim();
+    if (!bodyText || bodyText.length < 300 || !/<h2\b/.test(article)) {
+      throw new Error(`${file} must include its article body without JavaScript`);
+    }
+    if (!schemas.some((schema) => schema['@type'] === 'Article')) {
+      throw new Error(`${file} is missing Article structured data`);
+    }
+    for (const [image] of article.matchAll(/<img\b[^>]*>/g)) {
+      if (!/\bwidth="[1-9]\d*"/.test(image) || !/\bheight="[1-9]\d*"/.test(image)) {
+        throw new Error(`${file} must reserve space for article image: ${image}`);
+      }
+    }
+  }
 
   if (language === 'en') {
     const h1 = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)?.[1];
@@ -115,8 +140,7 @@ for (const [file, path, basePath, language] of htmlFiles) {
         throw new Error(`${file} has a link that leaves English: ${href}`);
       }
     }
-    for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
-      const schema = assertValidJson(match[1], file);
+    for (const schema of schemas) {
       function checkUrls(value) {
         if (typeof value === 'string' && value.startsWith(`${SITE_URL}/`)) {
           const relative = value.slice(SITE_URL.length);
@@ -127,7 +151,7 @@ for (const [file, path, basePath, language] of htmlFiles) {
     }
   }
 
-  if (/rel="modulepreload"[^>]+compression-[^>]+\.js/.test(html)) {
+  if (/rel="modulepreload"[^>]+(?:compression|browser-image-compression)-[^>]+\.js/.test(html)) {
     throw new Error(`${file} should not preload the image compression engine`);
   }
 
@@ -142,8 +166,17 @@ for (const [file, path, basePath, language] of htmlFiles) {
 }
 
 const serviceWorker = readDistFile('sw.js');
-if (/assets\/compression-[^"']+\.js/.test(serviceWorker)) {
+if (/assets\/(?:compression|browser-image-compression)-[^"']+\.js/.test(serviceWorker)) {
   throw new Error('The image compression engine should not be precached');
+}
+
+const compressionWorkers = readdirSync(resolve(DIST_DIR, 'assets'))
+  .filter((file) => /^browser-image-compression-[\w-]+\.js$/.test(file))
+  .filter((file) => readDistFile(`assets/${file}`) === readFileSync(
+    resolve('node_modules/browser-image-compression/dist/browser-image-compression.js'), 'utf8',
+  ));
+if (compressionWorkers.length !== 1) {
+  throw new Error('Missing self-hosted image compression worker library');
 }
 
 assertNoForbidden(sitemap, 'sitemap.xml');

@@ -1,5 +1,11 @@
 // English articles are authored independently; locale routing supplies their /en URLs.
 export const ENGLISH_POSTS = {
+  'compress-images-without-uploading': {
+    title: 'Compress images without uploading them: how to check',
+    description: 'See what stays in your browser, inspect network requests with a sample image, and try an offline check. Understand what local processing does—and does not—protect.',
+    category: 'Privacy', readingTime: '5 min read',
+    keywords: 'compress images without uploading,private image compressor,local image compression,offline image compression',
+  },
   'png-larger-after-compression': {
     title: 'Why did my PNG get bigger after compression?',
     description: 'A bigger output file does not always mean a broken compressor. Compare real PNG and JPG samples, check what changed, and choose a format that fits the job.',

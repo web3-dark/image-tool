@@ -3,6 +3,14 @@ import { TARGET_SIZE_PAGE_CONFIGS } from './targetSizes.js';
 
 export const BLOG_POSTS = [
   {
+    path: '/blog/compress-images-without-uploading', slug: 'compress-images-without-uploading',
+    title: '图片压缩会上传吗？如何验证浏览器本地处理',
+    seoTitle: '不上传图片怎么压缩？本地处理与隐私验证方法 - PicThin',
+    description: '用公开样例检查图片压缩是否上传：查看网络请求、断网重试，分清程序下载、匿名统计与图片传输，并了解元数据和本地处理的边界。',
+    datePublished: '2026-10-10', dateModified: '2026-10-10',
+    category: '实用教程', readingTime: '5 分钟', keywords: '不上传图片压缩,本地图片压缩,图片压缩隐私,浏览器图片处理',
+  },
+  {
     path: '/blog/png-larger-after-compression', slug: 'png-larger-after-compression',
     title: 'PNG 为什么越压越大？先检查格式和颜色',
     seoTitle: 'PNG 压缩后变大怎么办？格式、颜色与文件大小排查 - PicThin',
