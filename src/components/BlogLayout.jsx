@@ -1,9 +1,8 @@
 import { useI18n } from '../i18n/useI18n.js';
 import { Link } from 'react-router-dom';
-import { Logo } from './Logo';
 import PrivacyPolicy from './PrivacyPolicy';
 import FeedbackButton from './FeedbackButton.jsx';
-import LanguageSwitcher from './LanguageSwitcher.jsx';
+import SiteHeader from './SiteHeader.jsx';
 import { useState } from 'react';
 
 export default function BlogLayout({ children }) {
@@ -12,19 +11,7 @@ export default function BlogLayout({ children }) {
 
   return (
     <div className="flex flex-col min-h-screen w-full bg-bg">
-      <header className="sticky top-0 z-50 border-b border-border bg-surface/90 backdrop-blur supports-[backdrop-filter]:bg-surface/75 px-4 md:px-8 py-2">
-        <div className="flex flex-wrap items-center justify-between gap-3 max-w-4xl mx-auto w-full">
-          <Link to="/" className="block">
-            <Logo size="sm" showText={true} />
-          </Link>
-          <nav className="ml-auto flex flex-wrap items-center gap-3 text-sm">
-            <Link to="/" className="text-foreground-muted hover:text-primary transition-colors">{t("图片压缩")}</Link>
-            <Link to="/tools" className="text-foreground-muted hover:text-primary transition-colors">{t("工具")}</Link>
-            <Link to="/blog" className="text-foreground hover:text-primary font-medium transition-colors">{t("指南")}</Link>
-            <LanguageSwitcher />
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="flex-1 w-full">
         {children}

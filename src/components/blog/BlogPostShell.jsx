@@ -1,14 +1,18 @@
+import EnglishArticle from '../../content/en/Articles.jsx';
+import { ENGLISH_POSTS, getLocalizedPost } from '../../content/en/posts.js';
 import { useI18n } from '../../i18n/useI18n.js';
 import { Link } from 'react-router-dom';
 import BlogLayout from '../BlogLayout';
 import BlogBreadcrumbs from './BlogBreadcrumbs';
 import { BlogArticleSeo } from './BlogSeo';
 
-export default function BlogPostShell({ post, extraSchemas, afterArticle = null, children }) {
-  const { t } = useI18n();
+export default function BlogPostShell({ post: originalPost, extraSchemas, afterArticle = null, children }) {
+  const { t, language } = useI18n();
+  const post = getLocalizedPost(originalPost, language);
+  const hasEnglishArticle = language === 'en' && Boolean(ENGLISH_POSTS[post.slug]);
   return (
     <BlogLayout>
-      <BlogArticleSeo post={post} extraSchemas={extraSchemas} />
+      <BlogArticleSeo post={post} extraSchemas={hasEnglishArticle ? [] : extraSchemas} />
 
       <article className="blog-article max-w-3xl mx-auto px-4 md:px-6 py-10 md:py-14">
         <header className="mb-10">
@@ -26,10 +30,10 @@ export default function BlogPostShell({ post, extraSchemas, afterArticle = null,
           </h1>
         </header>
 
-        {children}
+        {hasEnglishArticle ? <EnglishArticle slug={post.slug} /> : children}
       </article>
 
-      {afterArticle}
+      {!hasEnglishArticle && afterArticle}
     </BlogLayout>
   );
 }

@@ -8,8 +8,7 @@ import BatchResultsPanel from './components/BatchResultsPanel';
 import BrowserCompat from './components/BrowserCompat';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import FeedbackButton from './components/FeedbackButton.jsx';
-import LanguageSwitcher from './components/LanguageSwitcher.jsx';
-import { Logo } from './components/Logo';
+import SiteHeader from './components/SiteHeader.jsx';
 import { Slider } from './components/ui/slider';
 import {
   Select,
@@ -311,25 +310,7 @@ function App() {
       <BrowserCompat />
 
       {/* 页头 */}
-      <header className="flex-shrink-0 border-b border-border bg-surface px-4 md:px-8 py-3">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3 min-w-0">
-            <Logo size="sm" showText={true} />
-            <span className="hidden md:inline text-sm text-foreground-muted truncate">{t("智能图片压缩 • 本地处理 • 隐私优先")}</span>
-          </div>
-          <nav className="ml-auto flex flex-wrap items-center gap-1">
-            <Link
-              to="/tools"
-              className="text-sm text-foreground-muted hover:text-primary transition-colors px-3 py-1.5 rounded-md hover:bg-primary-muted"
-            >{t("全部工具")}</Link>
-            <Link
-              to="/blog"
-              className="text-sm text-foreground-muted hover:text-primary transition-colors px-3 py-1.5 rounded-md hover:bg-primary-muted"
-            >{t("压缩指南")}</Link>
-            <LanguageSwitcher />
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       {/* 主内容区域 */}
       <main className="flex-1 overflow-auto w-full bg-bg">

@@ -1,3 +1,4 @@
+import { getLocalizedPost } from '../../content/en/posts.js';
 import { useI18n } from '../../i18n/useI18n.js';
 import { Link } from 'react-router-dom';
 import BlogBreadcrumbs from '../../components/blog/BlogBreadcrumbs';
@@ -8,7 +9,7 @@ import { BLOG_POSTS } from '../../config/content';
 const DESCRIPTION = 'picthin 图片压缩指南：学习 JPG、PNG、WebP、AVIF 的压缩原理、格式选择、安全处理和批量优化方法。';
 
 export default function BlogIndex() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   return (
     <BlogLayout>
       <BlogIndexSeo description={DESCRIPTION} />
@@ -21,7 +22,7 @@ export default function BlogIndex() {
         </header>
 
         <div className="divide-y divide-border border-y border-border">
-          {BLOG_POSTS.map((post) => (
+          {BLOG_POSTS.map((post) => getLocalizedPost(post, language)).map((post) => (
             <article key={post.path} className="py-6">
               <Link to={post.path} className="group block">
                 <div className="flex flex-wrap items-center gap-2 text-xs text-foreground-muted mb-3">
